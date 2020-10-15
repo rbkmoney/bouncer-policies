@@ -8,7 +8,7 @@ build('bouncer-policies', 'docker-host') {
 
   def pipeDefault
   runStage('load pipeline') {
-    env.JENKINS_LIB = "./jenkins_lib"
+    env.JENKINS_LIB = "build_utils/jenkins_lib"
     pipeDefault = load("${env.JENKINS_LIB}/pipeDefault.groovy")
   }
 

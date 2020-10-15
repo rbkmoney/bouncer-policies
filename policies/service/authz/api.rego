@@ -10,7 +10,7 @@ assertions := {
 
 # Set of assertions which tell why operation under the input context is forbidden.
 # When the set is empty operation is not explicitly forbidden.
-# Each element must be a 2-item array of the following form:
+# Each element must be either a string `"code"` or a 2-item array of the form:
 # ```
 # ["code", "description"]
 # ```
@@ -52,7 +52,7 @@ warnings[why] {
 
 # Set of assertions which tell why operation under the input context is allowed.
 # When the set is empty operation is not explicitly allowed.
-# Each element must be a 2-item array of the following form:
+# Each element must be either a string `"code"` or a 2-item array of the form:
 # ```
 # ["code", "description"]
 # ```

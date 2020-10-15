@@ -1,0 +1,14 @@
+{"1.1.0",
+[{<<"bouncer_proto">>,
+  {git,"git@github.com:rbkmoney/bouncer-proto.git",
+       {ref,"19220769d95babaa34681b87527dcf51cc29f090"}},
+  0},
+ {<<"jsx">>,{pkg,<<"jsx">>,<<"3.0.0">>},0},
+ {<<"thrift">>,
+  {git,"https://github.com/rbkmoney/thrift_erlang.git",
+       {ref,"846a0819d9b6d09d0c31f160e33a78dbad2067b4"}},
+  0}]}.
+[
+{pkg_hash,[
+ {<<"jsx">>, <<"20A170ABD4335FC6DB24D5FAD1E5D677C55DADF83D1B20A8A33B5FE159892A39">>}]}
+].

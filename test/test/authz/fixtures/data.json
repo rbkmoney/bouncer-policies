@@ -1,0 +1,127 @@
+{
+
+    "env_default": {
+        "env": {
+            "now": "2020-02-02T12:34:56Z"
+        }
+    },
+
+    "op_capi_create_payment_resource": {
+        "capi": {
+            "op": {
+                "id": "CreatePaymentResource",
+                "party": {"id": "PARTY"}
+            }
+        }
+    },
+
+    "op_capi_create_invoice": {
+        "capi": {
+            "op": {
+                "id": "CreateInvoice",
+                "invoice": {"id": "INVOICE"},
+                "shop": {"id": "SHOP"},
+                "party": {"id": "PARTY"}
+            }
+        }
+    },
+
+    "op_capi_get_invoice": {
+        "capi": {
+            "op": {
+                "id": "GetInvoiceByID",
+                "invoice": { "id": "INVOICE" },
+                "shop": { "id": "SHOP" },
+                "party": { "id": "PARTY" }
+            }
+        }
+    },
+
+    "op_capi_create_refund": {
+        "capi": {
+            "op": {
+                "id": "CreateRefund",
+                "invoice": {"id": "INVOICE"},
+                "payment": {"id": "PAYMENT"},
+                "shop": {"id": "SHOP"},
+                "party": {"id": "PARTY"}
+            }
+        }
+    },
+
+
+    "op_capi_get_invoice_2": {
+        "capi": {
+            "op": {
+                "id": "GetInvoiceByID",
+                "invoice": { "id": "INVOICE_2" },
+                "shop": { "id": "SHOP" },
+                "party": { "id": "PARTY" }
+            }
+        }
+    },
+
+    "session_token_valid": {
+        "auth": {
+            "method": "SessionToken",
+            "expiration": "2021-01-01T00:00:00Z"
+        }
+    },
+
+    "invoice_access_token_valid": {
+        "auth": {
+            "method": "InvoiceAccessToken",
+            "expiration": "2021-01-01T00:00:00Z",
+            "scope": [
+                {
+                    "invoice": { "id": "INVOICE" },
+                    "party": { "id": "PARTY" }
+                }
+            ]
+        }
+    },
+
+    "invoice_access_token_valid_party_2": {
+        "auth": {
+            "method": "InvoiceAccessToken",
+            "expiration": "2021-01-01T00:00:00Z",
+            "scope": [
+                {
+                    "invoice": { "id": "INVOICE" },
+                    "party": { "id": "PARTY_2" }
+                }
+            ]
+        }
+    },
+
+    "invoice_access_token_expired": {
+        "auth": {
+            "method": "InvoiceAccessToken",
+            "expiration": "2020-02-02T00:00:00Z",
+            "scope": [
+                {
+                    "invoice": { "id": "INVOICE" }
+                }
+            ]
+        }
+    },
+
+    "requester_default": {
+        "requester": {
+            "ip": "95.217.228.176"
+        }
+    },
+
+    "requester_local": {
+        "requester": {
+            "ip": "10.1.17.141"
+        }
+    },
+
+    "requester_local_ipv6": {
+        "requester": {
+            "ip": "fd12:3456:789a:1::42"
+        }
+    }
+
+}

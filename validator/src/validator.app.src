@@ -1,0 +1,14 @@
+{application, validator, [
+    {description, "Validate context fragments against bouncer-proto"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {applications, [
+        kernel,
+        stdlib,
+        thrift,
+        jsx,
+        bouncer_proto
+    ]},
+    {env, []},
+    {licenses, ["Apache 2.0"]}
+]}.

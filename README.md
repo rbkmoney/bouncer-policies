@@ -13,27 +13,22 @@ Each policy under `/policies/service` can be specified as _ruleset id_ when talk
 {
     // Set of assertions which tell why operation under the input context is forbidden.
     // When the set is empty operation is not explicitly forbidden.
-    // Each element must be either a string `"code"` or a 2-item array of the form:
+    // Each element must be an object containing at least a "code" property, meant
+    // primarily for machines to read and analyze. Though a "description" property meant
+    // for humans won't hurt.
     // ```
-    // ["code", "description"]
+    // {"code": "auth_expired", "description": "...", ...}
     // ```
     "forbidden" : [...],
 
     // Set of assertions which tell why operation under the input context is allowed.
     // When the set is empty operation is not explicitly allowed.
-    // Each element must be either a string "code" a 2-item array of the same form.
+    // Each element must be a similar object, containing at least a "code" property.
     "allowed"   : [...]
 }
 ```
 
 When evaluating some policy [bouncer][1] will provide [bouncer context][4] in a JSON representation as an input document.
-
-> #### TODO
-> Быть может нам стоит сразу принять более дружественную для дальнейшего расширения структуру assertion, типа:
-> `{"code": "smth", "description": "...", ...}`
-> или
-> `["code", {"meta":"data",...}]`
-> ?
 
 ## Testing
 

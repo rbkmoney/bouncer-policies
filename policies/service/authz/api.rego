@@ -17,20 +17,20 @@ assertions := {
 forbidden[why] {
     input
     not input.auth.method
-    why := [
-        "auth_required",
-        "Authorization is required"
-    ]
+    why := {
+        "code": "auth_required",
+        "description": "Authorization is required"
+    }
 }
 
 forbidden[why] {
     exp := time.parse_rfc3339_ns(input.auth.expiration)
     now := time.parse_rfc3339_ns(input.env.now)
     now > exp
-    why := [
-        "auth_expired",
-        sprintf("Authorization is expired at: %s", [input.auth.expiration])
-    ]
+    why := {
+        "code": "auth_expired",
+        "description": sprintf("Authorization is expired at: %s", [input.auth.expiration])
+    }
 }
 
 forbidden[why] {
@@ -39,10 +39,13 @@ forbidden[why] {
     matches := net.cidr_contains_matches(blacklist, ip)
     matches[_]
     ranges := [ range | matches[_][0] = i; range := blacklist[i] ]
-    why := [
-        "ip_range_blacklisted",
-        sprintf("Requester IP address is blacklisted with ranges: %v", [concat(", ", ranges)])
-    ]
+    why := {
+        "code": "ip_range_blacklisted",
+        "description": sprintf(
+            "Requester IP address is blacklisted with ranges: %v",
+            [concat(", ", ranges)]
+        )
+    }
 }
 
 warnings[why] {
@@ -70,20 +73,20 @@ allowed[why] {
 org_allowed[why] {
     org := org_by_operation
     org.owner == input.user.id
-    why := [
-        "user_is_owner",
-        "User is the organisation owner itself"
-    ]
+    why := {
+        "code": "user_is_owner",
+        "description": "User is the organisation owner itself"
+    }
 }
 
 org_allowed[why] {
     rolename := role_by_operation[_]
     org_by_operation.roles[i].id == rolename
     scopename := scopename_by_role[i]
-    why := [
-        "user_has_role",
-        sprintf("User has role %s in scope %v", [rolename, scopename])
-    ]
+    why := {
+        "code": "user_has_role",
+        "description": sprintf("User has role %s in scope %v", [rolename, scopename])
+    }
 }
 
 scopename_by_role[i] = sprintf("shop:%s", [shop]) {

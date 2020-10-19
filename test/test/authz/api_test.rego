@@ -10,7 +10,7 @@ test_no_warnings {
 
 test_empty_context_forbidden {
     result := api.assertions with input as {}
-    result.forbidden[_][0] == "auth_required"
+    result.forbidden[_].code == "auth_required"
 }
 
 test_token_blacklisted_local_ip {
@@ -20,7 +20,7 @@ test_token_blacklisted_local_ip {
         fixtures.session_token_valid,
         fixtures.op_capi_create_invoice
     ])
-    result.forbidden[_][0] == "ip_range_blacklisted"
+    result.forbidden[_].code == "ip_range_blacklisted"
 }
 
 test_token_blacklisted_local_ipv6 {
@@ -30,7 +30,7 @@ test_token_blacklisted_local_ipv6 {
         fixtures.session_token_valid,
         fixtures.op_capi_create_invoice
     ])
-    result.forbidden[_][0] == "ip_range_blacklisted"
+    result.forbidden[_].code == "ip_range_blacklisted"
 }
 
 test_invoice_access_token_valid_1 {
@@ -41,7 +41,7 @@ test_invoice_access_token_valid_1 {
         fixtures.op_capi_create_payment_resource
     ])
     count(result.forbidden) == 0
-    result.allowed[_][0] == "invoice_access_token_allows_tokenization"
+    result.allowed[_].code == "invoice_access_token_allows_tokenization"
 }
 
 test_invoice_access_token_valid_2 {
@@ -52,7 +52,7 @@ test_invoice_access_token_valid_2 {
         fixtures.op_capi_get_invoice
     ])
     count(result.forbidden) == 0
-    result.allowed[_][0] == "invoice_access_token_allows_operation"
+    result.allowed[_].code == "invoice_access_token_allows_operation"
 }
 
 test_invoice_access_token_expired {
@@ -62,7 +62,7 @@ test_invoice_access_token_expired {
         fixtures.invoice_access_token_expired,
         fixtures.op_capi_create_payment_resource
     ])
-    result.forbidden[_][0] == "auth_expired"
+    result.forbidden[_].code == "auth_expired"
 }
 
 test_invoice_access_token_invalid_party {

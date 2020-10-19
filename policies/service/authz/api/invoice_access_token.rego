@@ -12,19 +12,19 @@ import input.capi.op
 allowed[why] {
     op.id == "CreatePaymentResource"
     party_matches_token_scope
-    why := [
-        "invoice_access_token_allows_tokenization",
-        "Invoice access token allows payment resource tokenization"
-    ]
+    why := {
+        "code": "invoice_access_token_allows_tokenization",
+        "description": "Invoice access token allows payment resource tokenization"
+    }
 }
 
 allowed[why] {
     operation_allowed
     invoice_matches_token_scope
-    why := [
-        "invoice_access_token_allows_operation",
-        "Invoice access token allows operation on this invoice"
-    ]
+    why := {
+        "code": "invoice_access_token_allows_operation",
+        "description": "Invoice access token allows operation on this invoice"
+    }
 }
 
 party_matches_token_scope {

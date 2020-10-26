@@ -2,6 +2,7 @@ package service.authz.api
 
 import data.service.authz.api.invoice_access_token
 import data.service.authz.blacklists
+import data.service.authz.roles
 
 assertions := {
     "forbidden" : { why | forbidden[why] },
@@ -100,35 +101,24 @@ scopename_by_role[i] = "*" {
     not role.scope
 }
 
-# Set of roles at least one of which is required to perform the operation in context.
-role_by_operation["Manager"]
-    { input.capi.op.id == "CreateInvoice" }
-    { input.capi.op.id == "GetInvoiceByID" }
-    { input.capi.op.id == "GetInvoiceEvents" }
-    { input.capi.op.id == "FulfillInvoice" }
-    { input.capi.op.id == "RescindInvoice" }
-    { input.capi.op.id == "GetPayments" }
-    { input.capi.op.id == "GetPaymentByID" }
-    { input.capi.op.id == "CancelPayment" }
-    { input.capi.op.id == "CapturePayment" }
-    { input.capi.op.id == "GetRefunds" }
-    { input.capi.op.id == "GetRefundByID" }
-    { input.capi.op.id == "CreateRefund" }
-    { input.capi.op.id == "CreateInvoiceTemplate" }
-    { input.capi.op.id == "GetInvoiceTemplateByID" }
-    { input.capi.op.id == "UpdateInvoiceTemplate" }
-    { input.capi.op.id == "DeleteInvoiceTemplate" }
+# Get role to perform the operation in context.
+role_by_operation = role_by_id[id]
+    { id = input.capi.op.id }
+    { id = input.orgmgmt.op.id }
+    { id = input.shortener.op.id }
 
-role_by_operation["Administrator"]
-    { input.orgmgmt.op.id == "ListInvitations" }
-    { input.orgmgmt.op.id == "CreateInvitation" }
-    { input.orgmgmt.op.id == "GetInvitation" }
-    { input.orgmgmt.op.id == "RevokeInvitation" }
+# A mapping of role names to role operations.
+role_by_id[operation] = [rolename] {
+    operation := roles.roles[i].operations[_]
+    org_by_operation.roles[_].id == roles.roles[i].name
+    rolename := roles.roles[i].name
+}
 
 # Context of an organisation which is being operated upon.
 org_by_operation = org_by_id[id]
     { id = input.capi.op.party.id }
     { id = input.orgmgmt.op.organization.id }
+    { id = input.shortener.op.party.id }
 
 # A mapping of org ids to organizations.
 org_by_id := { org.id: org | org := input.user.orgs[_] }

@@ -1,0 +1,51 @@
+{
+    "roles": [
+        {
+            "name": "Manager",
+            "operations": [
+                "CreateInvoice",
+                "GetInvoiceByID",
+                "GetInvoiceEvents",
+                "FulfillInvoice",
+                "RescindInvoice",
+                "GetPayments",
+                "GetPaymentByID",
+                "CancelPayment",
+                "CapturePayment",
+                "GetRefunds",
+                "GetRefundByID",
+                "CreateRefund",
+                "CreateInvoiceTemplate",
+                "GetInvoiceTemplateByID",
+                "UpdateInvoiceTemplate",
+                "DeleteInvoiceTemplate"
+            ]
+        },
+        {
+            "name": "Administrator",
+            "operations": [
+                "CreateInvoice",
+                "GetInvoiceByID",
+                "GetInvoiceEvents",
+                "FulfillInvoice",
+                "RescindInvoice",
+                "GetPayments",
+                "GetPaymentByID",
+                "CancelPayment",
+                "CapturePayment",
+                "GetRefunds",
+                "GetRefundByID",
+                "CreateRefund",
+                "CreateInvoiceTemplate",
+                "GetInvoiceTemplateByID",
+                "UpdateInvoiceTemplate",
+                "DeleteInvoiceTemplate",
+
+                "ListInvitations",
+                "CreateInvitation",
+                "GetInvitation",
+                "RevokeInvitation"
+            ]
+        }
+    ]
+}

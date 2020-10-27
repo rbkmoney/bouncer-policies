@@ -2,49 +2,79 @@
     "roles": [
         {
             "name": "Manager",
-            "operations": [
-                "CreateInvoice",
-                "GetInvoiceByID",
-                "GetInvoiceEvents",
-                "FulfillInvoice",
-                "RescindInvoice",
-                "GetPayments",
-                "GetPaymentByID",
-                "CancelPayment",
-                "CapturePayment",
-                "GetRefunds",
-                "GetRefundByID",
-                "CreateRefund",
-                "CreateInvoiceTemplate",
-                "GetInvoiceTemplateByID",
-                "UpdateInvoiceTemplate",
-                "DeleteInvoiceTemplate"
+            "api": [
+                {
+                    "name": "Common",
+                    "operations": [
+                        "CreateInvoice",
+                        "GetInvoiceByID",
+                        "GetInvoiceEvents",
+                        "FulfillInvoice",
+                        "RescindInvoice",
+                        "GetPayments",
+                        "GetPaymentByID",
+                        "CancelPayment",
+                        "CapturePayment",
+                        "GetRefunds",
+                        "GetRefundByID",
+                        "CreateRefund",
+                        "CreateInvoiceTemplate",
+                        "GetInvoiceTemplateByID",
+                        "UpdateInvoiceTemplate",
+                        "DeleteInvoiceTemplate"
+                    ]
+                },
+                {
+                    "name": "UrlShortener",
+                    "operations": [
+                        "ShortenUrl",
+                        "GetShortenedUrl",
+                        "DeleteShortenedUrl"
+                    ]
+                }
             ]
         },
         {
             "name": "Administrator",
-            "operations": [
-                "CreateInvoice",
-                "GetInvoiceByID",
-                "GetInvoiceEvents",
-                "FulfillInvoice",
-                "RescindInvoice",
-                "GetPayments",
-                "GetPaymentByID",
-                "CancelPayment",
-                "CapturePayment",
-                "GetRefunds",
-                "GetRefundByID",
-                "CreateRefund",
-                "CreateInvoiceTemplate",
-                "GetInvoiceTemplateByID",
-                "UpdateInvoiceTemplate",
-                "DeleteInvoiceTemplate",
-
-                "ListInvitations",
-                "CreateInvitation",
-                "GetInvitation",
-                "RevokeInvitation"
+            "api": [
+                {
+                    "name": "CommonAPI",
+                    "operations": [
+                        "CreateInvoice",
+                        "GetInvoiceByID",
+                        "GetInvoiceEvents",
+                        "FulfillInvoice",
+                        "RescindInvoice",
+                        "GetPayments",
+                        "GetPaymentByID",
+                        "CancelPayment",
+                        "CapturePayment",
+                        "GetRefunds",
+                        "GetRefundByID",
+                        "CreateRefund",
+                        "CreateInvoiceTemplate",
+                        "GetInvoiceTemplateByID",
+                        "UpdateInvoiceTemplate",
+                        "DeleteInvoiceTemplate"
+                    ]
+                },
+                {
+                    "name": "OrgManagement",
+                    "operations": [
+                        "ListInvitations",
+                        "CreateInvitation",
+                        "GetInvitation",
+                        "RevokeInvitation"
+                    ]
+                },
+                {
+                    "name": "UrlShortener",
+                    "operations": [
+                        "ShortenUrl",
+                        "GetShortenedUrl",
+                        "DeleteShortenedUrl"
+                    ]
+                }
             ]
         }
     ]

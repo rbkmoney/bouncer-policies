@@ -106,6 +106,49 @@
         }
     },
 
+    "op_shortener_shorten_url": {
+        "shortener": {
+            "op": {
+                "id": "ShortenUrl"
+            }
+        }
+    },
+
+    "user_default": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": "OWNER",
+                    "roles": [
+                        {
+                            "id": "Manager",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
+    "user_owner": {
+        "user": {
+            "id": "OWNER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": "OWNER",
+                    "roles": []
+                }
+            ]
+        }
+    },
+
     "requester_default": {
         "requester": {
             "ip": "95.217.228.176"

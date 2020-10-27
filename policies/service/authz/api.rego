@@ -81,6 +81,16 @@ org_allowed[why] {
 }
 
 org_allowed[why] {
+    operation_without_org_id
+    rolename := role_by_operation[_]
+    organizations[_].roles[_].id == rolename
+    why := {
+        "code": "user_has_role",
+        "description": sprintf("User has role %s", [rolename])
+    }
+}
+
+org_allowed[why] {
     rolename := role_by_operation[_]
     org_by_operation.roles[i].id == rolename
     scopename := scopename_by_role[i]
@@ -107,18 +117,36 @@ role_by_operation = role_by_id[id]
     { id = input.orgmgmt.op.id }
     { id = input.shortener.op.id }
 
-# A mapping of role names to role operations.
-role_by_id[operation] = [rolename] {
-    operation := roles.roles[i].operations[_]
-    org_by_operation.roles[_].id == roles.roles[i].name
-    rolename := roles.roles[i].name
+# A mapping of operations to role names.
+role_by_id[op] = rolenames {
+    op := operations[_]
+    rolenames := { role.name |
+        role := roles.roles[i]
+        role.api[_].operations[_] == op
+    }
+}
+
+# A set of all known operations.
+operations[op] {
+    role := roles.roles[i]
+    op := role.api[_].operations[_]
 }
 
 # Context of an organisation which is being operated upon.
 org_by_operation = org_by_id[id]
     { id = input.capi.op.party.id }
     { id = input.orgmgmt.op.organization.id }
-    { id = input.shortener.op.party.id }
 
 # A mapping of org ids to organizations.
 org_by_id := { org.id: org | org := input.user.orgs[_] }
+
+# Context of an organisation which is being operated upon.
+operation_without_org_id {
+    not input.capi
+    not input.orgmgmt
+}
+
+# A set of all user organizations.
+organizations[org] {
+    org := input.user.orgs[_]
+}

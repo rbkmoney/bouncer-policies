@@ -27,6 +27,8 @@ BASE_IMAGE_TAG := 0.24.0
 VALIDATOR := $(CURDIR)/validator.escript
 INSTANCES := $(wildcard test/test/*/fixtures/*.json)
 
+.PHONY: $(VALIDATOR)
+
 validate: $(VALIDATOR)
 	$(foreach inst, $(INSTANCES), $(VALIDATOR) $(inst))
 

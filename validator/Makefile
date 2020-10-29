@@ -1,14 +1,18 @@
 REBAR := $(shell which rebar3 2>/dev/null || which ./rebar3)
 
-.PHONY: validator
+DEPS := \
+	$(wildcard src/*) \
+	rebar.lock
 
-validator:
-	$(REBAR) escriptize
-	$(MAKE) install
+DEPS := $(foreach fn, $(DEPS), $(realpath $(fn)))
 
 BINDIR = $(shell $(REBAR) path --bin)
 SCRIPT = $(BINDIR)/validator
 TARGET ?= validator
+
+$(TARGET): $(DEPS)
+	$(REBAR) escriptize
+	$(MAKE) install
 
 install: $(SCRIPT)
 	@cp -v $< $(TARGET)

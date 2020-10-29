@@ -131,7 +131,7 @@
             "orgs": [
                 {
                     "id": "PARTY",
-                    "owner": "OWNER",
+                    "owner": { "id": "OWNER" },
                     "roles": [
                         {
                             "id": "Manager",
@@ -153,7 +153,7 @@
             "orgs": [
                 {
                     "id": "PARTY",
-                    "owner": "OWNER",
+                    "owner": { "id": "OWNER" },
                     "roles": []
                 }
             ]

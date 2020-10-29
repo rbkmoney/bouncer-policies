@@ -74,7 +74,7 @@ allowed[why] {
 
 org_allowed[why] {
     org := org_by_operation
-    org.owner == input.user.id
+    org.owner.id == input.user.id
     why := {
         "code": "user_is_owner",
         "description": "User is the organisation owner itself"

@@ -114,6 +114,17 @@
         }
     },
 
+    "op_shortener_delete_shorten_url": {
+        "shortener": {
+            "op": {
+                "id": "DeleteShortenedUrl",
+                "shortened_url": {
+                    "owner": { "id": "USER" }
+                }
+            }
+        }
+    },
+
     "user_default": {
         "user": {
             "id": "USER",

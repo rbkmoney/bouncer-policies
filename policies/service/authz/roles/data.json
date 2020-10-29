@@ -1,10 +1,8 @@
 {
-    "roles": [
-        {
-            "name": "Manager",
-            "api": [
-                {
-                    "name": "Common",
+    "roles": {
+        "Manager" : {
+            "apis": {
+                "CommonAPI" : {
                     "operations": [
                         "CreateInvoice",
                         "GetInvoiceByID",
@@ -24,7 +22,7 @@
                         "DeleteInvoiceTemplate"
                     ]
                 },
-                {
+                "UrlShortener" : {
                     "name": "UrlShortener",
                     "operations": [
                         "ShortenUrl",
@@ -32,13 +30,11 @@
                         "DeleteShortenedUrl"
                     ]
                 }
-            ]
+            }
         },
-        {
-            "name": "Administrator",
-            "api": [
-                {
-                    "name": "CommonAPI",
+        "Administrator" : {
+            "apis": {
+                "CommonAPI" : {
                     "operations": [
                         "CreateInvoice",
                         "GetInvoiceByID",
@@ -58,7 +54,7 @@
                         "DeleteInvoiceTemplate"
                     ]
                 },
-                {
+                "OrgManagement" : {
                     "name": "OrgManagement",
                     "operations": [
                         "ListInvitations",
@@ -67,7 +63,7 @@
                         "RevokeInvitation"
                     ]
                 },
-                {
+                "UrlShortener" : {
                     "name": "UrlShortener",
                     "operations": [
                         "ShortenUrl",
@@ -75,7 +71,7 @@
                         "DeleteShortenedUrl"
                     ]
                 }
-            ]
+            }
         }
-    ]
+    }
 }

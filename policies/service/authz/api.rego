@@ -1,6 +1,7 @@
 package service.authz.api
 
 import data.service.authz.api.invoice_access_token
+import data.service.authz.api.url_shortener
 import data.service.authz.blacklists
 import data.service.authz.roles
 
@@ -81,13 +82,8 @@ org_allowed[why] {
 }
 
 org_allowed[why] {
-    operation_without_org_id
-    rolename := role_by_operation[_]
-    organizations[_].roles[_].id == rolename
-    why := {
-        "code": "user_has_role",
-        "description": sprintf("User has role %s", [rolename])
-    }
+    input.shortener
+    url_shortener.allowed[why]
 }
 
 org_allowed[why] {
@@ -120,16 +116,32 @@ role_by_operation = role_by_id[id]
 # A mapping of operations to role names.
 role_by_id[op] = rolenames {
     op := operations[_]
-    rolenames := { role.name |
+    rolenames := { i |
         role := roles.roles[i]
-        role.api[_].operations[_] == op
+        role.apis[_].operations[_] == op
     }
 }
 
 # A set of all known operations.
 operations[op] {
     role := roles.roles[i]
-    op := role.api[_].operations[_]
+    api_by_op[api]
+    op := role.apis[api].operations[_]
+}
+
+# A mapping input op context to API name
+api_by_op[api]
+{
+    input.capi
+    api := "CommonAPI"
+}
+{
+    input.orgmgmt
+    api := "OrgManagement"
+}
+{
+    input.shortener
+    api := "UrlShortener"
 }
 
 # Context of an organisation which is being operated upon.
@@ -139,12 +151,6 @@ org_by_operation = org_by_id[id]
 
 # A mapping of org ids to organizations.
 org_by_id := { org.id: org | org := input.user.orgs[_] }
-
-# Context of an organisation which is being operated upon.
-operation_without_org_id {
-    not input.capi
-    not input.orgmgmt
-}
 
 # A set of all user organizations.
 organizations[org] {

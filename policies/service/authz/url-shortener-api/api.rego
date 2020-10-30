@@ -10,7 +10,7 @@ package service.authz.api.url_shortener
 import input.shortener.op
 
 allowed[why] {
-    op.id == "DeleteShortenedUrl"
+    operation_allowed
     shortened_url_owner_matches_user_id
     why := {
         "code": "session_token_allows_operation",
@@ -19,7 +19,7 @@ allowed[why] {
 }
 
 allowed[why] {
-    operation_allowed
+    op.id == "ShortenUrl"
     why := {
         "code": "session_token_allows_operation",
         "description": "Session token allows this operation"
@@ -31,5 +31,5 @@ shortened_url_owner_matches_user_id {
 }
 
 operation_allowed
-    { op.id == "ShortenUrl" }
+    { op.id == "DeleteShortenedUrl" }
     { op.id == "GetShortenedUrl" }

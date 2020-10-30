@@ -68,6 +68,12 @@ allowed[why] {
 }
 
 allowed[why] {
+    input.auth.method == "SessionToken"
+    input.shortener
+    url_shortener.allowed[why]
+}
+
+allowed[why] {
     input.auth.method == "InvoiceAccessToken"
     invoice_access_token.allowed[why]
 }
@@ -79,11 +85,6 @@ org_allowed[why] {
         "code": "user_is_owner",
         "description": "User is the organisation owner itself"
     }
-}
-
-org_allowed[why] {
-    input.shortener
-    url_shortener.allowed[why]
 }
 
 org_allowed[why] {
@@ -125,12 +126,12 @@ role_by_id[op] = rolenames {
 # A set of all known operations.
 operations[op] {
     role := roles.roles[i]
-    api_by_op[api]
+    api := api_by_op
     op := role.apis[api].operations[_]
 }
 
-# A mapping input op context to API name
-api_by_op[api]
+# Get API name by input op context
+api_by_op = api
 {
     input.capi
     api := "CommonAPI"

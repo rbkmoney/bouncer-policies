@@ -23,6 +23,9 @@ build('bouncer-policies', 'docker-host') {
         sh "make -s wc_validate"
       }
     }
+    runStage('tests coverage') {
+      sh "make test_coverage"
+    }
 
     runStage('test policies') {
       sh "make test"

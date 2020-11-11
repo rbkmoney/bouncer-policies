@@ -125,6 +125,31 @@
         }
     },
 
+    "op_anapi_analytics": {
+        "anapi": {
+            "op": {
+                "id": "GetPaymentsToolDistribution",
+                "party": { "id": "PARTY"},
+                "shops": [
+                    { "id": "SHOP" }
+                ]
+            }
+        }
+    },
+
+    "op_anapi_reports_several_shops": {
+        "anapi": {
+            "op": {
+                "id": "SearchReports",
+                "party": { "id": "PARTY"},
+                "shops": [
+                    { "id": "SHOP" },
+                    { "id": "SHOP2" }
+                ]
+            }
+        }
+    },
+
     "user_default": {
         "user": {
             "id": "USER",

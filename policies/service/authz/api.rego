@@ -2,6 +2,7 @@ package service.authz.api
 
 import data.service.authz.api.invoice_access_token
 import data.service.authz.api.url_shortener
+import data.service.authz.api.anapi
 import data.service.authz.blacklists
 import data.service.authz.roles
 
@@ -50,6 +51,11 @@ forbidden[why] {
     }
 }
 
+forbidden[why] {
+    input.anapi
+    anapi.forbidden[why]
+}
+
 warnings[why] {
     not blacklists.source_ip_range
     why := "Blacklist 'source_ip_range' is not defined, blacklisting by IP will NOT WORK."
@@ -71,6 +77,12 @@ allowed[why] {
     input.auth.method == "SessionToken"
     input.shortener
     url_shortener.allowed[why]
+}
+
+allowed[why] {
+    input.auth.method == "SessionToken"
+    input.anapi
+    anapi.allowed[why]
 }
 
 allowed[why] {
@@ -113,6 +125,7 @@ role_by_operation = role_by_id[id]
     { id = input.capi.op.id }
     { id = input.orgmgmt.op.id }
     { id = input.shortener.op.id }
+    { id = input.anapi.op.id }
 
 # A mapping of operations to role names.
 role_by_id[op] = rolenames {
@@ -144,11 +157,16 @@ api_by_op = api
     input.shortener
     api := "UrlShortener"
 }
+{
+    input.anapi
+    api := "AnalyticsAPI"
+}
 
 # Context of an organisation which is being operated upon.
 org_by_operation = org_by_id[id]
     { id = input.capi.op.party.id }
     { id = input.orgmgmt.op.organization.id }
+    { id = input.anapi.op.party.id}
 
 # A mapping of org ids to organizations.
 org_by_id := { org.id: org | org := input.user.orgs[_] }

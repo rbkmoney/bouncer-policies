@@ -160,3 +160,39 @@ test_session_token_valid_operation_4 {
     count(result.allowed) == 1
     result.allowed[_].code == "user_has_role"
 }
+
+test_anapi_valid_operation {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_anapi_analytics
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_anapi_org_owner_valid_operation {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_owner,
+        fixtures.session_token_valid,
+        fixtures.op_anapi_analytics
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 2
+}
+
+test_anapi_invalid_operation {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_anapi_reports_several_shops
+    ])
+    count(result.forbidden) == 1
+    count(result.allowed) == 1
+}

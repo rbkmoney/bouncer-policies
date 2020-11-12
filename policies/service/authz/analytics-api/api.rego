@@ -19,13 +19,17 @@ forbidden[why] {
 }
 
 anapi_user_access_denied {
-    org := api.org_by_operation
     some_shop_not_in_scope
-    input.uset.id != org.owner.id
+    user_not_owner
+}
+
+user_not_owner {
+    org := api.org_by_operation
+    input.user.id != org.owner.id
 }
 
 some_shop_not_in_scope {
-    count(op.shops[_]) != count(op_shop_in_scope[_])
+    count(op.shops) != count(op_shop_in_scope)
 }
 
 op_shop_in_scope[id] {

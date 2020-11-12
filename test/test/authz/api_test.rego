@@ -170,7 +170,7 @@ test_anapi_valid_operation {
         fixtures.op_anapi_analytics
     ])
     count(result.forbidden) == 0
-    count(result.allowed) == 1
+    count(result.allowed) == 2
 }
 
 test_anapi_org_owner_valid_operation {
@@ -194,5 +194,5 @@ test_anapi_invalid_operation {
         fixtures.op_anapi_reports_several_shops
     ])
     count(result.forbidden) == 1
-    count(result.allowed) == 1
+    count(result.allowed) == 2
 }

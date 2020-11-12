@@ -29,6 +29,31 @@
                         "GetShortenedUrl",
                         "DeleteShortenedUrl"
                     ]
+                },
+                "AnalyticsAPI" : {
+                    "operations": [
+                        "GetPaymentsToolDistribution",
+                        "GetPaymentsAmount",
+                        "GetAveragePayment",
+                        "GetPaymentsCount",
+                        "GetPaymentsErrorDistribution",
+                        "GetPaymentsSplitAmount",
+                        "GetPaymentsSplitCount",
+                        "GetRefundsAmount",
+                        "GetCurrentBalances",
+                        "GetPaymentsSubErrorDistribution",
+                        "GetCurrentBalancesGroupByShop",
+                        "SearchReports",
+                        "GetReport",
+                        "CreateReport",
+                        "CancelReport",
+                        "DownloadFile",
+                        "SearchInvoices",
+                        "SearchPayments",
+                        "SearchPayouts",
+                        "SearchRefunds",
+                        "SearchChargebacks"
+                    ]
                 }
             }
         },
@@ -69,6 +94,31 @@
                         "ShortenUrl",
                         "GetShortenedUrl",
                         "DeleteShortenedUrl"
+                    ]
+                },
+                "AnalyticsAPI" : {
+                    "operations": [
+                        "GetPaymentsToolDistribution",
+                        "GetPaymentsAmount",
+                        "GetAveragePayment",
+                        "GetPaymentsCount",
+                        "GetPaymentsErrorDistribution",
+                        "GetPaymentsSplitAmount",
+                        "GetPaymentsSplitCount",
+                        "GetRefundsAmount",
+                        "GetCurrentBalances",
+                        "GetPaymentsSubErrorDistribution",
+                        "GetCurrentBalancesGroupByShop",
+                        "SearchReports",
+                        "GetReport",
+                        "CreateReport",
+                        "CancelReport",
+                        "DownloadFile",
+                        "SearchInvoices",
+                        "SearchPayments",
+                        "SearchPayouts",
+                        "SearchRefunds",
+                        "SearchChargebacks"
                     ]
                 }
             }

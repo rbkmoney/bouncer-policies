@@ -112,8 +112,12 @@ org_allowed[why] {
 scopename_by_role[i] = sprintf("shop:%s", [shop]) {
     role := org_by_operation.roles[i]
     shop := role.scope.shop.id
-    shop == input.capi.op.shop.id
+    shop == operation_shop_id[shop]
 }
+
+operation_shop_id[id]
+    { id := input.capi.op.shop.id }
+    { id := input.anapi.op.shops[_].id }
 
 scopename_by_role[i] = "*" {
     role := org_by_operation.roles[i]

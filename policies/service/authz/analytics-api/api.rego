@@ -29,14 +29,14 @@ user_not_owner {
 }
 
 some_shop_not_in_scope {
-    count(op.shops) != count(op_shop_in_scope)
+    count(op.shops - op_shop_in_scope) != 0
 }
 
-op_shop_in_scope[id] {
+op_shop_in_scope[shop] {
     some i
     org := api.org_by_operation
     op.shops[i].id == org.roles[_].scope.shop.id
-    id := op.shops[i].id
+    shop := op.shops[i]
 }
 
 # Set of assertions which tell why operation under the input context is allowed.

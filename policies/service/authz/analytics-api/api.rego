@@ -1,7 +1,7 @@
 package service.authz.api.anapi
 
 import input.anapi.op
-import data.service.authz.api
+import data.service.authz.org
 
 # Set of assertions which tell why operation under the input context is forbidden.
 # When the set is empty operation is not explicitly forbidden.
@@ -24,18 +24,18 @@ anapi_user_access_denied {
 }
 
 user_not_owner {
-    org := api.org_by_operation
-    input.user.id != org.owner.id
+    organization := org.org_by_operation
+    input.user.id != organization.owner.id
 }
 
 some_shop_not_in_scope {
-    count(op.shops - op_shop_in_scope) != 0
+    count(op.shops) - count(op_shop_in_scope) != 0
 }
 
 op_shop_in_scope[shop] {
     some i
-    org := api.org_by_operation
-    op.shops[i].id == org.roles[_].scope.shop.id
+    organization := org.org_by_operation
+    op.shops[i].id == organization.roles[_].scope.shop.id
     shop := op.shops[i]
 }
 

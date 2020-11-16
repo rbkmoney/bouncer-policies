@@ -18,3 +18,9 @@ allow {
     path[0] == "v1"
     path[1] == "policies"
 }
+
+allow {
+    method == "POST"
+    path[0] == "binbase"
+    path[1] == "v1"
+}

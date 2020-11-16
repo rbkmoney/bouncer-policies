@@ -29,6 +29,12 @@
                         "GetShortenedUrl",
                         "DeleteShortenedUrl"
                     ]
+                },
+                "Binapi" : {
+                    "name": "Binapi",
+                    "operations": [
+                        "LookupCardInfo"
+                    ]
                 }
             }
         },
@@ -69,6 +75,12 @@
                         "ShortenUrl",
                         "GetShortenedUrl",
                         "DeleteShortenedUrl"
+                    ]
+                },
+                "Binapi": {
+                    "name": "Binapi",
+                    "operations": [
+                        "LookupCardInfo"
                     ]
                 }
             }

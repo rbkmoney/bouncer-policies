@@ -160,3 +160,15 @@ test_session_token_valid_operation_4 {
     count(result.allowed) == 1
     result.allowed[_].code == "user_has_role"
 }
+
+test_lookup_card_info {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.session_token_bin_lookup_allowed,
+        fixtures.op_binapi_lookup_card_info
+    ])
+    # count(result.forbidden) == 0
+    # count(result.allowed) == 1
+    result.allowed[_].code == "session_token_allows_operation"
+}

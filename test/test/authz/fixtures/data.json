@@ -68,6 +68,14 @@
         }
     },
 
+    "session_token_bin_lookup_allowed": {
+        "auth": {
+            "method": "SessionToken",
+            "expiration": "2021-01-01T00:00:00Z",
+            "bin_lookup_allowed": true
+        }
+    },
+
     "invoice_access_token_valid": {
         "auth": {
             "method": "InvoiceAccessToken",
@@ -121,6 +129,14 @@
                 "shortened_url": {
                     "owner": { "id": "USER" }
                 }
+            }
+        }
+    },
+
+    "op_binapi_lookup_card_info": {
+        "binapi": {
+            "op": {
+                "id": "LookupCardInfo"
             }
         }
     },

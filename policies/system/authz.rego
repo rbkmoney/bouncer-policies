@@ -20,6 +20,12 @@ allow {
 }
 
 allow {
+    method == "POST"
+    path[0] == "binbase"
+    path[1] == "v1"
+}
+
+allow {
     method == "GET"
     path == {
         ["health"],

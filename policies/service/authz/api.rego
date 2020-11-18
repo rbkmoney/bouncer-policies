@@ -2,6 +2,7 @@ package service.authz.api
 
 import data.service.authz.api.invoice_access_token
 import data.service.authz.api.url_shortener
+import data.service.authz.api.binapi
 import data.service.authz.blacklists
 import data.service.authz.roles
 
@@ -73,6 +74,11 @@ allowed[why] {
 }
 
 allowed[why] {
+    input.binapi
+    binapi.allowed[why]
+}
+
+allowed[why] {
     input.auth.method == "InvoiceAccessToken"
     invoice_access_token.allowed[why]
 }
@@ -112,6 +118,7 @@ role_by_operation = role_by_id[id]
     { id = input.capi.op.id }
     { id = input.orgmgmt.op.id }
     { id = input.shortener.op.id }
+    { id = input.binapi.op.id }
 
 # A mapping of operations to role names.
 role_by_id[op] = rolenames {
@@ -142,6 +149,10 @@ api_by_op = api
 {
     input.shortener
     api := "UrlShortener"
+}
+{
+    input.binapi
+    api = "Binapi"
 }
 
 # Context of an organisation which is being operated upon.

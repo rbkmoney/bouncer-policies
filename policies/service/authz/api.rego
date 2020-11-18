@@ -118,7 +118,6 @@ role_by_operation = role_by_id[id]
     { id = input.capi.op.id }
     { id = input.orgmgmt.op.id }
     { id = input.shortener.op.id }
-    { id = input.binapi.op.id }
 
 # A mapping of operations to role names.
 role_by_id[op] = rolenames {
@@ -149,10 +148,6 @@ api_by_op = api
 {
     input.shortener
     api := "UrlShortener"
-}
-{
-    input.binapi
-    api = "Binapi"
 }
 
 # Context of an organisation which is being operated upon.

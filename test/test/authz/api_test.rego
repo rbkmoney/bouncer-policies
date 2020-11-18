@@ -108,3 +108,55 @@ test_invoice_access_token_invalid_operation_2 {
     count(result.forbidden) == 0
     count(result.allowed) == 0
 }
+
+test_session_token_valid_operation_1 {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_shortener_shorten_url
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+    result.allowed[_].code == "session_token_allows_operation"
+}
+
+test_session_token_valid_operation_2 {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_shortener_delete_shorten_url
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+    result.allowed[_].code == "session_token_allows_operation"
+}
+
+test_session_token_valid_operation_3 {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_owner,
+        fixtures.session_token_valid,
+        fixtures.op_capi_create_invoice
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+    result.allowed[_].code == "user_is_owner"
+}
+
+test_session_token_valid_operation_4 {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_create_invoice
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+    result.allowed[_].code == "user_has_role"
+}

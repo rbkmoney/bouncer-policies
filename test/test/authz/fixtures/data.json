@@ -106,6 +106,60 @@
         }
     },
 
+    "op_shortener_shorten_url": {
+        "shortener": {
+            "op": {
+                "id": "ShortenUrl"
+            }
+        }
+    },
+
+    "op_shortener_delete_shorten_url": {
+        "shortener": {
+            "op": {
+                "id": "DeleteShortenedUrl",
+                "shortened_url": {
+                    "owner": { "id": "USER" }
+                }
+            }
+        }
+    },
+
+    "user_default": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": { "id": "OWNER" },
+                    "roles": [
+                        {
+                            "id": "Manager",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
+    "user_owner": {
+        "user": {
+            "id": "OWNER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": { "id": "OWNER" },
+                    "roles": []
+                }
+            ]
+        }
+    },
+
     "requester_default": {
         "requester": {
             "ip": "95.217.228.176"

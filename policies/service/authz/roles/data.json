@@ -1,0 +1,61 @@
+{
+    "roles": {
+        "Manager" : {
+            "apis": {
+                "CommonAPI" : {
+                    "operations": [
+                        "CreateInvoice",
+                        "GetInvoiceByID",
+                        "GetInvoiceEvents",
+                        "FulfillInvoice",
+                        "RescindInvoice",
+                        "GetPayments",
+                        "GetPaymentByID",
+                        "CancelPayment",
+                        "CapturePayment",
+                        "GetRefunds",
+                        "GetRefundByID",
+                        "CreateRefund",
+                        "CreateInvoiceTemplate",
+                        "GetInvoiceTemplateByID",
+                        "UpdateInvoiceTemplate",
+                        "DeleteInvoiceTemplate"
+                    ]
+                }
+            }
+        },
+        "Administrator" : {
+            "apis": {
+                "CommonAPI" : {
+                    "operations": [
+                        "CreateInvoice",
+                        "GetInvoiceByID",
+                        "GetInvoiceEvents",
+                        "FulfillInvoice",
+                        "RescindInvoice",
+                        "GetPayments",
+                        "GetPaymentByID",
+                        "CancelPayment",
+                        "CapturePayment",
+                        "GetRefunds",
+                        "GetRefundByID",
+                        "CreateRefund",
+                        "CreateInvoiceTemplate",
+                        "GetInvoiceTemplateByID",
+                        "UpdateInvoiceTemplate",
+                        "DeleteInvoiceTemplate"
+                    ]
+                },
+                "OrgManagement" : {
+                    "name": "OrgManagement",
+                    "operations": [
+                        "ListInvitations",
+                        "CreateInvitation",
+                        "GetInvitation",
+                        "RevokeInvitation"
+                    ]
+                }
+            }
+        }
+    }
+}

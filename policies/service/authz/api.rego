@@ -1,7 +1,9 @@
 package service.authz.api
 
 import data.service.authz.api.invoice_access_token
+import data.service.authz.api.url_shortener
 import data.service.authz.blacklists
+import data.service.authz.roles
 
 assertions := {
     "forbidden" : { why | forbidden[why] },
@@ -12,7 +14,7 @@ assertions := {
 # When the set is empty operation is not explicitly forbidden.
 # Each element must be either a string `"code"` or a 2-item array of the form:
 # ```
-# ["code", "description"]
+# {"code": "auth_expired", "description": "...", ...}
 # ```
 forbidden[why] {
     input
@@ -66,13 +68,18 @@ allowed[why] {
 }
 
 allowed[why] {
+    input.shortener
+    url_shortener.allowed[why]
+}
+
+allowed[why] {
     input.auth.method == "InvoiceAccessToken"
     invoice_access_token.allowed[why]
 }
 
 org_allowed[why] {
     org := org_by_operation
-    org.owner == input.user.id
+    org.owner.id == input.user.id
     why := {
         "code": "user_is_owner",
         "description": "User is the organisation owner itself"
@@ -100,30 +107,42 @@ scopename_by_role[i] = "*" {
     not role.scope
 }
 
-# Set of roles at least one of which is required to perform the operation in context.
-role_by_operation["Manager"]
-    { input.capi.op.id == "CreateInvoice" }
-    { input.capi.op.id == "GetInvoiceByID" }
-    { input.capi.op.id == "GetInvoiceEvents" }
-    { input.capi.op.id == "FulfillInvoice" }
-    { input.capi.op.id == "RescindInvoice" }
-    { input.capi.op.id == "GetPayments" }
-    { input.capi.op.id == "GetPaymentByID" }
-    { input.capi.op.id == "CancelPayment" }
-    { input.capi.op.id == "CapturePayment" }
-    { input.capi.op.id == "GetRefunds" }
-    { input.capi.op.id == "GetRefundByID" }
-    { input.capi.op.id == "CreateRefund" }
-    { input.capi.op.id == "CreateInvoiceTemplate" }
-    { input.capi.op.id == "GetInvoiceTemplateByID" }
-    { input.capi.op.id == "UpdateInvoiceTemplate" }
-    { input.capi.op.id == "DeleteInvoiceTemplate" }
+# Get role to perform the operation in context.
+role_by_operation = role_by_id[id]
+    { id = input.capi.op.id }
+    { id = input.orgmgmt.op.id }
+    { id = input.shortener.op.id }
 
-role_by_operation["Administrator"]
-    { input.orgmgmt.op.id == "ListInvitations" }
-    { input.orgmgmt.op.id == "CreateInvitation" }
-    { input.orgmgmt.op.id == "GetInvitation" }
-    { input.orgmgmt.op.id == "RevokeInvitation" }
+# A mapping of operations to role names.
+role_by_id[op] = rolenames {
+    op := operations[_]
+    rolenames := { i |
+        role := roles.roles[i]
+        role.apis[_].operations[_] == op
+    }
+}
+
+# A set of all known operations.
+operations[op] {
+    role := roles.roles[i]
+    api := api_by_op
+    op := role.apis[api].operations[_]
+}
+
+# Get API name by input op context
+api_by_op = api
+{
+    input.capi
+    api := "CommonAPI"
+}
+{
+    input.orgmgmt
+    api := "OrgManagement"
+}
+{
+    input.shortener
+    api := "UrlShortener"
+}
 
 # Context of an organisation which is being operated upon.
 org_by_operation = org_by_id[id]
@@ -132,3 +151,8 @@ org_by_operation = org_by_id[id]
 
 # A mapping of org ids to organizations.
 org_by_id := { org.id: org | org := input.user.orgs[_] }
+
+# A set of all user organizations.
+organizations[org] {
+    org := input.user.orgs[_]
+}

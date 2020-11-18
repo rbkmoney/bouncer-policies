@@ -125,6 +125,17 @@
         }
     },
 
+    "op_binapi_lookup_card_info": {
+        "binapi": {
+            "op": {
+                "id": "LookupCardInfo",
+                "party": {
+                    "id": "PARTY_2"
+                }
+            }
+        }
+    },
+
     "user_default": {
         "user": {
             "id": "USER",

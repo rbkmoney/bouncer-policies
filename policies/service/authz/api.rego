@@ -4,6 +4,7 @@ import data.service.authz.api.invoice_access_token
 import data.service.authz.api.url_shortener
 import data.service.authz.api.binapi
 import data.service.authz.blacklists
+import data.service.authz.whitelists
 import data.service.authz.roles
 
 assertions := {
@@ -54,6 +55,11 @@ forbidden[why] {
 warnings[why] {
     not blacklists.source_ip_range
     why := "Blacklist 'source_ip_range' is not defined, blacklisting by IP will NOT WORK."
+}
+
+warnings[why] {
+    not whitelists.bin_lookup_allowed_party_ids
+    why := "Whitelist 'bin_lookup_allowed_party_ids' is not defined, whitelisting by partyID will NOT WORK."
 }
 
 # Set of assertions which tell why operation under the input context is allowed.

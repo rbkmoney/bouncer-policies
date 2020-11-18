@@ -12,11 +12,6 @@ allowed[why] {
     }
 }
 
-warning[why] {
-    not whitelists.bin_lookup_allowed_party_ids
-    why := "Whitelist 'bin_lookup_allowed_party_ids' is not defined, whitelisting by partyID will NOT WORK."
-}
-
 bin_lookup_allowed {
     op.party.id = whitelists.bin_lookup_allowed_party_ids[_]
 }

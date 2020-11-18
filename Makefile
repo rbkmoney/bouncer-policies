@@ -22,6 +22,13 @@ BASE_IMAGE_TAG := 0.24.0
 
 -include $(UTILS_PATH)/make_lib/utils_image.mk
 
+# CALL_ANYWHERE
+$(SUBTARGETS): %/.git: %
+	git submodule update --init $<
+	touch $@
+
+submodules: $(SUBTARGETS)
+
 .PHONY: manifest test
 
 VALIDATOR := $(CURDIR)/validator.escript
@@ -47,9 +54,15 @@ TEST_IMAGE := $(BASE_IMAGE_NAME):$(BASE_IMAGE_TAG)
 TEST_BUNDLES := policies test
 TEST_VOLUMES := $(foreach bundle, $(TEST_BUNDLES), -v $(CURDIR)/$(bundle):/$(bundle):ro)
 TEST_BUNDLE_DIRS := $(foreach bundle, $(TEST_BUNDLES), /$(bundle))
+TEST_COVERAGE_THRESHOLD := 0
 
 test: manifest
 	$(DOCKER) run --rm $(TEST_VOLUMES) \
 		$(TEST_IMAGE) test $(TEST_BUNDLE_DIRS) \
 			--explain full \
 			--ignore input.json
+
+RUN_TEST_COVERAGE := $(DOCKER) run --rm $(TEST_VOLUMES) $(TEST_IMAGE) test --coverage $(TEST_BUNDLE_DIRS)
+
+test_coverage: manifest
+	python3 test_coverage.py "$(RUN_TEST_COVERAGE)" $(TEST_COVERAGE_THRESHOLD)

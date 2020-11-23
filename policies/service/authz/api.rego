@@ -11,7 +11,8 @@ import data.service.authz.org
 
 assertions := {
     "forbidden" : { why | forbidden[why] },
-    "allowed"   : { why | allowed[why] }
+    "allowed"   : { why | allowed[why] },
+    "restrictions" : { what.service: what.restrictions | restrictions[what] }
 }
 
 # Set of assertions which tell why operation under the input context is forbidden.
@@ -100,4 +101,15 @@ allowed[why] {
     input.auth.method == "SessionToken"
     input.anapi
     anapi.allowed[why]
+}
+
+# Restrictions
+
+restrictions[what] {
+    input.anapi
+    rstns := anapi.restrictions[_]
+    what := {
+        "service": "anapi",
+        "restrictions": rstns
+    }
 }

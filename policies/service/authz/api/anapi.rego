@@ -19,17 +19,28 @@ forbidden[why] {
 }
 
 anapi_user_access_denied {
-    some_shop_not_in_scope
-    user_not_owner
+    not op_with_shops
+    not user_is_owner
 }
 
-user_not_owner {
+op_with_shops {
+    count(op.shops) != 0
+}
+
+user_is_owner {
     organization := org.org_by_operation
-    input.user.id != organization.owner.id
+    input.user.id == organization.owner.id
 }
 
-some_shop_not_in_scope {
-    count(op.shops) - count(op_shop_in_scope) != 0
+# Restrictions
+
+restrictions[what] {
+    not user_is_owner
+    what := {
+        "op": {
+            "shops": [{"id": id} | id := op_shop_in_scope[_].id]
+        }
+    }
 }
 
 op_shop_in_scope[shop] {

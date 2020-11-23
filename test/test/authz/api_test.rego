@@ -194,6 +194,7 @@ test_anapi_valid_operation {
     ])
     count(result.forbidden) == 0
     count(result.allowed) == 2
+    result.restrictions == fixtures.op_anapi_restrictions
 }
 
 test_anapi_org_owner_valid_operation {
@@ -206,6 +207,7 @@ test_anapi_org_owner_valid_operation {
     ])
     count(result.forbidden) == 0
     count(result.allowed) == 2
+    result.restrictions == {}
 }
 
 test_anapi_invalid_operation {
@@ -216,6 +218,7 @@ test_anapi_invalid_operation {
         fixtures.session_token_valid,
         fixtures.op_anapi_reports_several_shops
     ])
-    count(result.forbidden) == 1
+    count(result.forbidden) == 0
     count(result.allowed) == 2
+    result.restrictions == fixtures.op_anapi_restrictions
 }

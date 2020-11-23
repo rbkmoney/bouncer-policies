@@ -18,3 +18,11 @@ allow {
     path[0] == "v1"
     path[1] == "policies"
 }
+
+allow {
+    method == "GET"
+    path == {
+        ["health"],
+        ["metrics"]
+    }[_]
+}

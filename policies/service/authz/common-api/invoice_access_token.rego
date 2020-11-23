@@ -4,7 +4,7 @@ package service.authz.api.invoice_access_token
 # When the set is empty operation is not explicitly allowed.
 # Each element must be a 2-item array of the following form:
 # ```
-# ["code", "description"]
+# {"code": "auth_expired", "description": "...", ...}
 # ```
 
 import input.capi.op

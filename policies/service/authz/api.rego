@@ -2,8 +2,10 @@ package service.authz.api
 
 import data.service.authz.api.invoice_access_token
 import data.service.authz.api.url_shortener
+import data.service.authz.api.binapi
 import data.service.authz.api.anapi
 import data.service.authz.blacklists
+import data.service.authz.whitelists
 import data.service.authz.roles
 import data.service.authz.org
 
@@ -16,7 +18,7 @@ assertions := {
 # When the set is empty operation is not explicitly forbidden.
 # Each element must be either a string `"code"` or a 2-item array of the form:
 # ```
-# ["code", "description"]
+# {"code": "auth_expired", "description": "...", ...}
 # ```
 forbidden[why] {
     input
@@ -62,6 +64,11 @@ warnings[why] {
     why := "Blacklist 'source_ip_range' is not defined, blacklisting by IP will NOT WORK."
 }
 
+warnings[why] {
+    not whitelists.bin_lookup_allowed_party_ids
+    why := "Whitelist 'bin_lookup_allowed_party_ids' is not defined, whitelisting by partyID will NOT WORK."
+}
+
 # Set of assertions which tell why operation under the input context is allowed.
 # When the set is empty operation is not explicitly allowed.
 # Each element must be either a string `"code"` or a 2-item array of the form:
@@ -75,9 +82,18 @@ allowed[why] {
 }
 
 allowed[why] {
-    input.auth.method == "SessionToken"
     input.shortener
     url_shortener.allowed[why]
+}
+
+allowed[why] {
+    input.binapi
+    binapi.allowed[why]
+}
+
+allowed[why] {
+    input.auth.method == "InvoiceAccessToken"
+    invoice_access_token.allowed[why]
 }
 
 allowed[why] {

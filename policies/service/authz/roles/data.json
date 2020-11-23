@@ -22,14 +22,6 @@
                         "DeleteInvoiceTemplate"
                     ]
                 },
-                "UrlShortener" : {
-                    "name": "UrlShortener",
-                    "operations": [
-                        "ShortenUrl",
-                        "GetShortenedUrl",
-                        "DeleteShortenedUrl"
-                    ]
-                },
                 "AnalyticsAPI" : {
                     "operations": [
                         "GetPaymentsToolDistribution",
@@ -86,14 +78,6 @@
                         "CreateInvitation",
                         "GetInvitation",
                         "RevokeInvitation"
-                    ]
-                },
-                "UrlShortener" : {
-                    "name": "UrlShortener",
-                    "operations": [
-                        "ShortenUrl",
-                        "GetShortenedUrl",
-                        "DeleteShortenedUrl"
                     ]
                 },
                 "AnalyticsAPI" : {

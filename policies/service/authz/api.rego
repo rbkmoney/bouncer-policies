@@ -101,8 +101,3 @@ allowed[why] {
     input.anapi
     anapi.allowed[why]
 }
-
-allowed[why] {
-    input.auth.method == "InvoiceAccessToken"
-    invoice_access_token.allowed[why]
-}

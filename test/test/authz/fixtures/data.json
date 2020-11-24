@@ -6,6 +6,15 @@
         }
     },
 
+    "op_orgmgmt_create_invitation": {
+        "orgmgmt": {
+            "op": {
+                "id": "CreateInvitation",
+                "organization": {"id": "PARTY"}
+            }
+        }
+    },
+
     "op_capi_create_payment_resource": {
         "capi": {
             "op": {
@@ -55,6 +64,61 @@
             "op": {
                 "id": "GetInvoiceByID",
                 "invoice": { "id": "INVOICE_2" },
+                "shop": { "id": "SHOP" },
+                "party": { "id": "PARTY" }
+            }
+        }
+    },
+
+    "op_capi_get_invoice_payment_methods": {
+        "capi": {
+            "op": {
+                "id": "GetInvoicePaymentMethods",
+                "invoice": { "id": "INVOICE" },
+                "shop": { "id": "SHOP" },
+                "party": { "id": "PARTY" }
+            }
+        }
+    },
+
+    "op_capi_get_invoice_events": {
+        "capi": {
+            "op": {
+                "id": "GetInvoiceEvents",
+                "invoice": { "id": "INVOICE" },
+                "shop": { "id": "SHOP" },
+                "party": { "id": "PARTY" }
+            }
+        }
+    },
+
+    "op_capi_create_payment": {
+        "capi": {
+            "op": {
+                "id": "CreatePayment",
+                "invoice": { "id": "INVOICE" },
+                "shop": { "id": "SHOP" },
+                "party": { "id": "PARTY" }
+            }
+        }
+    },
+
+    "op_capi_get_payments": {
+        "capi": {
+            "op": {
+                "id": "GetPayments",
+                "invoice": { "id": "INVOICE" },
+                "shop": { "id": "SHOP" },
+                "party": { "id": "PARTY" }
+            }
+        }
+    },
+
+    "op_capi_get_payment_by_id": {
+        "capi": {
+            "op": {
+                "id": "GetPaymentByID",
+                "invoice": { "id": "INVOICE" },
                 "shop": { "id": "SHOP" },
                 "party": { "id": "PARTY" }
             }
@@ -114,6 +178,17 @@
         }
     },
 
+    "op_shortener_get_shorten_url": {
+        "shortener": {
+            "op": {
+                "id": "GetShortenedUrl",
+                "shortened_url": {
+                    "owner": { "id": "USER" }
+                }
+            }
+        }
+    },
+
     "op_shortener_delete_shorten_url": {
         "shortener": {
             "op": {
@@ -136,6 +211,28 @@
         }
     },
 
+    "user_default_administrator": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": { "id": "OWNER" },
+                    "roles": [
+                        {
+                            "id": "Administrator",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
     "user_default": {
         "user": {
             "id": "USER",
@@ -151,6 +248,23 @@
                                     "id": "SHOP"
                                 }
                             }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
+    "user_with_role_without_scope": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": { "id": "OWNER" },
+                    "roles": [
+                        {
+                            "id": "Manager"
                         }
                     ]
                 }

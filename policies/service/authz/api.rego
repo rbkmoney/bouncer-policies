@@ -109,6 +109,7 @@ org_allowed[why] {
 }
 
 scopename_by_role[i] = sprintf("shop:%s", [shop]) {
+    input.capi
     role := org_by_operation.roles[i]
     shop := role.scope.shop.id
     shop == input.capi.op.shop.id
@@ -117,6 +118,11 @@ scopename_by_role[i] = sprintf("shop:%s", [shop]) {
 scopename_by_role[i] = "*" {
     role := org_by_operation.roles[i]
     not role.scope
+}
+
+scopename_by_role[i] = "*" {
+    input.orgmgmt
+    role := org_by_operation.roles[i]
 }
 
 # Get role to perform the operation in context.
@@ -163,8 +169,3 @@ org_by_operation = org_by_id[id]
 
 # A mapping of org ids to organizations.
 org_by_id := { org.id: org | org := input.user.orgs[_] }
-
-# A set of all user organizations.
-organizations[org] {
-    org := input.user.orgs[_]
-}

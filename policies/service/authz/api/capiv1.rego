@@ -1,4 +1,4 @@
-package service.authz.api.binapi
+package service.authz.api.capiv1
 
 import input.capi.op
 import input.invoicing

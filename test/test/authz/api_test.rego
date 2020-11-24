@@ -184,7 +184,7 @@ test_lookup_card_info_forbidden {
     count(result.allowed) == 0
 }
 
-test_anapi_valid_operation {
+test_anapi_valid_restricted_operation {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
@@ -210,7 +210,7 @@ test_anapi_org_owner_valid_operation {
     result.restrictions == {}
 }
 
-test_anapi_invalid_operation {
+test_anapi_restricted_several_shops_operation {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
@@ -221,4 +221,17 @@ test_anapi_invalid_operation {
     count(result.forbidden) == 0
     count(result.allowed) == 2
     result.restrictions == fixtures.op_anapi_restrictions
+}
+
+test_anapi_forbidden_operation {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_anapi_analytics_no_shops
+    ])
+    count(result.forbidden) == 1
+    count(result.allowed) == 1
+    result.restrictions != {}
 }

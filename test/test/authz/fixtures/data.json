@@ -148,6 +148,16 @@
         }
     },
 
+    "op_anapi_analytics_no_shops": {
+        "anapi": {
+            "op": {
+                "id": "GetPaymentsToolDistribution",
+                "party": { "id": "PARTY"},
+                "shops": []
+            }
+        }
+    },
+
     "op_anapi_reports_several_shops": {
         "anapi": {
             "op": {

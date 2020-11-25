@@ -77,12 +77,6 @@ warnings[why] {
 # ["code", "description"]
 # ```
 allowed[why] {
-    input.auth.method == "SessionToken"
-    input.user
-    org.allowed[why]
-}
-
-allowed[why] {
     input.shortener
     url_shortener.allowed[why]
 }
@@ -98,7 +92,6 @@ allowed[why] {
 }
 
 allowed[why] {
-    input.auth.method == "SessionToken"
     input.anapi
     anapi.allowed[why]
 }

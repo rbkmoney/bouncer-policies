@@ -2,6 +2,9 @@ package service.authz.api.anapi
 
 import input.anapi.op
 import data.service.authz.org
+import data.service.authz.roles
+
+api_name := "AnalyticsAPI"
 
 # Set of assertions which tell why operation under the input context is forbidden.
 # When the set is empty operation is not explicitly forbidden.
@@ -10,32 +13,27 @@ import data.service.authz.org
 # ["code", "description"]
 # ```
 forbidden[why] {
-    ops_require_auth
-    anapi_user_access_denied
+    input.auth.method != "SessionToken"
     why := {
-        "code": "user_access_denied",
-        "description": "User didn't pass check"
+        "code": "unknown_auth_method_forbids_operation",
+        "description": "Unkown auth method for this operation"
     }
 }
 
-anapi_user_access_denied {
-    not op_with_shops
-    not user_is_owner
-}
-
-op_with_shops {
-    count(op.shops) != 0
-}
-
-user_is_owner {
-    organization := org.org_by_operation
-    input.user.id == organization.owner.id
+forbidden[why] {
+    not user_can_do_op
+    why := {
+        "code": "user_rights_forbid_operation",
+        "description": "User has no rights for this operation"
+    }
 }
 
 # Restrictions
 
 restrictions[what] {
+    input.auth.method == "SessionToken"
     not user_is_owner
+    user_has_role_for_op
     what := {
         "op": {
             "shops": [{"id": id} | id := op_shop_in_scope[_].id]
@@ -57,47 +55,45 @@ op_shop_in_scope[shop] {
 # ["code", "description"]
 # ```
 allowed[why] {
-    all_ops
+    input.auth.method == "SessionToken"
     why := {
         "code": "session_token_allows_operation",
         "description": "Session token allows this operation"
     }
 }
 
-all_ops
-    { ops_require_auth }
-    { ops_with_no_auth }
+allowed[why] {
+    user_is_owner
+    why := {
+        "code": "org_ownership_allows_operation",
+        "description": "User is owner of organization that is subject of this operation"
+    }
+}
 
-ops_require_auth
-    { analytics_operation_allowed }
-    { reports_operation_allowed }
-    { searches_operation_allowed }
+allowed[why] {
+    user_has_role_for_op
+    why := {
+        "code": "org_role_allows_operation",
+        "description": "User has role that permits this operation"
+    }
+}
 
-ops_with_no_auth
-    { op.id == "DownloadFile" }
+user_can_do_op
+    { user_is_owner }
+    { user_has_role_for_op }
 
-analytics_operation_allowed
-    { op.id == "GetPaymentsToolDistribution" }
-    { op.id == "GetPaymentsAmount" }
-    { op.id == "GetAveragePayment" }
-    { op.id == "GetPaymentsCount" }
-    { op.id == "GetPaymentsErrorDistribution" }
-    { op.id == "GetPaymentsSplitAmount" }
-    { op.id == "GetPaymentsSplitCount" }
-    { op.id == "GetRefundsAmount" }
-    { op.id == "GetCurrentBalances" }
-    { op.id == "GetPaymentsSubErrorDistribution" }
-    { op.id == "GetCurrentBalancesGroupByShop" }
+user_is_owner {
+    organization := org.org_by_operation
+    input.user.id == organization.owner.id
+}
 
-reports_operation_allowed
-    { op.id == "SearchReports" }
-    { op.id == "GetReport" }
-    { op.id == "CreateReport" }
-    { op.id == "CancelReport" }
+user_has_role_for_op {
+    user_role := org_by_operation.roles[_]
+    op.id == roles.roles[user_role.id].apis[api_name].operations[_]
+}
 
-searches_operation_allowed
-    { op.id == "SearchInvoices" }
-    { op.id == "SearchPayments" }
-    { op.id == "SearchPayouts" }
-    { op.id == "SearchRefunds" }
-    { op.id == "SearchChargebacks" }
+org_by_operation = org_by_id[id] {
+    id = input.anapi.op.party.id
+}
+
+org_by_id := { org.id: org | org := input.user.orgs[_] }

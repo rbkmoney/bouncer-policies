@@ -136,10 +136,10 @@
         }
     },
 
-    "op_anapi_analytics": {
+    "op_anapi": {
         "anapi": {
             "op": {
-                "id": "GetPaymentsToolDistribution",
+                "id": "SearchInvoices",
                 "party": { "id": "PARTY"},
                 "shops": [
                     { "id": "SHOP" }
@@ -148,24 +148,37 @@
         }
     },
 
-    "op_anapi_analytics_no_shops": {
+    "op_anapi_no_shops": {
         "anapi": {
             "op": {
-                "id": "GetPaymentsToolDistribution",
+                "id": "SearchInvoices",
                 "party": { "id": "PARTY"},
                 "shops": []
             }
         }
     },
 
-    "op_anapi_reports_several_shops": {
+    "op_anapi_several_shops": {
+        "anapi": {
+            "op": {
+                "id": "SearchInvoices",
+                "party": { "id": "PARTY"},
+                "shops": [
+                    { "id": "SHOP" },
+                    { "id": "SHOP2" },
+                    { "id": "SHOP3" }
+                ]
+            }
+        }
+    },
+
+    "op_anapi_reports": {
         "anapi": {
             "op": {
                 "id": "SearchReports",
                 "party": { "id": "PARTY"},
                 "shops": [
-                    { "id": "SHOP" },
-                    { "id": "SHOP2" }
+                    { "id": "SHOP" }
                 ]
             }
         }
@@ -175,7 +188,9 @@
         "anapi": {
             "op": {
                 "shops": [
-                    {"id": "SHOP"}
+                    {
+                        "id": "SHOP"
+                    }
                 ]
             }
         }
@@ -198,6 +213,79 @@
                             }
                         }
                     ]
+                }
+            ]
+        }
+    },
+
+    "user_several_roles": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": { "id": "OWNER" },
+                    "roles": [
+                        {
+                            "id": "Manager",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP"
+                                }
+                            }
+                        },
+                        {
+                            "id": "Manager",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP2"
+                                }
+                            }
+                        },
+                        {
+                            "id": "Administrator",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP3"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
+    "user_administrator": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": { "id": "OWNER" },
+                    "roles": [
+                        {
+                            "id": "Administrator",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
+    "user_no_roles": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": { "id": "OWNER" },
+                    "roles": []
                 }
             ]
         }

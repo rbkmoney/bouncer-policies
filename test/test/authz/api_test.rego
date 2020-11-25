@@ -135,32 +135,6 @@ test_session_token_valid_operation_2 {
     result.allowed[_].code == "session_token_allows_operation"
 }
 
-test_session_token_valid_operation_3 {
-    result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_owner,
-        fixtures.session_token_valid,
-        fixtures.op_capi_create_invoice
-    ])
-    count(result.forbidden) == 0
-    count(result.allowed) == 1
-    result.allowed[_].code == "user_is_owner"
-}
-
-test_session_token_valid_operation_4 {
-    result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_default,
-        fixtures.session_token_valid,
-        fixtures.op_capi_create_invoice
-    ])
-    count(result.forbidden) == 0
-    count(result.allowed) == 1
-    result.allowed[_].code == "user_has_role"
-}
-
 test_lookup_card_info_allowed {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
@@ -190,7 +164,7 @@ test_anapi_valid_restricted_operation {
         fixtures.requester_default,
         fixtures.user_default,
         fixtures.session_token_valid,
-        fixtures.op_anapi_analytics
+        fixtures.op_anapi
     ])
     count(result.forbidden) == 0
     count(result.allowed) == 2
@@ -203,7 +177,7 @@ test_anapi_org_owner_valid_operation {
         fixtures.requester_default,
         fixtures.user_owner,
         fixtures.session_token_valid,
-        fixtures.op_anapi_analytics
+        fixtures.op_anapi
     ])
     count(result.forbidden) == 0
     count(result.allowed) == 2
@@ -216,7 +190,7 @@ test_anapi_restricted_several_shops_operation {
         fixtures.requester_default,
         fixtures.user_default,
         fixtures.session_token_valid,
-        fixtures.op_anapi_reports_several_shops
+        fixtures.op_anapi_several_shops
     ])
     count(result.forbidden) == 0
     count(result.allowed) == 2
@@ -229,9 +203,9 @@ test_anapi_forbidden_operation {
         fixtures.requester_default,
         fixtures.user_default,
         fixtures.session_token_valid,
-        fixtures.op_anapi_analytics_no_shops
+        fixtures.op_anapi_reports
     ])
     count(result.forbidden) == 1
     count(result.allowed) == 1
-    result.restrictions != {}
+    result.restrictions == {}
 }

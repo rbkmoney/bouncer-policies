@@ -1,7 +1,6 @@
 package service.authz.api.anapi
 
 import input.anapi.op
-import data.service.authz.org
 import data.service.authz.roles
 
 api_name := "AnalyticsAPI"
@@ -43,8 +42,7 @@ restrictions[what] {
 
 op_shop_in_scope[shop] {
     some i
-    organization := org.org_by_operation
-    op.shops[i].id == organization.roles[_].scope.shop.id
+    op.shops[i].id == user_role_by_operation[_].scope.shop.id
     shop := op.shops[i]
 }
 
@@ -83,11 +81,15 @@ user_can_do_op
     { user_has_role_for_op }
 
 user_is_owner {
-    organization := org.org_by_operation
+    organization := org_by_operation
     input.user.id == organization.owner.id
 }
 
 user_has_role_for_op {
+    user_role_by_operation[_]
+}
+
+user_role_by_operation[user_role] {
     user_role := org_by_operation.roles[_]
     op.id == roles.roles[user_role.id].apis[api_name].operations[_]
 }

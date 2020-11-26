@@ -196,6 +196,21 @@
         }
     },
 
+    "op_anapi_restrictions_several_shops": {
+        "anapi": {
+            "op": {
+                "shops": [
+                    {
+                        "id": "SHOP"
+                    },
+                    {
+                        "id": "SHOP2"
+                    }
+                ]
+            }
+        }
+    },
+
     "user_default": {
         "user": {
             "id": "USER",

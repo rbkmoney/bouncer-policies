@@ -1,4 +1,4 @@
-package test.authz.system
+package test.system.authz
 
 import data.system.authz
 
@@ -7,8 +7,8 @@ test_empty_context_forbidden {
     result == false
 }
 
-test_get_post_data_allowed {
-    result := authz.allow with input as {
+test_post_data_allowed {
+    authz.allow with input as {
         "path" : [
             "v1",
             "data",
@@ -16,36 +16,43 @@ test_get_post_data_allowed {
         ],
         "method" : "POST"
     }
-    result == true
+}
+
+test_get_data_allowed {
+    authz.allow with input as {
+        "path" : [
+            "v1",
+            "data",
+            "service"
+        ],
+        "method" : "GET"
+    }
 }
 
 test_get_policies_allowed {
-    result := authz.allow with input as {
+    authz.allow with input as {
         "path" : [
             "v1",
             "policies"
         ],
         "method" : "GET"
     }
-    result == true
 }
 
 test_health_allowed {
-    result := authz.allow with input as {
+    authz.allow with input as {
         "path" : [
             "health"
         ],
         "method" : "GET"
     }
-    result == true
 }
 
 test_metrics_allowed {
-    result := authz.allow with input as {
+    authz.allow with input as {
         "path" : [
             "metrics"
         ],
         "method" : "GET"
     }
-    result == true
 }

@@ -1,8 +1,8 @@
-package test.authz.api
+package test.service.authz.api
 
 import data.service.authz.api
-import data.test.authz.util
-import data.test.authz.fixtures
+import data.test.service.authz.util
+import data.test.service.authz.fixtures
 
 test_no_warnings {
     count(api.warnings) == 0

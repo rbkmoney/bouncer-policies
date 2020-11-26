@@ -1,8 +1,8 @@
-package test.authz.invoice_access_token
+package test.service.authz.api.invoice_access_token
 
 import data.service.authz.api
-import data.test.authz.util
-import data.test.authz.fixtures
+import data.test.service.authz.util
+import data.test.service.authz.fixtures
 
 test_invoice_access_token_valid_1 {
     result := api.assertions with input as util.deepmerge([

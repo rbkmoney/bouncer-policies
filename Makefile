@@ -66,10 +66,3 @@ RUN_TEST_COVERAGE := $(DOCKER) run --rm $(TEST_VOLUMES) $(TEST_IMAGE) test --cov
 
 test_coverage: manifest
 	python3 test_coverage.py "$(RUN_TEST_COVERAGE)" $(TEST_COVERAGE_THRESHOLD)
-
-test_coverage_verbose: manifest
-	$(DOCKER) run --rm $(TEST_VOLUMES) \
-		$(TEST_IMAGE) test --coverage $(TEST_BUNDLE_DIRS)\
-			--explain full \
-			--ignore input.json \
-			| jq '.files | map_values(.not_covered? | [.[]? | {start: .start.row, end: .end.row}])'

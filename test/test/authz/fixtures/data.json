@@ -95,6 +95,40 @@
         }
     },
 
+    "op_capi_get_refunds_fail": {
+        "capi": {
+            "op": {
+                "id": "GetRefunds",
+                "invoice": {
+                    "id": "INVOICE"
+                },
+                "payment": {
+                    "id": "PAYMENT"
+                },
+                "shop": {
+                    "id": "SHOP"
+                },
+                "party": {
+                    "id": "PARTY"
+                }
+            }
+        },
+        "invoicing": {
+            "invoice": {
+                "id": "INVOICE"
+            },
+            "payment": {
+                "id": "PAYMENT_2"
+            },
+            "shop": {
+                "id": "SHOP"
+            },
+            "party": {
+                "id": "PARTY"
+            }
+        }
+    },
+
     "session_token_valid": {
         "auth": {
             "method": "SessionToken",

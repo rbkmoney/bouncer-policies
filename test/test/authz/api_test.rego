@@ -196,3 +196,15 @@ test_get_refunds_allowed {
     count(result.allowed) == 1
     result.allowed[_].code == "session_token_allows_operation"
 }
+
+test_get_refunds_forbidden_context_mismatch {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_get_refunds_fail
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 0
+}
+

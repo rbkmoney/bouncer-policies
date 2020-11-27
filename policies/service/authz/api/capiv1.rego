@@ -4,6 +4,7 @@ import input.capi.op
 import input.invoicing
 
 allowed[why] {
+    input.auth.method == "SessionToken"
     requires_invoicing_context
     input_matches_invoicing_context
     why := {
@@ -14,6 +15,10 @@ allowed[why] {
 
 allowed[why] {
     input.auth.method == "InvoiceAccessToken"
+    allowed_w_invoice_access_token[why]
+}
+
+allowed_w_invoice_access_token[why] {
     op.id == "CreatePaymentResource"
     party_matches_token_scope
     why := {
@@ -22,9 +27,9 @@ allowed[why] {
     }
 }
 
-allowed[why] {
-    input.auth.method == "InvoiceAccessToken"
-    operation_allowed
+allowed_w_invoice_access_token[why] {
+    not op.id == "CreatePaymentResource"
+    authorize_w_invoice_access_token
     invoice_matches_token_scope
     why := {
         "code": "invoice_access_token_allows_operation",
@@ -102,7 +107,7 @@ invoice_matches_token_scope {
     scope.invoice.id == op.invoice.id
 }
 
-operation_allowed
+authorize_w_invoice_access_token
     { op.id == "GetInvoiceByID" }
     { op.id == "GetInvoiceEvents" }
     { op.id == "GetInvoicePaymentMethods" }

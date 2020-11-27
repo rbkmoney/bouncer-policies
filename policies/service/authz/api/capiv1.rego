@@ -12,6 +12,26 @@ allowed[why] {
     }
 }
 
+allowed[why] {
+    input.auth.method == "InvoiceAccessToken"
+    op.id == "CreatePaymentResource"
+    party_matches_token_scope
+    why := {
+        "code": "invoice_access_token_allows_tokenization",
+        "description": "Invoice access token allows payment resource tokenization"
+    }
+}
+
+allowed[why] {
+    input.auth.method == "InvoiceAccessToken"
+    operation_allowed
+    invoice_matches_token_scope
+    why := {
+        "code": "invoice_access_token_allows_operation",
+        "description": "Invoice access token allows operation on this invoice"
+    }
+}
+
 matching_invoice {
     op.invoice.id
     op.invoice.id == invoicing.invoice.id
@@ -74,3 +94,22 @@ requires_invoicing_context
     { op.id == "CreateRefund" }
     { op.id == "GetRefunds" }
     { op.id == "GetRefundByID" }
+
+party_matches_token_scope {
+    scope := input.auth.scope[_]
+    scope.party.id == op.party.id
+}
+
+invoice_matches_token_scope {
+    scope := input.auth.scope[_]
+    scope.party.id == op.party.id
+    scope.invoice.id == op.invoice.id
+}
+
+operation_allowed
+    { op.id == "GetInvoiceByID" }
+    { op.id == "GetInvoiceEvents" }
+    { op.id == "GetInvoicePaymentMethods" }
+    { op.id == "CreatePayment" }
+    { op.id == "GetPayments" }
+    { op.id == "GetPaymentByID" }

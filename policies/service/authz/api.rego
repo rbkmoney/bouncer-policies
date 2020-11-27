@@ -86,13 +86,7 @@ allowed[why] {
 }
 
 allowed[why] {
-    input.auth.method == "InvoiceAccessToken"
-    invoice_access_token.allowed[why]
-}
-
-allowed[why] {
     input.capi
-    not input.auth.method == "InvoiceAccessToken"
     capiv1.allowed[why]
 }
 

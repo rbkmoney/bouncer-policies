@@ -9,16 +9,56 @@ import json
 class Bcolors:
     OKCYAN = '\033[96m'
     OKGREEN = '\033[92m'
+    DIM = '\033[90m'
     FAIL = '\033[91m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
 
 
-def print_coverage_info(fileName, coverage, threshold):
-    if coverage < threshold:
-        print(f"{fileName} {Bcolors.FAIL} {coverage}% FAIL {Bcolors.ENDC}")
+def print_coverage_info(fileName, coverage, threshold, bold=False):
+    if bold:
+        fileNamePart = f"{Bcolors.BOLD}{fileName:<70}{Bcolors.ENDC}"
     else:
-        print(f"{fileName} {Bcolors.OKGREEN} {coverage}% OK {Bcolors.ENDC}")
+        fileNamePart = f"{fileName:<70}"
+    if coverage < threshold:
+        print(f"{fileNamePart}{Bcolors.FAIL}{coverage:>5.1f}% FAIL{Bcolors.ENDC}")
+    else:
+        print(f"{fileNamePart}{Bcolors.OKGREEN}{coverage:>5.1f}% OK{Bcolors.ENDC}")
+
+
+def print_line_hilight(lineNum, line, color):
+    stripped = line.strip('\n')
+    print(f"{lineNum:>4} {color}{stripped}{Bcolors.ENDC}")
+    return lineNum + 1
+
+def print_coverage_details(fileName, notCoveredSegments):
+    # How many lines to print before any segment, at most?
+    ctxLinesBefore = 2
+    # How many lines to print after any segment, at most?
+    ctxLinesAfter = 2
+    with open(fileName) as fd:
+        lineNum = 1
+        segEndLast = None
+        for seg in notCoveredSegments:
+            segStart = seg["start"]["row"]
+            segEnd = seg["end"]["row"]
+            # Printing "after" context of previous segment, if any.
+            while segEndLast and lineNum <= segEndLast + ctxLinesAfter and lineNum < segStart:
+                lineNum = print_line_hilight(lineNum, fd.readline(), Bcolors.DIM)
+            # Skipping unrelated lines.
+            while lineNum < segStart - ctxLinesBefore:
+                fd.readline()
+                lineNum += 1
+            # Printing "before" context of current segment.
+            while lineNum < segStart:
+                lineNum = print_line_hilight(lineNum, fd.readline(), Bcolors.DIM)
+            # Printing segment itself.
+            while lineNum <= segEnd:
+                lineNum = print_line_hilight(lineNum, fd.readline(), Bcolors.FAIL)
+            segEndLast = segEnd
+        # Printing "after" context of last segment, if any.
+        while segEndLast and lineNum <= segEndLast + ctxLinesAfter:
+            lineNum = print_line_hilight(lineNum, fd.readline(), Bcolors.DIM)
 
 
 def main(*argv):
@@ -39,16 +79,18 @@ def main(*argv):
 
     for file in files.keys():
         coverage = files[file]["coverage"] if "coverage" in files[file] else 0
+        print_coverage_info(file, coverage, threshold)
         if coverage < threshold:
             notCovered = True
-        print_coverage_info(file, coverage, threshold)
+            print_coverage_details(file[1:], files[file]["not_covered"])
 
     print(f"{Bcolors.OKCYAN}-----{Bcolors.ENDC}")
     fullCoverage = resultJson["coverage"]
     print_coverage_info(
-        f"{Bcolors.BOLD}SUMMARY{Bcolors.ENDC}",
+        "SUMMARY",
         fullCoverage,
-        threshold
+        threshold,
+        bold=True
     )
 
     if notCovered:

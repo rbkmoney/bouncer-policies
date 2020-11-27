@@ -1,8 +1,8 @@
 package test.authz.api.anapi
 
 import data.service.authz.api
-import data.test.authz.util
-import data.test.authz.fixtures
+import data.test.service.authz.util
+import data.test.service.authz.fixtures
 
 test_anapi_restricted {
     result := api.assertions with input as util.deepmerge([
@@ -86,7 +86,7 @@ test_anapi_forbidden_operation_no_role_2 {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
-        fixtures.user_administrator,
+        fixtures.user_default_administrator,
         fixtures.session_token_valid,
         fixtures.op_anapi
     ])
@@ -112,7 +112,7 @@ test_anapi_forbidden_operation_no_shops {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
-        fixtures.user_administrator,
+        fixtures.user_default_administrator,
         fixtures.session_token_valid,
         fixtures.op_anapi_no_shops
     ])

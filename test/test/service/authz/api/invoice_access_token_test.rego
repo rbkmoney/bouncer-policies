@@ -1,37 +1,8 @@
-package test.authz.api
+package test.service.authz.api.invoice_access_token
 
 import data.service.authz.api
-import data.test.authz.util
-import data.test.authz.fixtures
-
-test_no_warnings {
-    count(api.warnings) == 0
-}
-
-test_empty_context_forbidden {
-    result := api.assertions with input as {}
-    result.forbidden[_].code == "auth_required"
-}
-
-test_token_blacklisted_local_ip {
-    result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_local,
-        fixtures.session_token_valid,
-        fixtures.op_capi_create_invoice
-    ])
-    result.forbidden[_].code == "ip_range_blacklisted"
-}
-
-test_token_blacklisted_local_ipv6 {
-    result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_local_ipv6,
-        fixtures.session_token_valid,
-        fixtures.op_capi_create_invoice
-    ])
-    result.forbidden[_].code == "ip_range_blacklisted"
-}
+import data.test.service.authz.util
+import data.test.service.authz.fixtures
 
 test_invoice_access_token_valid_1 {
     result := api.assertions with input as util.deepmerge([
@@ -109,51 +80,57 @@ test_invoice_access_token_invalid_operation_2 {
     count(result.allowed) == 0
 }
 
-test_session_token_valid_operation_1 {
+test_invoice_access_token_valid_capi_get_invoice_payment_methods{
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
-        fixtures.user_default,
-        fixtures.session_token_valid,
-        fixtures.op_shortener_shorten_url
+        fixtures.invoice_access_token_valid,
+        fixtures.op_capi_get_invoice_payment_methods
     ])
     count(result.forbidden) == 0
     count(result.allowed) == 1
-    result.allowed[_].code == "session_token_allows_operation"
 }
 
-test_session_token_valid_operation_2 {
+test_invoice_access_token_valid_capi_get_invoice_events{
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
-        fixtures.user_default,
-        fixtures.session_token_valid,
-        fixtures.op_shortener_delete_shorten_url
+        fixtures.invoice_access_token_valid,
+        fixtures.op_capi_get_invoice_events
     ])
     count(result.forbidden) == 0
     count(result.allowed) == 1
-    result.allowed[_].code == "session_token_allows_operation"
 }
 
-test_lookup_card_info_allowed {
+test_invoice_access_token_valid_capi_create_payment{
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
-        fixtures.session_token_valid,
-        fixtures.op_binapi_lookup_card_info
-    ]) with data.service.authz.whitelists.bin_lookup_allowed_party_ids as ["PARTY_2"]
+        fixtures.invoice_access_token_valid,
+        fixtures.op_capi_create_payment
+    ])
     count(result.forbidden) == 0
     count(result.allowed) == 1
-    result.allowed[_].code == "session_token_allows_operation"
 }
 
-test_lookup_card_info_forbidden {
+test_invoice_access_token_valid_capi_get_payments{
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
-        fixtures.session_token_valid,
-        fixtures.op_binapi_lookup_card_info
-    ]) with data.service.authz.whitelists.bin_lookup_allowed_party_ids as ["PARTY_3"]
+        fixtures.invoice_access_token_valid,
+        fixtures.op_capi_get_payments
+    ])
     count(result.forbidden) == 0
-    count(result.allowed) == 0
+    count(result.allowed) == 1
+}
+
+test_invoice_access_token_valid_capi_get_payment_by_id{
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.invoice_access_token_valid,
+        fixtures.op_capi_get_payment_by_id
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
 }

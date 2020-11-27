@@ -98,6 +98,7 @@ allowed[why] {
 
 # Restrictions
 
+
 restrictions[what] {
     input.anapi
     rstns := anapi.restrictions[_]

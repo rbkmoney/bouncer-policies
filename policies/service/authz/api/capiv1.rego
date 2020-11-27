@@ -36,10 +36,6 @@ matching_invoice {
     op.invoice.id
     op.invoice.id == invoicing.invoice.id
 }
-matching_invoice {
-    not op.invoice.id
-    not invoicing.invoice.id
-}
 
 matching_party {
     op.party.id

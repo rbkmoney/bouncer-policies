@@ -137,10 +137,10 @@
         }
     },
 
-    "op_capi_get_refunds_fail": {
+    "op_capi_cancel_payment_fail": {
         "capi": {
             "op": {
-                "id": "GetRefunds",
+                "id": "CancelPayment",
                 "invoice": {
                     "id": "INVOICE"
                 },
@@ -170,7 +170,219 @@
             }
         }
     },
-    
+
+    "op_capi_get_refund_by_id": {
+        "capi": {
+            "op": {
+                "id": "GetRefundByID",
+                "invoice": {
+                    "id": "INVOICE"
+                },
+                "shop": {
+                    "id": "SHOP"
+                },
+                "party": {
+                    "id": "PARTY"
+                },
+                "payment": {
+                    "id": "PAYMENT"
+                },
+                "refund": {
+                    "id": "REFUND"
+                }
+            }
+        },
+        "invoicing": {
+            "invoice": {
+                "id": "INVOICE"
+            },
+            "payment": {
+                "id": "PAYMENT"
+            },
+            "shop": {
+                "id": "SHOP"
+            },
+            "party": {
+                "id": "PARTY"
+            },
+            "refund": {
+                "id": "REFUND"
+            }
+        }
+    },
+
+    "op_capi_no_shop_context": {
+        "capi": {
+            "op": {
+                "id": "CapturePayment",
+                "invoice": {
+                    "id": "INVOICE"
+                },
+                "payment": {
+                    "id": "PAYMENT"
+                },
+                "shop": {
+                    "id": "SHOP"
+                },
+                "party": {
+                    "id": "PARTY"
+                }
+            }
+        },
+        "invoicing": {
+            "invoice": {
+                "id": "INVOICE"
+            },
+            "payment": {
+                "id": "PAYMENT"
+            },
+            "party": {
+                "id": "PARTY"
+            }
+        }
+    },
+
+    "op_capi_no_party_context": {
+        "capi": {
+            "op": {
+                "id": "FulfillInvoice",
+                "invoice": {
+                    "id": "INVOICE"
+                },
+                "shop": {
+                    "id": "SHOP"
+                },
+                "party": {
+                    "id": "PARTY"
+                }
+            }
+        },
+        "invoicing": {
+            "invoice": {
+                "id": "INVOICE"
+            },
+            "shop": {
+                "id": "SHOP"
+            }
+        }
+    },
+
+    "op_capi_no_refund_context": {
+        "capi": {
+            "op": {
+                "id": "GetRefundByID",
+                "invoice": {
+                    "id": "INVOICE"
+                },
+                "shop": {
+                    "id": "SHOP"
+                },
+                "party": {
+                    "id": "PARTY"
+                },
+                "payment": {
+                    "id": "PAYMENT"
+                },
+                "refund": {
+                    "id": "REFUND"
+                }
+            }
+        },
+        "invoicing": {
+            "invoice": {
+                "id": "INVOICE"
+            },
+            "payment": {
+                "id": "PAYMENT"
+            },
+            "shop": {
+                "id": "SHOP"
+            },
+            "party": {
+                "id": "PARTY"
+            }
+        }
+    },
+
+    "op_capi_no_payment_context": {
+        "capi": {
+            "op": {
+                "id": "GetRefundByID",
+                "invoice": {
+                    "id": "INVOICE"
+                },
+                "shop": {
+                    "id": "SHOP"
+                },
+                "party": {
+                    "id": "PARTY"
+                },
+                "payment": {
+                    "id": "PAYMENT"
+                },
+                "refund": {
+                    "id": "REFUND"
+                }
+            }
+        },
+        "invoicing": {
+            "invoice": {
+                "id": "INVOICE"
+            },
+            "shop": {
+                "id": "SHOP"
+            },
+            "party": {
+                "id": "PARTY"
+            },
+            "refund": {
+                "id": "REFUND"
+            }
+        }
+    },
+
+    "op_capi_create_invoice_access_token": {
+        "capi": {
+            "op": {
+                "id": "CreateInvoiceAccessToken",
+                "invoice": {"id": "INVOICE"}
+            }
+        },
+        "invoicing": {
+            "invoice": {
+                "id": "INVOICE"
+            }
+        }
+    },
+
+    "op_capi_insufficient_input_info": {
+        "capi": {
+            "op": {
+                "id": "GetRefundByID",
+                "invoice": {
+                    "id": "INVOICE"
+                }
+            }
+        },
+        "invoicing": {
+            "invoice": {
+                "id": "INVOICE"
+            },
+            "shop": {
+                "id": "SHOP"
+            },
+            "party": {
+                "id": "PARTY"
+            },
+            "payment": {
+                "id": "PAYMENT"
+            },
+            "refund": {
+                "id": "REFUND"
+            }
+        }
+    },
+
     "op_capi_get_payments": {
         "capi": {
             "op": {

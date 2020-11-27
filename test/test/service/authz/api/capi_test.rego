@@ -153,9 +153,85 @@ test_get_refunds_forbidden_context_mismatch {
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.session_token_valid,
-        fixtures.op_capi_get_refunds_fail
+        fixtures.op_capi_cancel_payment_fail
     ])
     count(result.forbidden) == 0
     count(result.allowed) == 0
 }
 
+test_forbidden_invoicing_context_no_shop {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_no_shop_context
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 0
+}
+
+test_forbidden_invoicing_context_no_party {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_no_party_context
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 0
+}
+
+test_forbidden_invoicing_context_no_refund {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_no_refund_context
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 0
+}
+
+test_forbidden_invoicing_context_no_payment {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_no_payment_context
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 0
+}
+
+test_create_invoice_access_token_allowed {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_create_invoice_access_token
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_insufficient_input_forbidden {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_insufficient_input_info
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 0
+}
+
+test_get_refund_by_id_allowed {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_get_refund_by_id
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}

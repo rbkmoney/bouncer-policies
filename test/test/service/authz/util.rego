@@ -1,4 +1,4 @@
-package test.authz.util
+package test.service.authz.util
 
 deepmerge([]) = out {
     out := {}

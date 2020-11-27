@@ -405,6 +405,34 @@
         }
     },
 
+    "op_capi_rescind_invoice": {
+        "capi": {
+            "op": {
+                "id": "RescindInvoice",
+                "invoice": {
+                    "id": "INVOICE"
+                },
+                "shop": {
+                    "id": "SHOP"
+                },
+                "party": {
+                    "id": "PARTY"
+                }
+            }
+        },
+        "invoicing": {
+            "invoice": {
+                "id": "INVOICE"
+            },
+            "shop": {
+                "id": "SHOP"
+            },
+            "party": {
+                "id": "PARTY"
+            }
+        }
+    },
+
     "session_token_valid": {
         "auth": {
             "method": "SessionToken",

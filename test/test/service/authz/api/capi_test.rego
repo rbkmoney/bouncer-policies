@@ -235,3 +235,14 @@ test_get_refund_by_id_allowed {
     count(result.forbidden) == 0
     count(result.allowed) == 1
 }
+
+test_rescind_invoice_allowed {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_rescind_invoice
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}

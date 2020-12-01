@@ -13,7 +13,7 @@ test_anapi_restricted {
         fixtures.op_anapi
     ])
     count(result.forbidden) == 0
-    count(result.allowed) == 2
+    count(result.allowed) == 1
     result.restrictions == fixtures.op_anapi_restrictions
 }
 
@@ -26,7 +26,7 @@ test_anapi_allowed_org_owner {
         fixtures.op_anapi
     ])
     count(result.forbidden) == 0
-    count(result.allowed) == 2
+    count(result.allowed) == 1
     result.restrictions == {}
 }
 
@@ -39,7 +39,7 @@ test_anapi_allowed_operation_no_shops {
         fixtures.op_anapi_no_shops
     ])
     count(result.forbidden) == 0
-    count(result.allowed) == 2
+    count(result.allowed) == 1
     result.restrictions == {}
 }
 
@@ -52,7 +52,7 @@ test_anapi_restricted_several_shops_operation {
         fixtures.op_anapi_several_shops
     ])
     count(result.forbidden) == 0
-    count(result.allowed) == 2
+    count(result.allowed) == 1
     result.restrictions == fixtures.op_anapi_restrictions
 }
 
@@ -65,7 +65,7 @@ test_anapi_restricted_several_shops_several_roles_operation {
         fixtures.op_anapi_several_shops
     ])
     count(result.forbidden) == 0
-    count(result.allowed) == 2
+    count(result.allowed) == 1
     result.restrictions == fixtures.op_anapi_restrictions_several_shops
 }
 
@@ -77,8 +77,8 @@ test_anapi_forbidden_operation_no_role {
         fixtures.session_token_valid,
         fixtures.op_anapi_reports
     ])
-    count(result.forbidden) == 1
-    count(result.allowed) == 1
+    count(result.forbidden) == 0
+    count(result.allowed) == 0
     result.restrictions == {}
 }
 
@@ -90,8 +90,8 @@ test_anapi_forbidden_operation_no_role_2 {
         fixtures.session_token_valid,
         fixtures.op_anapi
     ])
-    count(result.forbidden) == 1
-    count(result.allowed) == 1
+    count(result.forbidden) == 0
+    count(result.allowed) == 0
     result.restrictions == {}
 }
 
@@ -103,8 +103,8 @@ test_anapi_forbidden_operation_no_role_3 {
         fixtures.session_token_valid,
         fixtures.op_anapi
     ])
-    count(result.forbidden) == 1
-    count(result.allowed) == 1
+    count(result.forbidden) == 0
+    count(result.allowed) == 0
     result.restrictions == {}
 }
 
@@ -116,7 +116,7 @@ test_anapi_forbidden_operation_no_shops {
         fixtures.session_token_valid,
         fixtures.op_anapi_no_shops
     ])
-    count(result.forbidden) == 1
-    count(result.allowed) == 1
+    count(result.forbidden) == 0
+    count(result.allowed) == 0
     result.restrictions == {}
 }

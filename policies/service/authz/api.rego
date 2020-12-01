@@ -12,7 +12,7 @@ import data.service.authz.org
 assertions := {
     "forbidden" : { why | forbidden[why] },
     "allowed"   : { why | allowed[why] },
-    "restrictions" : { what.service: what.restrictions | restrictions[what] }
+    "restricted" : restricted
 }
 
 # Set of assertions which tell why operation under the input context is forbidden.
@@ -103,7 +103,17 @@ restrictions[what] {
     input.anapi
     rstns := anapi.restrictions[_]
     what := {
-        "service": "anapi",
+        "type": "anapi",
         "restrictions": rstns
+    }
+}
+
+# WIP
+merge_restrictions(rstns) = merged_rstns {
+    types := {t | t := rstns[_].type}
+    merged_rstns := {type: restriction |
+        some i, j
+        rstns[i].type == types[j]
+
     }
 }

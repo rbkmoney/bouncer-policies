@@ -19,14 +19,6 @@ forbidden[why] {
     }
 }
 
-forbidden[why] {
-    not user_can_do_op
-    why := {
-        "code": "user_rights_forbid_operation",
-        "description": "User has no rights for this operation"
-    }
-}
-
 # Restrictions
 
 restrictions[what] {
@@ -52,15 +44,9 @@ op_shop_in_scope[shop] {
 # ```
 # ["code", "description"]
 # ```
-allowed[why] {
-    input.auth.method == "SessionToken"
-    why := {
-        "code": "session_token_allows_operation",
-        "description": "Session token allows this operation"
-    }
-}
 
 allowed[why] {
+    input.auth.method == "SessionToken"
     user_is_owner
     why := {
         "code": "org_ownership_allows_operation",
@@ -69,6 +55,7 @@ allowed[why] {
 }
 
 allowed[why] {
+    input.auth.method == "SessionToken"
     user_has_role_for_op
     why := {
         "code": "org_role_allows_operation",
@@ -94,8 +81,7 @@ user_role_by_operation[user_role] {
     op.id == roles.roles[user_role.id].apis[api_name].operations[_]
 }
 
-org_by_operation = org_by_id[id] {
-    id = input.anapi.op.party.id
+org_by_operation = org {
+    org := input.user.orgs[_]
+    org.id == input.anapi.op.party.id
 }
-
-org_by_id := { org.id: org | org := input.user.orgs[_] }

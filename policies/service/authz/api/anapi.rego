@@ -22,7 +22,6 @@ forbidden[why] {
 # Restrictions
 
 restrictions[what] {
-    input.auth.method == "SessionToken"
     not user_is_owner
     user_has_role_for_op
     what := {
@@ -34,7 +33,7 @@ restrictions[what] {
 
 op_shop_in_scope[shop] {
     some i
-    op.shops[i].id == user_role_by_operation[_].scope.shop.id
+    op.shops[i].id == user_roles_by_operation[_].scope.shop.id
     shop := op.shops[i]
 }
 
@@ -46,7 +45,6 @@ op_shop_in_scope[shop] {
 # ```
 
 allowed[why] {
-    input.auth.method == "SessionToken"
     user_is_owner
     why := {
         "code": "org_ownership_allows_operation",
@@ -55,8 +53,7 @@ allowed[why] {
 }
 
 allowed[why] {
-    input.auth.method == "SessionToken"
-    user_has_role_for_op
+    user_has_any_role_for_op
     why := {
         "code": "org_role_allows_operation",
         "description": "User has role that permits this operation"
@@ -72,11 +69,11 @@ user_is_owner {
     input.user.id == organization.owner.id
 }
 
-user_has_role_for_op {
-    user_role_by_operation[_]
+user_has_any_role_for_op {
+    user_roles_by_operation[_]
 }
 
-user_role_by_operation[user_role] {
+user_roles_by_operation[user_role] {
     user_role := org_by_operation.roles[_]
     op.id == roles.roles[user_role.id].apis[api_name].operations[_]
 }

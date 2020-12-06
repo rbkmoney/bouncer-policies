@@ -23,7 +23,7 @@ forbidden[why] {
 
 restrictions[what] {
     not user_is_owner
-    user_has_role_for_op
+    user_has_any_role_for_op
     what := {
         "op": {
             "shops": [{"id": id} | id := op_shop_in_scope[_].id]
@@ -59,10 +59,6 @@ allowed[why] {
         "description": "User has role that permits this operation"
     }
 }
-
-user_can_do_op
-    { user_is_owner }
-    { user_has_role_for_op }
 
 user_is_owner {
     organization := org_by_operation

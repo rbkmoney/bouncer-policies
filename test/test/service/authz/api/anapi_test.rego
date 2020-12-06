@@ -120,3 +120,16 @@ test_anapi_forbidden_operation_no_shops {
     count(result.allowed) == 0
     result.restrictions == {}
 }
+
+test_anapi_forbidden_operation_auth_invalid {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.invoice_access_token_valid,
+        fixtures.op_anapi
+    ])
+    count(result.forbidden) == 1
+    count(result.allowed) == 1
+    result.restrictions == fixtures.op_anapi_restrictions
+}

@@ -286,7 +286,7 @@
         }
     },
 
-    "user_default_administrator": {
+    "user_default_other_role": {
         "user": {
             "id": "USER",
             "orgs": [
@@ -295,7 +295,7 @@
                     "owner": { "id": "OWNER" },
                     "roles": [
                         {
-                            "id": "Administrator",
+                            "id": "OtherRole",
                             "scope": {
                                 "shop": {
                                     "id": "SHOP"
@@ -355,7 +355,7 @@
                             }
                         },
                         {
-                            "id": "Administrator",
+                            "id": "OtherRole",
                             "scope": {
                                 "shop": {
                                     "id": "SHOP3"

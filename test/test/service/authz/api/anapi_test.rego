@@ -86,7 +86,7 @@ test_anapi_forbidden_operation_no_role_2 {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
-        fixtures.user_default_administrator,
+        fixtures.user_default_other_role,
         fixtures.session_token_valid,
         fixtures.op_anapi
     ])
@@ -112,7 +112,7 @@ test_anapi_forbidden_operation_no_shops {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
-        fixtures.user_default_administrator,
+        fixtures.user_default_other_role,
         fixtures.session_token_valid,
         fixtures.op_anapi_no_shops
     ])

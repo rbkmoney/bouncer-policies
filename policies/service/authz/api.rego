@@ -17,9 +17,9 @@ assertions := {
 
 # Set of assertions which tell why operation under the input context is forbidden.
 # When the set is empty operation is not explicitly forbidden.
-# Each element must be either a string `"code"` or a 2-item array of the form:
+# Each element must be an object of the following form:
 # ```
-# {"code": "auth_expired", "description": "...", ...}
+# {"code": "auth_expired", "description": "..."}
 # ```
 forbidden[why] {
     input
@@ -72,9 +72,9 @@ warnings[why] {
 
 # Set of assertions which tell why operation under the input context is allowed.
 # When the set is empty operation is not explicitly allowed.
-# Each element must be either a string `"code"` or a 2-item array of the form:
+# Each element must be an object of the following form:
 # ```
-# ["code", "description"]
+# {"code": "auth_expired", "description": "..."}
 # ```
 allowed[why] {
     input.shortener

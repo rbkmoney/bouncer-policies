@@ -1,10 +1,9 @@
 package service.authz.api.invoice_access_token
 
 # Set of assertions which tell why operation under the input context is allowed.
-# When the set is empty operation is not explicitly allowed.
-# Each element must be a 2-item array of the following form:
+# Each element must be an object of the following form:
 # ```
-# {"code": "auth_expired", "description": "...", ...}
+# {"code": "auth_expired", "description": "..."}
 # ```
 
 import input.capi.op

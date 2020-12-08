@@ -76,5 +76,5 @@ user_roles_by_operation[user_role] {
 
 org_by_operation = org {
     org := input.user.orgs[_]
-    org.id == input.anapi.op.party.id
+    org.id == op.party.id
 }

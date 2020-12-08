@@ -25,7 +25,7 @@ restrictions[what] {
     user_has_any_role_for_op
     what := {
         "op": {
-            "shops": [{"id": id} | id := op_shop_in_scope[_].id]
+            "shops": [shop | shop := op_shop_in_scope[_]]
         }
     }
 }

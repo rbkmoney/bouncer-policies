@@ -14,7 +14,7 @@ forbidden[why] {
     input.auth.method != "SessionToken"
     why := {
         "code": "unknown_auth_method_forbids_operation",
-        "description": "Unkown auth method for this operation"
+        "description": sprintf("Unknown auth method for this operation: %v", [input.auth.method])
     }
 }
 

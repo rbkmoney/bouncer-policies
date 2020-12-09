@@ -106,3 +106,11 @@ restrictions[what] {
         "restrictions": rstns
     }
 }
+
+restrictions[what] {
+    input.simulate_restriction_conflict
+    what := {
+        "type": "anapi",
+        "restrictions": {"anapi": {}}
+    }
+}

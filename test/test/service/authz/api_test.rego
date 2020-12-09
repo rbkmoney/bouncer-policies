@@ -42,3 +42,14 @@ test_token_blacklisted_local_ipv6 {
     ])
     result.forbidden[_].code == "ip_range_blacklisted"
 }
+
+test_restrictions_conflict {
+    api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_anapi,
+        {"simulate_restriction_conflict": true}
+    ])
+}

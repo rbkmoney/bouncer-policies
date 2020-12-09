@@ -18,6 +18,3 @@ deepmerge([o1, o2, o3, o4]) = out {
 deepmerge([o1, o2, o3, o4, o5]) = out {
     out := object.union(object.union(object.union(object.union(o1, o2), o3), o4), o5)
 }
-deepmerge([o1, o2, o3, o4, o5, o6]) = out {
-    out := object.union(object.union(object.union(object.union(object.union(o1, o2), o3), o4), o5), o6)
-}

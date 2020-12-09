@@ -12,7 +12,7 @@ import data.service.authz.org
 assertions := {
     "forbidden" : { why | forbidden[why] },
     "allowed"   : { why | allowed[why] },
-    "restrictions": { what.type: what.restrictions | restrictions[what] }
+    "restrictions": { what.type: what.restrictions[what.type] | restrictions[what] }
 }
 
 # Set of assertions which tell why operation under the input context is forbidden.

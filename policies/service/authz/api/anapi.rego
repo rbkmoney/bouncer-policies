@@ -24,8 +24,10 @@ restrictions[what] {
     not user_is_owner
     user_has_any_role_for_op
     what := {
-        "op": {
-            "shops": [shop | shop := op_shop_in_scope[_]]
+        "anapi": {
+            "op": {
+                "shops": [shop | shop := op_shop_in_scope[_]]
+            }
         }
     }
 }

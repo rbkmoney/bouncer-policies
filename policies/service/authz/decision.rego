@@ -5,7 +5,7 @@ import data.service.authz.api
 decide(assertions) = d {
     count(assertions.forbidden) > 0
     d := {
-        "verdict": ["forbidden", assertions.forbidden]
+        "resolution": ["forbidden", assertions.forbidden]
     }
 }
 
@@ -14,7 +14,7 @@ decide(assertions) = d {
     assertions.restrictions != {}
     count(assertions.allowed) > 0
     d := {
-        "verdict": ["restricted", assertions.allowed],
+        "resolution": ["restricted", assertions.allowed],
         "restrictions": assertions.restrictions
     }
 }
@@ -24,7 +24,7 @@ decide(assertions) = d {
     assertions.restrictions == {}
     count(assertions.allowed) > 0
     d := {
-        "verdict": ["allowed", assertions.allowed]
+        "resolution": ["allowed", assertions.allowed]
     }
 }
 
@@ -32,6 +32,6 @@ decide(assertions) = d {
     count(assertions.forbidden) == 0
     count(assertions.allowed) == 0
     d := {
-        "verdict": ["forbidden", []]
+        "resolution": ["forbidden", []]
     }
 }

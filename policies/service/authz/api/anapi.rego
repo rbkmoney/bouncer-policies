@@ -51,10 +51,10 @@ allowed[why] {
 }
 
 allowed[why] {
-    user_has_any_role_for_op
+    user_role_id := user_roles_by_operation[_].id
     why := {
         "code": "org_role_allows_operation",
-        "description": "User has role that permits this operation"
+        "description": sprintf("User has role that permits this operation: %v", [user_role_id])
     }
 }
 

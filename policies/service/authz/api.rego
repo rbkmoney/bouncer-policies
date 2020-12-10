@@ -4,7 +4,7 @@ import data.service.authz.api.invoice_access_token
 import data.service.authz.api.url_shortener
 import data.service.authz.api.binapi
 import data.service.authz.api.anapi
-import data.service.authz.api.capiv1
+import data.service.authz.api.capi
 import data.service.authz.blacklists
 import data.service.authz.whitelists
 import data.service.authz.roles
@@ -89,7 +89,7 @@ allowed[why] {
 
 allowed[why] {
     input.capi
-    capiv1.allowed[why]
+    capi.allowed[why]
 }
 
 allowed[why] {

@@ -32,7 +32,10 @@ submodules: $(SUBTARGETS)
 .PHONY: manifest test
 
 VALIDATOR := $(CURDIR)/validator.escript
-INSTANCES := $(wildcard test/test/*/fixtures/*.json)
+INSTANCES := $(shell find test/test/service -type f -path '*/fixtures/*.json')
+ifeq ($(INSTANCES),)
+$(error No fixtures to validate found, you probably need to update a search pattern)
+endif
 
 .PHONY: $(VALIDATOR)
 

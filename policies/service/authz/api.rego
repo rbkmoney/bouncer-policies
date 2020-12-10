@@ -3,21 +3,24 @@ package service.authz.api
 import data.service.authz.api.invoice_access_token
 import data.service.authz.api.url_shortener
 import data.service.authz.api.binapi
+import data.service.authz.api.anapi
 import data.service.authz.api.capiv1
 import data.service.authz.blacklists
 import data.service.authz.whitelists
 import data.service.authz.roles
+import data.service.authz.org
 
 assertions := {
     "forbidden" : { why | forbidden[why] },
-    "allowed"   : { why | allowed[why] }
+    "allowed"   : { why | allowed[why] },
+    "restrictions": { what.type: what.restrictions[what.type] | restrictions[what] }
 }
 
 # Set of assertions which tell why operation under the input context is forbidden.
 # When the set is empty operation is not explicitly forbidden.
-# Each element must be either a string `"code"` or a 2-item array of the form:
+# Each element must be an object of the following form:
 # ```
-# {"code": "auth_expired", "description": "...", ...}
+# {"code": "auth_expired", "description": "..."}
 # ```
 forbidden[why] {
     input
@@ -53,6 +56,11 @@ forbidden[why] {
     }
 }
 
+forbidden[why] {
+    input.anapi
+    anapi.forbidden[why]
+}
+
 warnings[why] {
     not blacklists.source_ip_range
     why := "Blacklist 'source_ip_range' is not defined, blacklisting by IP will NOT WORK."
@@ -65,16 +73,10 @@ warnings[why] {
 
 # Set of assertions which tell why operation under the input context is allowed.
 # When the set is empty operation is not explicitly allowed.
-# Each element must be either a string `"code"` or a 2-item array of the form:
+# Each element must be an object of the following form:
 # ```
-# ["code", "description"]
+# {"code": "auth_expired", "description": "..."}
 # ```
-allowed[why] {
-    input.auth.method == "SessionToken"
-    input.user
-    org_allowed[why]
-}
-
 allowed[why] {
     input.shortener
     url_shortener.allowed[why]
@@ -90,83 +92,18 @@ allowed[why] {
     capiv1.allowed[why]
 }
 
-org_allowed[why] {
-    org := org_by_operation
-    org.owner.id == input.user.id
-    why := {
-        "code": "user_is_owner",
-        "description": "User is the organisation owner itself"
+allowed[why] {
+    input.anapi
+    anapi.allowed[why]
+}
+
+# Restrictions
+
+restrictions[what] {
+    input.anapi
+    rstns := anapi.restrictions[_]
+    what := {
+        "type": "anapi",
+        "restrictions": rstns
     }
 }
-
-org_allowed[why] {
-    rolename := role_by_operation[_]
-    org_by_operation.roles[i].id == rolename
-    scopename := scopename_by_role[i]
-    why := {
-        "code": "user_has_role",
-        "description": sprintf("User has role %s in scope %v", [rolename, scopename])
-    }
-}
-
-scopename_by_role[i] = sprintf("shop:%s", [shop]) {
-    input.capi
-    role := org_by_operation.roles[i]
-    shop := role.scope.shop.id
-    shop == input.capi.op.shop.id
-}
-
-scopename_by_role[i] = "*" {
-    role := org_by_operation.roles[i]
-    not role.scope
-}
-
-scopename_by_role[i] = "*" {
-    input.orgmgmt
-    role := org_by_operation.roles[i]
-}
-
-# Get role to perform the operation in context.
-role_by_operation = role_by_id[id]
-    { id = input.capi.op.id }
-    { id = input.orgmgmt.op.id }
-    { id = input.shortener.op.id }
-
-# A mapping of operations to role names.
-role_by_id[op] = rolenames {
-    op := operations[_]
-    rolenames := { i |
-        role := roles.roles[i]
-        role.apis[_].operations[_] == op
-    }
-}
-
-# A set of all known operations.
-operations[op] {
-    role := roles.roles[i]
-    api := api_by_op
-    op := role.apis[api].operations[_]
-}
-
-# Get API name by input op context
-api_by_op = api
-{
-    input.capi
-    api := "CommonAPI"
-}
-{
-    input.orgmgmt
-    api := "OrgManagement"
-}
-{
-    input.shortener
-    api := "UrlShortener"
-}
-
-# Context of an organisation which is being operated upon.
-org_by_operation = org_by_id[id]
-    { id = input.capi.op.party.id }
-    { id = input.orgmgmt.op.organization.id }
-
-# A mapping of org ids to organizations.
-org_by_id := { org.id: org | org := input.user.orgs[_] }

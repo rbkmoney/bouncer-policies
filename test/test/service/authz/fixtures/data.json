@@ -519,7 +519,82 @@
         }
     },
 
-    "user_default_administrator": {
+    "op_anapi": {
+        "anapi": {
+            "op": {
+                "id": "SearchInvoices",
+                "party": { "id": "PARTY"},
+                "shops": [
+                    { "id": "SHOP" }
+                ]
+            }
+        }
+    },
+
+    "op_anapi_no_shops": {
+        "anapi": {
+            "op": {
+                "id": "SearchInvoices",
+                "party": { "id": "PARTY"},
+                "shops": []
+            }
+        }
+    },
+
+    "op_anapi_several_shops": {
+        "anapi": {
+            "op": {
+                "id": "SearchInvoices",
+                "party": { "id": "PARTY"},
+                "shops": [
+                    { "id": "SHOP" },
+                    { "id": "SHOP2" },
+                    { "id": "SHOP3" }
+                ]
+            }
+        }
+    },
+
+    "op_anapi_reports": {
+        "anapi": {
+            "op": {
+                "id": "SearchReports",
+                "party": { "id": "PARTY"},
+                "shops": [
+                    { "id": "SHOP" }
+                ]
+            }
+        }
+    },
+
+    "op_anapi_restrictions": {
+        "anapi": {
+            "op": {
+                "shops": [
+                    {
+                        "id": "SHOP"
+                    }
+                ]
+            }
+        }
+    },
+
+    "op_anapi_restrictions_several_shops": {
+        "anapi": {
+            "op": {
+                "shops": [
+                    {
+                        "id": "SHOP"
+                    },
+                    {
+                        "id": "SHOP2"
+                    }
+                ]
+            }
+        }
+    },
+
+    "user_default_other_role": {
         "user": {
             "id": "USER",
             "orgs": [
@@ -528,7 +603,7 @@
                     "owner": { "id": "OWNER" },
                     "roles": [
                         {
-                            "id": "Administrator",
+                            "id": "OtherRole",
                             "scope": {
                                 "shop": {
                                     "id": "SHOP"
@@ -563,6 +638,44 @@
         }
     },
 
+    "user_several_roles": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": { "id": "OWNER" },
+                    "roles": [
+                        {
+                            "id": "Manager",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP"
+                                }
+                            }
+                        },
+                        {
+                            "id": "Manager",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP2"
+                                }
+                            }
+                        },
+                        {
+                            "id": "OtherRole",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP3"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    
     "user_with_role_without_scope": {
         "user": {
             "id": "USER",
@@ -575,6 +688,19 @@
                             "id": "Manager"
                         }
                     ]
+                }
+            ]
+        }
+    },
+
+    "user_no_roles": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": { "id": "OWNER" },
+                    "roles": []
                 }
             ]
         }

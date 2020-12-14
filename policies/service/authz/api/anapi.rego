@@ -23,8 +23,11 @@ forbidden[why] {
 # Restrictions
 
 restrictions[what] {
-    not utils.user_is_owner(op.party.id)
-    utils.user_has_any_role_for_op(op.id, op.party.id, api_name)
+    not utils.user_is_owner with input.abstract_party_id as op.party.id
+    utils.user_has_any_role_for_op
+        with input.abstract_party_id as op.party.id
+        with input.abstract_op_id as op.id
+        with input.abstract_api_name as api_name
     what := {
         "anapi": {
             "op": {
@@ -36,8 +39,10 @@ restrictions[what] {
 
 op_shop_in_scope[shop] {
     some i
-    result := utils.user_roles_by_operation(op.id, op.party.id, api_name)
-    op.shops[i].id == result["result"][_].scope.shop.id
+    op.shops[i].id == utils.user_roles_by_operation[_].scope.shop.id
+        with input.abstract_party_id as op.party.id
+        with input.abstract_op_id as op.id
+        with input.abstract_api_name as api_name
     shop := op.shops[i]
 }
 
@@ -48,7 +53,7 @@ op_shop_in_scope[shop] {
 # ```
 
 allowed[why] {
-    utils.user_is_owner(op.party.id)
+    utils.user_is_owner with input.abstract_party_id as op.party.id
     why := {
         "code": "org_ownership_allows_operation",
         "description": "User is owner of organization that is subject of this operation"
@@ -56,8 +61,10 @@ allowed[why] {
 }
 
 allowed[why] {
-    result := utils.user_roles_by_operation(op.id, op.party.id, api_name)
-    user_role_id := result["result"][_].id
+    user_role_id := utils.user_roles_by_operation[_].id
+        with input.abstract_party_id as op.party.id
+        with input.abstract_op_id as op.id
+        with input.abstract_api_name as api_name
     why := {
         "code": "org_role_allows_operation",
         "description": sprintf("User has role that permits this operation: %v", [user_role_id])

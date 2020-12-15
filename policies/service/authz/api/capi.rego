@@ -40,6 +40,16 @@ allowed[why] {
 }
 
 allowed[why] {
+    input.auth.method == "SessionToken"
+    operation_allowed
+    input_matches_invoicing_context
+    why := {
+        "code": "session_token_allows_operation",
+        "description": "Session token allows this operation"
+    }
+}
+
+allowed[why] {
     input.auth.method == "InvoiceAccessToken"
     invoice_access_token.allowed[why]
 }
@@ -131,3 +141,6 @@ input_matches_invoicing_context {
     matching_customer
     matching_binding
 }
+
+operation_allowed
+    { op.id == "GetPaymentInstitutionPayoutSchedules" }

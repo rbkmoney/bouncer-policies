@@ -134,3 +134,25 @@ test_invoice_access_token_valid_capi_get_payment_by_id{
     count(result.forbidden) == 0
     count(result.allowed) == 1
 }
+
+test_invoice_access_token_valid_capi_cancel_payment{
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.invoice_access_token_valid,
+        fixtures.op_capi_cancel_payment
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_invoice_access_token_valid_capi_capture_payment{
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.invoice_access_token_valid,
+        fixtures.op_capi_capture_payment
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}

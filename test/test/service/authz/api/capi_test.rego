@@ -124,3 +124,63 @@ test_rescind_invoice_allowed {
     count(result.forbidden) == 0
     count(result.allowed) == 1
 }
+
+test_get_payment_institution_payout_schedules_allowed {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_get_payment_institution_payout_schedules
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_update_invoice_template_allowed {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_update_invoice_template
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_create_binding_allowed {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_create_binding
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_get_binding_allowed {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_get_binding
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_capi_session_token_and_owner_allowed {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_owner,
+        fixtures.session_token_valid,
+        fixtures.op_capi_get_binding
+    ])
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}

@@ -11,7 +11,7 @@ user_has_any_role_for_op {
     user_roles_by_operation[_]
 }
 
-user_roles_by_operation[user_role] {
+user_roles_by_operation [user_role] {
     user_role := org_by_operation.roles[_]
     input.abstract_op_id == roles.roles[user_role.id].apis[input.abstract_api_name].operations[_]
 }

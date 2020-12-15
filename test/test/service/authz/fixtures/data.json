@@ -80,6 +80,9 @@
                 "payment": {
                     "id": "PAYMENT"
                 },
+                "refund": {
+                    "id": "REFUND"
+                },
                 "shop": {
                     "id": "SHOP"
                 },
@@ -88,22 +91,25 @@
                 }
             }
         },
-        "invoicing": {
+        "payment_processing": {
             "invoice": {
-                "id": "INVOICE"
-            },
-            "payment": {
-                "id": "PAYMENT"
-            },
-            "shop": {
-                "id": "SHOP"
-            },
-            "party": {
-                "id": "PARTY"
+                "id": "INVOICE",
+                "party": {
+                    "id": "PARTY"
+                },
+                "shop": {
+                    "id": "SHOP"
+                },
+                "payments": [
+                    {
+                        "id": "PAYMENT",
+                        "refunds": [{ "id": "REFUND" }]
+                    }
+                ]
             }
         }
     },
-    
+
     "op_capi_get_invoice_payment_methods": {
         "capi": {
             "op": {
@@ -155,18 +161,20 @@
                 }
             }
         },
-        "invoicing": {
+        "payment_processing": {
             "invoice": {
-                "id": "INVOICE"
-            },
-            "payment": {
-                "id": "PAYMENT_2"
-            },
-            "shop": {
-                "id": "SHOP"
-            },
-            "party": {
-                "id": "PARTY"
+                "id": "INVOICE",
+                "party": {
+                    "id": "PARTY"
+                },
+                "shop": {
+                    "id": "SHOP"
+                },
+                "payments": [
+                    {
+                        "id": "PAYMENT_2"
+                    }
+                ]
             }
         }
     },
@@ -192,21 +200,21 @@
                 }
             }
         },
-        "invoicing": {
+        "payment_processing": {
             "invoice": {
-                "id": "INVOICE"
-            },
-            "payment": {
-                "id": "PAYMENT"
-            },
-            "shop": {
-                "id": "SHOP"
-            },
-            "party": {
-                "id": "PARTY"
-            },
-            "refund": {
-                "id": "REFUND"
+                "id": "INVOICE",
+                "party": {
+                    "id": "PARTY"
+                },
+                "shop": {
+                    "id": "SHOP"
+                },
+                "payments": [
+                    {
+                        "id": "PAYMENT",
+                        "refunds": [{ "id": "REFUND" }]
+                    }
+                ]
             }
         }
     },
@@ -229,15 +237,12 @@
                 }
             }
         },
-        "invoicing": {
+        "payment_processing": {
             "invoice": {
-                "id": "INVOICE"
-            },
-            "payment": {
-                "id": "PAYMENT"
-            },
-            "party": {
-                "id": "PARTY"
+                "id": "INVOICE",
+                "party": {
+                    "id": "PARTY"
+                }
             }
         }
     },
@@ -257,12 +262,12 @@
                 }
             }
         },
-        "invoicing": {
+        "payment_processing": {
             "invoice": {
-                "id": "INVOICE"
-            },
-            "shop": {
-                "id": "SHOP"
+                "id": "INVOICE",
+                "shop": {
+                    "id": "SHOP"
+                }
             }
         }
     },
@@ -288,18 +293,20 @@
                 }
             }
         },
-        "invoicing": {
+        "payment_processing": {
             "invoice": {
-                "id": "INVOICE"
-            },
-            "payment": {
-                "id": "PAYMENT"
-            },
-            "shop": {
-                "id": "SHOP"
-            },
-            "party": {
-                "id": "PARTY"
+                "id": "INVOICE",
+                "party": {
+                    "id": "PARTY"
+                },
+                "shop": {
+                    "id": "SHOP"
+                },
+                "payments": [
+                    {
+                        "id": "PAYMENT"
+                    }
+                ]
             }
         }
     },
@@ -325,18 +332,15 @@
                 }
             }
         },
-        "invoicing": {
+        "payment_processing": {
             "invoice": {
-                "id": "INVOICE"
-            },
-            "shop": {
-                "id": "SHOP"
-            },
-            "party": {
-                "id": "PARTY"
-            },
-            "refund": {
-                "id": "REFUND"
+                "id": "INVOICE",
+                "party": {
+                    "id": "PARTY"
+                },
+                "shop": {
+                    "id": "SHOP"
+                }
             }
         }
     },
@@ -345,12 +349,9 @@
         "capi": {
             "op": {
                 "id": "CreateInvoiceAccessToken",
-                "invoice": {"id": "INVOICE"}
-            }
-        },
-        "invoicing": {
-            "invoice": {
-                "id": "INVOICE"
+                "party": {
+                    "id": "PARTY"
+                }
             }
         }
     },
@@ -364,21 +365,21 @@
                 }
             }
         },
-        "invoicing": {
+        "payment_processing": {
             "invoice": {
-                "id": "INVOICE"
-            },
-            "shop": {
-                "id": "SHOP"
-            },
-            "party": {
-                "id": "PARTY"
-            },
-            "payment": {
-                "id": "PAYMENT"
-            },
-            "refund": {
-                "id": "REFUND"
+                "id": "INVOICE",
+                "party": {
+                    "id": "PARTY"
+                },
+                "shop": {
+                    "id": "SHOP"
+                },
+                "payments": [
+                    {
+                        "id": "PAYMENT",
+                        "refunds": [{ "id": "REFUND" }]
+                    }
+                ]
             }
         }
     },
@@ -420,15 +421,15 @@
                 }
             }
         },
-        "invoicing": {
+        "payment_processing": {
             "invoice": {
-                "id": "INVOICE"
-            },
-            "shop": {
-                "id": "SHOP"
-            },
-            "party": {
-                "id": "PARTY"
+                "id": "INVOICE",
+                "party": {
+                    "id": "PARTY"
+                },
+                "shop": {
+                    "id": "SHOP"
+                }
             }
         }
     },
@@ -626,6 +627,28 @@
                     "roles": [
                         {
                             "id": "Manager",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
+    "user_administrator": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": { "id": "OWNER" },
+                    "roles": [
+                        {
+                            "id": "Administrator",
                             "scope": {
                                 "shop": {
                                     "id": "SHOP"

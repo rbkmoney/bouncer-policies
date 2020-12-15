@@ -45,3 +45,5 @@ operation_allowed
     { op.id == "CreatePayment" }
     { op.id == "GetPayments" }
     { op.id == "GetPaymentByID" }
+    { op.id == "CancelPayment" }
+    { op.id == "CapturePayment" }

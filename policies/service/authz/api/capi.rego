@@ -143,4 +143,13 @@ input_matches_invoicing_context {
 }
 
 operation_allowed
+    { op.id == "GetAccountByID" }
+    { op.id == "GetCategories" }
+    { op.id == "GetCategoryByRef" }
+    { op.id == "GetLocationsNames" }
+    { op.id == "GetPaymentInstitutions" }
+    { op.id == "GetPaymentInstitutionByRef" }
+    { op.id == "GetPaymentInstitutionPaymentTerms" }
+    { op.id == "GetPaymentInstitutionPayoutMethods" }
     { op.id == "GetPaymentInstitutionPayoutSchedules" }
+    { op.id == "GetScheduleByRef" }

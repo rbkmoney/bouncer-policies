@@ -18,7 +18,7 @@ api_name := "CommonAPI"
 
 allowed[why] {
     input.auth.method == "SessionToken"
-    utils.user_is_owner with input.abstract_party_id as op.party.id
+    utils.user_is_owner(op.party.id)
     input_matches_invoicing_context
     why := {
         "code": "org_ownership_allows_operation",
@@ -28,10 +28,7 @@ allowed[why] {
 
 allowed[why] {
     input.auth.method == "SessionToken"
-    user_role_id := utils.user_roles_by_operation[_].id
-        with input.abstract_party_id as op.party.id
-        with input.abstract_op_id as op.id
-        with input.abstract_api_name as api_name
+    user_role_id := utils.user_roles_by_operation(op.party.id, api_name, op.id)[_].id
     input_matches_invoicing_context
     why := {
         "code": "org_role_allows_operation",

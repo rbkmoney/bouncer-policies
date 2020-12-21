@@ -18,32 +18,7 @@ api_name := "CommonAPI"
 
 allowed[why] {
     input.auth.method == "SessionToken"
-    utils.user_is_owner(op.party.id)
-    input_matches_invoicing_context
-    why := {
-        "code": "org_ownership_allows_operation",
-        "description": "User is owner of organization that is subject of this operation"
-    }
-}
-
-allowed[why] {
-    input.auth.method == "SessionToken"
-    user_role_id := utils.user_roles_by_operation(op.party.id, api_name, op.id)[_].id
-    input_matches_invoicing_context
-    why := {
-        "code": "org_role_allows_operation",
-        "description": sprintf("User has role that permits this operation: %v", [user_role_id])
-    }
-}
-
-allowed[why] {
-    input.auth.method == "SessionToken"
-    operation_allowed
-    input_matches_invoicing_context
-    why := {
-        "code": "session_token_allows_operation",
-        "description": "Session token allows this operation"
-    }
+    session_token_allowed[why]
 }
 
 allowed[why] {
@@ -59,6 +34,43 @@ allowed[why] {
 allowed[why] {
     input.auth.method == "InvoiceTemplateAccessToken"
     invoice_template_access_token.allowed[why]
+}
+
+session_token_allowed[why] {
+    utils.user_is_owner(op.party.id)
+    input_matches_invoicing_context
+    why := {
+        "code": "org_ownership_allows_operation",
+        "description": "User is owner of organization that is subject of this operation"
+    }
+}
+
+session_token_allowed[why] {
+    utils.user_is_administrator(op.party.id)
+    input_matches_invoicing_context
+    why := {
+        "code": "administrator_role_allows_operation",
+        "description": "User is administrator of organization that is subject of this operation"
+    }
+}
+
+session_token_allowed[why] {
+    not utils.user_is_administrator(op.party.id)
+    user_role_id := utils.user_roles_by_operation(op.party.id, api_name, op.id)[_].id
+    input_matches_invoicing_context
+    why := {
+        "code": "org_role_allows_operation",
+        "description": sprintf("User has role that permits this operation: %v", [user_role_id])
+    }
+}
+
+session_token_allowed[why] {
+    is_session_token_operation
+    input_matches_invoicing_context
+    why := {
+        "code": "session_token_allows_operation",
+        "description": "Session token allows this operation"
+    }
 }
 
 matching_shop {
@@ -139,7 +151,7 @@ input_matches_invoicing_context {
     matching_binding
 }
 
-operation_allowed
+is_session_token_operation
     { op.id == "GetAccountByID" }
     { op.id == "GetCategories" }
     { op.id == "GetCategoryByRef" }

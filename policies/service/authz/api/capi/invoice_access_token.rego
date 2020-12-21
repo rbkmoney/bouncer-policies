@@ -18,8 +18,7 @@ allowed[why] {
 }
 
 allowed[why] {
-    not op.id == "CreatePaymentResource"
-    operation_allowed
+    is_invoice_access_token_operation
     invoice_matches_token_scope
     why := {
         "code": "invoice_access_token_allows_operation",
@@ -38,12 +37,9 @@ invoice_matches_token_scope {
     scope.invoice.id == op.invoice.id
 }
 
-operation_allowed
+is_invoice_access_token_operation
     { op.id == "GetInvoiceByID" }
     { op.id == "GetInvoiceEvents" }
     { op.id == "GetInvoicePaymentMethods" }
     { op.id == "CreatePayment" }
-    { op.id == "GetPayments" }
     { op.id == "GetPaymentByID" }
-    { op.id == "CancelPayment" }
-    { op.id == "CapturePayment" }

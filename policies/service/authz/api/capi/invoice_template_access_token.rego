@@ -9,7 +9,7 @@ package service.authz.api.capi.invoice_template_access_token
 import input.capi.op
 
 allowed[why] {
-    operation_allowed
+    is_invoice_template_access_token_operation
     invoice_template_matches_token_scope
     why := {
         "code": "invoice_template_access_token_allows_operation",
@@ -23,7 +23,7 @@ invoice_template_matches_token_scope {
     scope.invoice_template.id == op.invoice_template.id
 }
 
-operation_allowed
+is_invoice_template_access_token_operation
     { op.id == "GetInvoiceTemplateByID" }
     { op.id == "CreateInvoiceWithTemplate" }
     { op.id == "GetInvoicePaymentMethodsByTemplateID" }

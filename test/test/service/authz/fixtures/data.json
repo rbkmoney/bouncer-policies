@@ -588,7 +588,7 @@
         }
     },
 
-    "op_capi_abstract": {
+    "op_capi_empty": {
         "capi": {
             "op": {}
         }

@@ -18,8 +18,7 @@ allowed[why] {
 }
 
 allowed[why] {
-    not op.id == "CreatePaymentResource"
-    operation_allowed
+    is_customer_access_token_operation
     customer_matches_token_scope
     why := {
         "code": "customeraccess_token_allows_operation",
@@ -38,7 +37,7 @@ customer_matches_token_scope {
     scope.customer.id == op.customer.id
 }
 
-operation_allowed
+is_customer_access_token_operation
     { op.id == "GetCustomerById" }
     { op.id == "CreateBinding" }
     { op.id == "GetBindings" }

@@ -125,44 +125,84 @@ test_rescind_invoice_allowed {
     count(result.allowed) == 1
 }
 
-test_capi_operation_allowed {
-    test_input := util.deepmerge([
+capi_public_operation_ctx = operation_input {
+    operation_input := util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_default,
         fixtures.session_token_valid,
-        fixtures.op_capi_abstract
+        fixtures.op_capi_empty
     ])
-    result0 := api.assertions with input as test_input with input.capi.op as util.deepmerge([{"id" : "GetAccountByID"}])
-    count(result0.forbidden) == 0
-    count(result0.allowed) == 1
-    result1 := api.assertions with input as test_input with input.capi.op as util.deepmerge([{"id" : "GetCategories"}])
-    count(result1.forbidden) == 0
-    count(result1.allowed) == 1
-    result2 := api.assertions with input as test_input with input.capi.op as util.deepmerge([{"id" : "GetCategoryByRef"}])
-    count(result2.forbidden) == 0
-    count(result2.allowed) == 1
-    result3 := api.assertions with input as test_input with input.capi.op as util.deepmerge([{"id" : "GetLocationsNames"}])
-    count(result3.forbidden) == 0
-    count(result3.allowed) == 1
-    result4 := api.assertions with input as test_input with input.capi.op as util.deepmerge([{"id" : "GetPaymentInstitutions"}])
-    count(result4.forbidden) == 0
-    count(result4.allowed) == 1
-    result5 := api.assertions with input as test_input with input.capi.op as util.deepmerge([{"id" : "GetPaymentInstitutionByRef"}])
-    count(result5.forbidden) == 0
-    count(result5.allowed) == 1
-    result6 := api.assertions with input as test_input with input.capi.op as util.deepmerge([{"id" : "GetPaymentInstitutionPaymentTerms"}])
-    count(result6.forbidden) == 0
-    count(result6.allowed) == 1
-    result7 := api.assertions with input as test_input with input.capi.op as util.deepmerge([{"id" : "GetPaymentInstitutionPayoutMethods"}])
-    count(result7.forbidden) == 0
-    count(result7.allowed) == 1
-    result8 := api.assertions with input as test_input with input.capi.op as util.deepmerge([{"id" : "GetPaymentInstitutionPayoutSchedules"}])
-    count(result8.forbidden) == 0
-    count(result8.allowed) == 1
-    result9 := api.assertions with input as test_input with input.capi.op as util.deepmerge([{"id" : "GetScheduleByRef"}])
-    count(result9.forbidden) == 0
-    count(result9.allowed) == 1
+}
+
+test_capi_allowed_by_session_token_1 {
+    operation_input := capi_public_operation_ctx
+    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetAccountByID"}
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_capi_allowed_by_session_token_2 {
+    operation_input := capi_public_operation_ctx
+    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetCategories"}
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_capi_allowed_by_session_token_3 {
+    operation_input := capi_public_operation_ctx
+    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetCategoryByRef"}
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_capi_allowed_by_session_token_4 {
+    operation_input := capi_public_operation_ctx
+    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetLocationsNames"}
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_capi_allowed_by_session_token_5 {
+    operation_input := capi_public_operation_ctx
+    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetPaymentInstitutions"}
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_capi_allowed_by_session_token_6 {
+    operation_input := capi_public_operation_ctx
+    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetPaymentInstitutionByRef"}
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_capi_allowed_by_session_token_7 {
+    operation_input := capi_public_operation_ctx
+    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetPaymentInstitutionPaymentTerms"}
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_capi_allowed_by_session_token_8 {
+    operation_input := capi_public_operation_ctx
+    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetPaymentInstitutionPayoutMethods"}
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_capi_allowed_by_session_token_9 {
+    operation_input := capi_public_operation_ctx
+    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetPaymentInstitutionPayoutSchedules"}
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
+}
+
+test_capi_allowed_by_session_token_10 {
+    operation_input := capi_public_operation_ctx
+    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetScheduleByRef"}
+    count(result.forbidden) == 0
+    count(result.allowed) == 1
 }
 
 test_update_invoice_template_allowed {

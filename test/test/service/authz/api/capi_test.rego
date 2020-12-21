@@ -125,82 +125,70 @@ test_rescind_invoice_allowed {
     count(result.allowed) == 1
 }
 
-capi_public_operation_ctx = operation_input {
-    operation_input := util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_default,
-        fixtures.session_token_valid,
-        fixtures.op_capi_empty
-    ])
-}
+capi_public_operation_ctx = util.deepmerge([
+    fixtures.env_default,
+    fixtures.requester_default,
+    fixtures.user_default,
+    fixtures.session_token_valid,
+    fixtures.op_capi_empty
+])
 
 test_capi_allowed_by_session_token_1 {
-    operation_input := capi_public_operation_ctx
-    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetAccountByID"}
+    result := api.assertions with input as capi_public_operation_ctx with input.capi.op as {"id" : "GetAccountByID"}
     count(result.forbidden) == 0
     count(result.allowed) == 1
 }
 
 test_capi_allowed_by_session_token_2 {
-    operation_input := capi_public_operation_ctx
-    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetCategories"}
+    result := api.assertions with input as capi_public_operation_ctx with input.capi.op as {"id" : "GetCategories"}
     count(result.forbidden) == 0
     count(result.allowed) == 1
 }
 
 test_capi_allowed_by_session_token_3 {
-    operation_input := capi_public_operation_ctx
-    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetCategoryByRef"}
+    result := api.assertions with input as capi_public_operation_ctx with input.capi.op as {"id" : "GetCategoryByRef"}
     count(result.forbidden) == 0
     count(result.allowed) == 1
 }
 
 test_capi_allowed_by_session_token_4 {
-    operation_input := capi_public_operation_ctx
-    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetLocationsNames"}
+    result := api.assertions with input as capi_public_operation_ctx with input.capi.op as {"id" : "GetLocationsNames"}
     count(result.forbidden) == 0
     count(result.allowed) == 1
 }
 
 test_capi_allowed_by_session_token_5 {
-    operation_input := capi_public_operation_ctx
-    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetPaymentInstitutions"}
+    result := api.assertions with input as capi_public_operation_ctx with input.capi.op as {"id" : "GetPaymentInstitutions"}
     count(result.forbidden) == 0
     count(result.allowed) == 1
 }
 
 test_capi_allowed_by_session_token_6 {
-    operation_input := capi_public_operation_ctx
-    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetPaymentInstitutionByRef"}
+    result := api.assertions with input as capi_public_operation_ctx with input.capi.op as {"id" : "GetPaymentInstitutionByRef"}
     count(result.forbidden) == 0
     count(result.allowed) == 1
 }
 
 test_capi_allowed_by_session_token_7 {
-    operation_input := capi_public_operation_ctx
-    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetPaymentInstitutionPaymentTerms"}
+    result := api.assertions with input as capi_public_operation_ctx with input.capi.op as {"id" : "GetPaymentInstitutionPaymentTerms"}
     count(result.forbidden) == 0
     count(result.allowed) == 1
 }
 
 test_capi_allowed_by_session_token_8 {
-    operation_input := capi_public_operation_ctx
-    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetPaymentInstitutionPayoutMethods"}
+    result := api.assertions with input as capi_public_operation_ctx with input.capi.op as {"id" : "GetPaymentInstitutionPayoutMethods"}
     count(result.forbidden) == 0
     count(result.allowed) == 1
 }
 
 test_capi_allowed_by_session_token_9 {
-    operation_input := capi_public_operation_ctx
-    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetPaymentInstitutionPayoutSchedules"}
+    result := api.assertions with input as capi_public_operation_ctx with input.capi.op as {"id" : "GetPaymentInstitutionPayoutSchedules"}
     count(result.forbidden) == 0
     count(result.allowed) == 1
 }
 
 test_capi_allowed_by_session_token_10 {
-    operation_input := capi_public_operation_ctx
-    result := api.assertions with input as operation_input with input.capi.op as {"id" : "GetScheduleByRef"}
+    result := api.assertions with input as capi_public_operation_ctx with input.capi.op as {"id" : "GetScheduleByRef"}
     count(result.forbidden) == 0
     count(result.allowed) == 1
 }

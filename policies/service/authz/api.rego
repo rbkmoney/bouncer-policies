@@ -61,6 +61,11 @@ forbidden[why] {
     anapi.forbidden[why]
 }
 
+forbidden[why] {
+    input.capi
+    capi.forbidden[why]
+}
+
 warnings[why] {
     not blacklists.source_ip_range
     why := "Blacklist 'source_ip_range' is not defined, blacklisting by IP will NOT WORK."

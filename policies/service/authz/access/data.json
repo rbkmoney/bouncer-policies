@@ -1,0 +1,108 @@
+{
+    "accesses": {
+        "CommonAPI" : {
+            "shop" : {
+                "operations": [
+                    "CreateCustomer",
+                    "GetCustomerById",
+                    "DeleteCustomer",
+                    "CreateCustomerAccessToken",
+                    "CreateBinding",
+                    "GetBindings",
+                    "GetBinding",
+                    "GetCustomerEvents",
+
+                    "CreateInvoiceTemplate",
+                    "GetInvoiceTemplateByID",
+                    "UpdateInvoiceTemplate",
+                    "DeleteInvoiceTemplate",
+                    "CreateInvoiceWithTemplate",
+                    "GetInvoicePaymentMethodsByTemplateID",
+
+                    "CreateInvoice",
+                    "CreateInvoiceAccessToken",
+                    "GetInvoiceByID",
+                    "GetInvoiceByExternalID",
+                    "FulfillInvoice",
+                    "RescindInvoice",
+                    "GetInvoiceEvents",
+                    "GetInvoicePaymentMethods",
+
+                    "CreatePayment",
+                    "GetPayments",
+                    "GetPaymentByID",
+                    "GetPaymentByExternalID",
+                    "CancelPayment",
+                    "CapturePayment",
+                    "CreateRefund",
+                    "GetRefunds",
+                    "GetRefundByID",
+                    "GetRefundByExternalID",
+                    "GetChargebacks",
+                    "GetChargebackByID",
+
+                    "ActivateShop",
+                    "SuspendShop",
+                    "GetShopByID",
+                    "GetShopByIDForParty",
+                    "ActivateShopForParty",
+                    "SuspendShopForParty"
+                ]
+            },
+            "invoice" : {
+                "operations": [
+                    "CreateInvoiceAccessToken",
+                    "GetInvoiceByID",
+                    "GetInvoiceByExternalID",
+                    "FulfillInvoice",
+                    "RescindInvoice",
+                    "GetInvoiceEvents",
+                    "GetInvoicePaymentMethods",
+                    "CreatePayment"
+                ]
+            },
+            "payment" : {
+                "operations": [
+                    "GetPayments",
+                    "GetPaymentByID",
+                    "GetPaymentByExternalID",
+                    "CancelPayment",
+                    "CapturePayment",
+                    "CreateRefund"
+                ]
+            },
+            "refund" : {
+                "operations": [
+                    "GetRefunds",
+                    "GetRefundByID",
+                    "GetRefundByExternalID"
+                ]
+            },
+            "invoice_template" : {
+                "operations": [
+                    "GetInvoiceTemplateByID",
+                    "UpdateInvoiceTemplate",
+                    "DeleteInvoiceTemplate",
+                    "CreateInvoiceWithTemplate",
+                    "GetInvoicePaymentMethodsByTemplateID"
+                ]
+            },
+            "customer" : {
+                "operations": [
+                    "CreateCustomer",
+                    "GetCustomerById",
+                    "DeleteCustomer",
+                    "GetCustomerEvents",
+                    "CreateCustomerAccessToken",
+                    "CreateBinding",
+                    "GetBindings"
+                ]
+            },
+            "binding" : {
+                "operations": [
+                    "GetBinding"
+                ]
+            }
+        }
+    }
+}

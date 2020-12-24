@@ -8,12 +8,15 @@ import data.service.authz.blacklists
 import data.service.authz.whitelists
 import data.service.authz.roles
 import data.service.authz.org
+import data.service.authz.decision
 
 assertions := {
     "forbidden" : { why | forbidden[why] },
     "allowed"   : { why | allowed[why] },
     "restrictions": { what.type: what.restrictions[what.type] | restrictions[what] }
 }
+
+decision := decision.decide(assertions)
 
 # Set of assertions which tell why operation under the input context is forbidden.
 # When the set is empty operation is not explicitly forbidden.

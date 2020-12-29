@@ -5,8 +5,8 @@ import data.service.authz.api
 import data.test.service.authz.util
 import data.test.service.authz.fixtures
 
-test_decision {
-    result := api.decision with input as {}
+test_judgement {
+    result := api.judgement with input as {}
     result.resolution[0] == "forbidden"
     count(result.resolution[1]) == 1
 }

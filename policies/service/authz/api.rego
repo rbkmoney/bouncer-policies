@@ -16,7 +16,7 @@ assertions := {
     "restrictions": { what.type: what.restrictions[what.type] | restrictions[what] }
 }
 
-decision := decision.decide(assertions)
+judgement := decision.decide(assertions)
 
 # Set of assertions which tell why operation under the input context is forbidden.
 # When the set is empty operation is not explicitly forbidden.

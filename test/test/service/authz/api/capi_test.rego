@@ -8,7 +8,7 @@ test_get_refunds_allowed {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
-        fixtures.user_default,
+        fixtures.user_administrator,
         fixtures.session_token_valid,
         fixtures.op_capi_get_refunds
     ])
@@ -53,30 +53,6 @@ test_forbidden_invoicing_context_no_party {
     count(result.allowed) == 0
 }
 
-test_forbidden_invoicing_context_no_refund {
-    result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_default,
-        fixtures.session_token_valid,
-        fixtures.op_capi_no_refund_context
-    ])
-    count(result.forbidden) == 0
-    count(result.allowed) == 0
-}
-
-test_forbidden_invoicing_context_no_payment {
-    result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_default,
-        fixtures.session_token_valid,
-        fixtures.op_capi_no_payment_context
-    ])
-    count(result.forbidden) == 0
-    count(result.allowed) == 0
-}
-
 test_create_invoice_access_token_allowed {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
@@ -105,7 +81,7 @@ test_get_refund_by_id_allowed {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
-        fixtures.user_default,
+        fixtures.user_administrator,
         fixtures.session_token_valid,
         fixtures.op_capi_get_refund_by_id
     ])
@@ -197,7 +173,7 @@ test_update_invoice_template_allowed {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
-        fixtures.user_default,
+        fixtures.user_administrator,
         fixtures.session_token_valid,
         fixtures.op_capi_update_invoice_template
     ])
@@ -209,7 +185,7 @@ test_create_binding_allowed {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
-        fixtures.user_default,
+        fixtures.user_administrator,
         fixtures.session_token_valid,
         fixtures.op_capi_create_binding
     ])
@@ -221,7 +197,7 @@ test_get_binding_allowed {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
-        fixtures.user_default,
+        fixtures.user_administrator,
         fixtures.session_token_valid,
         fixtures.op_capi_get_binding
     ])

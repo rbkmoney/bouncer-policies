@@ -4,6 +4,7 @@ import data.service.authz.api.capi.invoice_access_token
 import data.service.authz.api.capi.customer_access_token
 import data.service.authz.api.capi.invoice_template_access_token
 import data.service.authz.api.utils
+import data.service.authz.access
 
 import input.capi.op
 import input.payment_processing
@@ -18,7 +19,7 @@ api_name := "CommonAPI"
 
 forbidden[why] {
     input.auth.method == "SessionToken"
-    not_session_token_operation
+    forbidden_session_token_operation
     why := {
         "code": "operation_not_allowed_for_session_token",
         "description": "Operation not allowed for session token"
@@ -33,6 +34,7 @@ forbidden[why] {
 
 allowed[why] {
     input.auth.method == "SessionToken"
+    has_access
     session_token_allowed[why]
 }
 
@@ -61,16 +63,6 @@ session_token_allowed[why] {
 }
 
 session_token_allowed[why] {
-    utils.user_is_administrator(op.party.id)
-    input_matches_payment_processing_context
-    why := {
-        "code": "administrator_role_allows_operation",
-        "description": "User is administrator of organization that is subject of this operation"
-    }
-}
-
-session_token_allowed[why] {
-    not utils.user_is_administrator(op.party.id)
     user_role_id := utils.user_roles_by_operation(op.party.id, api_name, op.id)[_].id
     input_matches_payment_processing_context
     why := {
@@ -90,137 +82,138 @@ session_token_allowed[why] {
 
 ##
 
-match_shop {
-    op.shop.id
-    user_roles := utils.user_roles_by_operation(op.party.id, api_name, op.id)
-    op.shop.id == user_roles[_].scope.shop.id
-}
-
-match_invoice {
-    op.invoice.id
-    match_shop
-    op.invoice.id == payment_processing.invoice.id
-    op.party.id == payment_processing.invoice.party.id
-    validate_shop(payment_processing.invoice.shop.id)
-}
-
-match_payment {
-    op.payment.id
-    match_invoice
-    op.payment.id == payment_processing.invoice.payments[_].id
-}
-
-match_refund {
-    op.refund.id
-    match_payment
-    op.payment.id == payment_processing.invoice.payments[i].id
-    op.refund.id == payment_processing.invoice.payments[i].refunds[_].id
-}
-
-match_invoice_template {
-    op.invoice_template.id
-    match_shop
-    op.invoice_template.id == payment_processing.invoice_template.id
-    op.party.id == payment_processing.invoice_template.party.id
-    validate_shop(payment_processing.invoice_template.shop.id)
-}
-
-match_customer {
-    op.customer.id
-    match_shop
-    op.customer.id == payment_processing.customer.id
-    op.party.id == payment_processing.customer.party.id
-    validate_shop(payment_processing.customer.shop.id)
-}
-
-match_binding {
-    op.binding.id
-    match_customer
-    op.binding.id == payment_processing.customer.bindings[_].id
-}
-
-##
-
-matching_shop {
-    match_shop
-}
-
-matching_shop {
-    not op.shop.id
-    not need_access("shop")
-}
-
-matching_invoice {
-    match_invoice
-}
-
-matching_invoice {
-    not op.invoice.id
-    not need_access("invoice")
-}
-
-matching_payment {
-    match_payment
-}
-
-matching_payment {
-    not op.payment.id
-    not need_access("payment")
-}
-
-matching_refund {
-    match_refund
-}
-
-matching_refund {
-    not op.refund.id
-    not need_access("refund")
-}
-
-matching_invoice_template {
-    match_invoice_template
-}
-
-matching_invoice_template {
-    not op.invoice_template.id
-    not need_access("invoice_template")
-}
-
-matching_customer {
-    match_customer
-}
-
-matching_customer {
-    not op.customer.id
-    not need_access("customer")
-}
-
-matching_binding {
-    match_binding
-}
-
-matching_binding {
-    not op.binding.id
-    not need_access("binding")
-}
-
-input_matches_payment_processing_context {
-    matching_shop
-    matching_invoice
-    matching_payment
-    matching_refund
-    matching_invoice_template
-    matching_customer
-    matching_binding
-}
-
-validate_shop(shop_id) {
+matching_shop(shop_id) {
     op.shop.id
     op.shop.id == shop_id
 }
 
-need_access(access_type) {
-    utils.need_access(api_name, access_type, op.id)
+matching_shop(shop_id) {
+    not op.shop.id
+}
+
+matching_invoice {
+    op.invoice.id
+    op.invoice.id == payment_processing.invoice.id
+    op.party.id == payment_processing.invoice.party.id
+    matching_shop(payment_processing.invoice.shop.id)
+}
+
+matching_invoice {
+    not op.invoice.id
+}
+
+matching_invoice_template {
+    op.invoice_template.id
+    op.invoice_template.id == payment_processing.invoice_template.id
+    op.party.id == payment_processing.invoice_template.party.id
+    matching_shop(payment_processing.invoice_template.shop.id)
+}
+
+matching_invoice_template {
+    not op.invoice_template.id
+}
+
+matching_customer {
+    op.customer.id
+    op.customer.id == payment_processing.customer.id
+    op.party.id == payment_processing.customer.party.id
+    matching_shop(payment_processing.customer.shop.id)
+}
+
+matching_customer {
+    not op.customer.id
+}
+
+input_matches_payment_processing_context {
+    matching_invoice
+    matching_invoice_template
+    matching_customer
+}
+
+has_access {
+    not missing_access
+}
+
+missing_access {
+    entity := access_by_operation[_]
+    not has_entity_access(entity)
+}
+
+access_by_operation[entity] {
+    access[api_name][entity].operations[_] == op.id
+}
+
+has_entity_access("party") {
+    op.party.id
+    has_party_access(op.party.id)
+}
+has_entity_access("shop") {
+    op.shop.id
+    has_shop_access(op.shop.id, op.party.id)
+}
+has_entity_access("invoice") {
+    op.invoice.id
+    has_invoice_access(op.invoice.id)
+}
+has_entity_access("invoice_template") {
+    op.invoice_template.id
+    has_invoice_template_access(op.invoice_template.id)
+}
+has_entity_access("customer") {
+    op.customer.id
+    has_customer_access(op.customer.id)
+}
+
+has_party_access(id) {
+    _ := utils.org_by_operation(id)
+    true
+}
+
+has_party_access(id) {
+    utils.user_is_owner(id)
+}
+
+has_shop_access(id, party_id) {
+    roles := utils.user_roles_by_operation(party_id, api_name, op.id)
+    role := roles[_]
+    user_role_has_shop_access(id, role)
+}
+
+has_shop_access(id, party_id) {
+    utils.user_is_administrator(op.party.id)
+}
+
+has_shop_access(id, party_id) {
+    utils.user_is_owner(party_id)
+}
+
+user_role_has_shop_access(shop_id, role) {
+    role.scope.shop
+    shop_id == role.scope.shop.id
+}
+user_role_has_shop_access(shop_id, role) {
+    not role.scope
+}
+
+has_invoice_access(id) {
+    invoice := payment_processing.invoice
+    invoice.id == id
+    has_party_access(invoice.party.id)
+    has_shop_access(invoice.shop.id, invoice.party.id)
+}
+
+has_invoice_template_access(id) {
+    invoice_template := payment_processing.invoice_template
+    invoice_template.id == id
+    has_party_access(invoice_template.party.id)
+    has_shop_access(invoice_template.shop.id, invoice_template.party.id)
+}
+
+has_customer_access(id) {
+    customer := payment_processing.customer
+    customer.id == id
+    has_party_access(customer.party.id)
+    has_shop_access(customer.shop.id, customer.party.id)
 }
 
 is_session_token_operation
@@ -235,5 +228,5 @@ is_session_token_operation
     { op.id == "GetPaymentInstitutionPayoutSchedules" }
     { op.id == "GetScheduleByRef" }
 
-not_session_token_operation
+forbidden_session_token_operation
     { op.id == "CreatePaymentResource" }

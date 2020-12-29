@@ -1,108 +1,164 @@
 {
-    "accesses": {
-        "CommonAPI" : {
-            "shop" : {
-                "operations": [
-                    "CreateCustomer",
-                    "GetCustomerById",
-                    "DeleteCustomer",
-                    "CreateCustomerAccessToken",
-                    "CreateBinding",
-                    "GetBindings",
-                    "GetBinding",
-                    "GetCustomerEvents",
+    "CommonAPI" : {
+        "shop" : {
+            "operations": [
+                "CreateCustomer",
+                "CreateInvoiceTemplate",
+                "UpdateInvoiceTemplate",
+                "DeleteInvoiceTemplate",
+                "CreateInvoiceWithTemplate",
+                "GetInvoicePaymentMethodsByTemplateID",
+                "CreateInvoice",
+                "ActivateShop",
+                "SuspendShop",
+                "GetShopByID",
+                "GetShopByIDForParty",
+                "ActivateShopForParty",
+                "SuspendShopForParty"
+            ]
+        },
+        "invoice" : {
+            "operations": [
+                "CreateInvoiceAccessToken",
+                "GetInvoiceByID",
+                "GetInvoiceByExternalID",
+                "FulfillInvoice",
+                "RescindInvoice",
+                "GetInvoiceEvents",
+                "GetInvoicePaymentMethods",
+                "CreatePayment",
+                "GetPayments",
+                "GetPaymentByID",
+                "GetPaymentByExternalID",
+                "CancelPayment",
+                "CapturePayment",
+                "CreateRefund",
+                "GetRefunds",
+                "GetRefundByID",
+                "GetRefundByExternalID",
+                "GetChargebacks",
+                "GetChargebackByID"
+            ]
+        },
+        "invoice_template" : {
+            "operations": [
+                "GetInvoiceTemplateByID",
+                "UpdateInvoiceTemplate",
+                "DeleteInvoiceTemplate",
+                "CreateInvoiceWithTemplate",
+                "GetInvoicePaymentMethodsByTemplateID"
+            ]
+        },
+        "customer" : {
+            "operations": [
+                "GetCustomerById",
+                "DeleteCustomer",
+                "GetCustomerEvents",
+                "CreateCustomerAccessToken",
+                "CreateBinding",
+                "GetBindings",
+                "GetBinding"
+            ]
+        },
+        "party" : {
+            "operations": [
+                "GetPaymentConversionStats",
+                "GetPaymentRevenueStats",
+                "GetPaymentGeoStats",
+                "GetPaymentRateStats",
+                "GetPaymentMethodStats",
 
-                    "CreateInvoiceTemplate",
-                    "GetInvoiceTemplateByID",
-                    "UpdateInvoiceTemplate",
-                    "DeleteInvoiceTemplate",
-                    "CreateInvoiceWithTemplate",
-                    "GetInvoicePaymentMethodsByTemplateID",
+                "GetClaims",
+                "GetClaimByID",
+                "CreateClaim",
+                "RevokeClaimByID",
 
-                    "CreateInvoice",
-                    "CreateInvoiceAccessToken",
-                    "GetInvoiceByID",
-                    "GetInvoiceByExternalID",
-                    "FulfillInvoice",
-                    "RescindInvoice",
-                    "GetInvoiceEvents",
-                    "GetInvoicePaymentMethods",
+                "GetContracts",
+                "GetContractByID",
+                "GetContractAdjustments",
+                "GetContractAdjustmentByID",
+                "GetContractsForParty",
+                "GetContractByIDForParty",
+                "GetContractAdjustmentsForParty",
+                "GetContractAdjustmentByIDForParty",
 
-                    "CreatePayment",
-                    "GetPayments",
-                    "GetPaymentByID",
-                    "GetPaymentByExternalID",
-                    "CancelPayment",
-                    "CapturePayment",
-                    "CreateRefund",
-                    "GetRefunds",
-                    "GetRefundByID",
-                    "GetRefundByExternalID",
-                    "GetChargebacks",
-                    "GetChargebackByID",
+                "CreateCustomer",
+                "GetCustomerById",
+                "DeleteCustomer",
+                "CreateCustomerAccessToken",
+                "CreateBinding",
+                "GetBindings",
+                "GetBinding",
+                "GetCustomerEvents",
 
-                    "ActivateShop",
-                    "SuspendShop",
-                    "GetShopByID",
-                    "GetShopByIDForParty",
-                    "ActivateShopForParty",
-                    "SuspendShopForParty"
-                ]
-            },
-            "invoice" : {
-                "operations": [
-                    "CreateInvoiceAccessToken",
-                    "GetInvoiceByID",
-                    "GetInvoiceByExternalID",
-                    "FulfillInvoice",
-                    "RescindInvoice",
-                    "GetInvoiceEvents",
-                    "GetInvoicePaymentMethods",
-                    "CreatePayment"
-                ]
-            },
-            "payment" : {
-                "operations": [
-                    "GetPayments",
-                    "GetPaymentByID",
-                    "GetPaymentByExternalID",
-                    "CancelPayment",
-                    "CapturePayment",
-                    "CreateRefund"
-                ]
-            },
-            "refund" : {
-                "operations": [
-                    "GetRefunds",
-                    "GetRefundByID",
-                    "GetRefundByExternalID"
-                ]
-            },
-            "invoice_template" : {
-                "operations": [
-                    "GetInvoiceTemplateByID",
-                    "UpdateInvoiceTemplate",
-                    "DeleteInvoiceTemplate",
-                    "CreateInvoiceWithTemplate",
-                    "GetInvoicePaymentMethodsByTemplateID"
-                ]
-            },
-            "customer" : {
-                "operations": [
-                    "CreateCustomer",
-                    "GetCustomerById",
-                    "DeleteCustomer",
-                    "GetCustomerEvents",
-                    "CreateCustomerAccessToken",
-                    "CreateBinding",
-                    "GetBindings"
-                ]
-            },
-            "binding" : {
-                "operations": [
-                    "GetBinding"
-                ]
-            }
+                "CreateInvoiceTemplate",
+                "GetInvoiceTemplateByID",
+                "UpdateInvoiceTemplate",
+                "DeleteInvoiceTemplate",
+                "CreateInvoiceWithTemplate",
+                "GetInvoicePaymentMethodsByTemplateID",
+
+                "CreateInvoice",
+                "CreateInvoiceAccessToken",
+                "GetInvoiceByID",
+                "GetInvoiceByExternalID",
+                "FulfillInvoice",
+                "RescindInvoice",
+                "GetInvoiceEvents",
+                "GetInvoicePaymentMethods",
+
+                "GetMyParty",
+                "ActivateMyParty",
+                "SuspendMyParty",
+
+                "CreatePayment",
+                "GetPayments",
+                "GetPaymentByID",
+                "GetRefundByExternalID",
+                "GetPaymentByExternalID",
+                "CancelPayment",
+                "CapturePayment",
+                "CreateRefund",
+                "GetRefunds",
+                "GetRefundByID",
+                "GetChargebacks",
+                "GetChargebackByID",
+
+                "GetPayoutTools",
+                "GetPayoutToolByID",
+                "GetPayout",
+                "CreatePayout",
+                "GetPayoutToolsForParty",
+                "GetPayoutToolByIDForParty",
+
+                "GetReports",
+                "GetReportsForParty",
+                "GetReport",
+                "GetReportForParty",
+                "CreateReport",
+                "CreateReportForParty",
+                "DownloadFile",
+                "DownloadFileForParty",
+
+                "SearchInvoices",
+                "SearchPayments",
+                "SearchPayouts",
+                "SearchRefunds",
+
+                "ActivateShop",
+                "SuspendShop",
+                "GetShops",
+                "GetShopByID",
+                "GetShopsForParty",
+                "GetShopByIDForParty",
+                "ActivateShopForParty",
+                "SuspendShopForParty",
+
+                "CreateWebhook",
+                "GetWebhooks",
+                "GetWebhookByID",
+                "DeleteWebhookByID"
+            ]
         }
     }
 }

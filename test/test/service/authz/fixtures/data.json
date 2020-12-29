@@ -77,15 +77,6 @@
                 "invoice": {
                     "id": "INVOICE"
                 },
-                "payment": {
-                    "id": "PAYMENT"
-                },
-                "refund": {
-                    "id": "REFUND"
-                },
-                "shop": {
-                    "id": "SHOP"
-                },
                 "party": {
                     "id": "PARTY"
                 }
@@ -99,15 +90,7 @@
                 },
                 "shop": {
                     "id": "SHOP"
-                },
-                "payments": [
-                    {
-                        "id": "PAYMENT",
-                        "refunds": [
-                            { "id": "REFUND" }
-                        ]
-                    }
-                ]
+                }
             }
         }
     },
@@ -170,13 +153,8 @@
                     "id": "PARTY"
                 },
                 "shop": {
-                    "id": "SHOP"
-                },
-                "payments": [
-                    {
-                        "id": "PAYMENT_2"
-                    }
-                ]
+                    "id": "SHOP_2"
+                }
             }
         }
     },
@@ -276,85 +254,26 @@
         }
     },
 
-    "op_capi_no_refund_context": {
-        "capi": {
-            "op": {
-                "id": "GetRefundByID",
-                "invoice": {
-                    "id": "INVOICE"
-                },
-                "shop": {
-                    "id": "SHOP"
-                },
-                "party": {
-                    "id": "PARTY"
-                },
-                "payment": {
-                    "id": "PAYMENT"
-                },
-                "refund": {
-                    "id": "REFUND"
-                }
-            }
-        },
-        "payment_processing": {
-            "invoice": {
-                "id": "INVOICE",
-                "party": {
-                    "id": "PARTY"
-                },
-                "shop": {
-                    "id": "SHOP"
-                },
-                "payments": [
-                    {
-                        "id": "PAYMENT"
-                    }
-                ]
-            }
-        }
-    },
-
-    "op_capi_no_payment_context": {
-        "capi": {
-            "op": {
-                "id": "GetRefundByID",
-                "invoice": {
-                    "id": "INVOICE"
-                },
-                "shop": {
-                    "id": "SHOP"
-                },
-                "party": {
-                    "id": "PARTY"
-                },
-                "payment": {
-                    "id": "PAYMENT"
-                },
-                "refund": {
-                    "id": "REFUND"
-                }
-            }
-        },
-        "payment_processing": {
-            "invoice": {
-                "id": "INVOICE",
-                "party": {
-                    "id": "PARTY"
-                },
-                "shop": {
-                    "id": "SHOP"
-                }
-            }
-        }
-    },
-
     "op_capi_create_invoice_access_token": {
         "capi": {
             "op": {
                 "id": "CreateInvoiceAccessToken",
                 "party": {
                     "id": "PARTY"
+                },
+                "invoice": {
+                    "id": "INVOICE"
+                }
+            }
+        },
+        "payment_processing": {
+            "invoice": {
+                "id": "INVOICE",
+                "party": {
+                    "id": "PARTY"
+                },
+                "shop": {
+                    "id": "SHOP"
                 }
             }
         }
@@ -432,14 +351,8 @@
                 "party": {
                     "id": "PARTY"
                 },
-                "shop": {
-                    "id": "SHOP"
-                },
                 "customer": {
                     "id": "CUSTOMER"
-                },
-                "binding": {
-                    "id": "BINDING"
                 }
             }
         },

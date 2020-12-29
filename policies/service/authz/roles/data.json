@@ -1,59 +1,42 @@
 {
     "roles": {
         "Integrator" : {
-
-        },
-        "Bookkeeper" : {
-
-        },
-        "Manager" : {
             "apis": {
                 "CommonAPI" : {
                     "operations": [
-                        "CreateInvoice",
-                        "GetInvoiceByID",
-                        "GetInvoiceEvents",
-                        "FulfillInvoice",
-                        "RescindInvoice",
+                        "GetMyParty",
                         "GetPayments",
                         "GetPaymentByID",
-                        "CancelPayment",
-                        "CapturePayment",
-                        "GetRefunds",
-                        "GetRefundByID",
-                        "CreateRefund",
-                        "CreateInvoiceTemplate",
-                        "GetInvoiceTemplateByID",
-                        "UpdateInvoiceTemplate",
-                        "DeleteInvoiceTemplate",
+                        "GetShops",
+                        "CreateWebhook",
+                        "GetWebhooks",
+                        "GetWebhookByID",
+                        "DeleteWebhookByID"
+                    ]
+                },
+                "AnalyticsAPI" : {
+                    "operations": [
                         "SearchInvoices",
                         "SearchPayments",
-                        "SearchPayouts",
-                        "CreateInvoiceTemplate",
-                        "GetInvoiceTemplateByID",
-                        "UpdateInvoiceTemplate",
-                        "DeleteInvoiceTemplate",
-                        "CreateInvoiceWithTemplate",
-                        "ActivateShop",
-                        "SuspendShop",
-                        "GetShops",
-                        "GetShopByID",
-                        "GetReports",
-                        "DownloadFile",
-                        "GetContractByID",
-                        "GetPayoutToolByID",
-                        "GetContractAdjustments",
-                        "GetContractAdjustmentByID",
-                        "CreateCustomer",
-                        "GetCustomerById",
-                        "DeleteCustomer",
-                        "CreateCustomerAccessToken",
-                        "CreateBinding",
-                        "GetBindings",
-                        "GetBinding",
-                        "GetCustomerEvents",
+                        "SearchRefunds"
+                    ]
+                }
+            }
+        },
+        "Bookkeeper" : {
+            "apis": {
+                "CommonAPI" : {
+                    "operations": [
                         "GetMyParty",
-                        "GetContracts"
+                        "GetPayments",
+                        "GetPaymentByID",
+                        "CreateRefund",
+                        "GetRefunds",
+                        "GetRefundByID",
+                        "GetPayoutTools",
+                        "GetPayoutToolByID",
+                        "CreatePayout",
+                        "GetShops"
                     ]
                 },
                 "AnalyticsAPI" : {
@@ -61,7 +44,52 @@
                         "SearchInvoices",
                         "SearchPayments",
                         "SearchRefunds",
-                        "SearchChargebacks"
+                        "SearchPayouts",
+                        "SearchReports",
+                        "GetReport",
+                        "CreateReport",
+                        "CancelReport",
+                        "DownloadFile"
+                    ]
+                }
+            }
+        },
+        "Manager" : {
+            "apis": {
+                "CommonAPI" : {
+                    "operations": [
+                        "CreateInvoiceTemplate",
+                        "GetInvoicePaymentMethodsByTemplateID",
+                        "CreateInvoice",
+                        "GetInvoiceByID",
+                        "FulfillInvoice",
+                        "RescindInvoice",
+                        "GetInvoicePaymentMethods",
+                        "GetMyParty",
+                        "GetPayments",
+                        "GetPaymentByID",
+                        "GetPayoutTools",
+                        "CreatePayout",
+                        "GetShops"
+                    ]
+                },
+                "AnalyticsAPI" : {
+                    "operations": [
+                        "SearchInvoices",
+                        "SearchPayments",
+                        "SearchRefunds",
+                        "SearchPayouts",
+                        "GetPaymentsToolDistribution",
+                        "GetPaymentsAmount",
+                        "GetAveragePayment",
+                        "GetPaymentsCount",
+                        "GetPaymentsErrorDistribution",
+                        "GetPaymentsSplitAmount",
+                        "GetPaymentsSplitCount",
+                        "GetRefundsAmount",
+                        "GetCurrentBalances",
+                        "GetPaymentsSubErrorDistribution",
+                        "GetCurrentBalancesGroupByShop"
                     ]
                 }
             }

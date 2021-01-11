@@ -11,7 +11,7 @@ test_invoice_access_token_valid_1 {
         fixtures.invoice_access_token_valid,
         fixtures.op_capi_create_payment_resource
     ])
-    count(result.forbidden) == 0
+    not result.forbidden
     result.allowed[_].code == "invoice_access_token_allows_tokenization"
 }
 
@@ -22,7 +22,7 @@ test_invoice_access_token_valid_2 {
         fixtures.invoice_access_token_valid,
         fixtures.op_capi_get_invoice
     ])
-    count(result.forbidden) == 0
+    not result.forbidden
     result.allowed[_].code == "invoice_access_token_allows_operation"
 }
 
@@ -43,8 +43,8 @@ test_invoice_access_token_invalid_party {
         fixtures.invoice_access_token_valid_party_2,
         fixtures.op_capi_create_payment_resource
     ])
-    count(result.forbidden) == 0
-    count(result.allowed) == 0
+    not result.forbidden
+    not result.allowed
 }
 
 test_invoice_access_token_invalid_invoice {
@@ -54,8 +54,8 @@ test_invoice_access_token_invalid_invoice {
         fixtures.invoice_access_token_valid,
         fixtures.op_capi_get_invoice_2
     ])
-    count(result.forbidden) == 0
-    count(result.allowed) == 0
+    not result.forbidden
+    not result.allowed
 }
 
 test_invoice_access_token_invalid_operation_1 {
@@ -65,8 +65,8 @@ test_invoice_access_token_invalid_operation_1 {
         fixtures.invoice_access_token_valid,
         fixtures.op_capi_create_refund
     ])
-    count(result.forbidden) == 0
-    count(result.allowed) == 0
+    not result.forbidden
+    not result.allowed
 }
 
 test_invoice_access_token_invalid_operation_2 {
@@ -76,8 +76,8 @@ test_invoice_access_token_invalid_operation_2 {
         fixtures.invoice_access_token_valid,
         fixtures.op_capi_create_invoice
     ])
-    count(result.forbidden) == 0
-    count(result.allowed) == 0
+    not result.forbidden
+    not result.allowed
 }
 
 test_invoice_access_token_valid_capi_get_invoice_payment_methods{
@@ -87,7 +87,7 @@ test_invoice_access_token_valid_capi_get_invoice_payment_methods{
         fixtures.invoice_access_token_valid,
         fixtures.op_capi_get_invoice_payment_methods
     ])
-    count(result.forbidden) == 0
+    not result.forbidden
     count(result.allowed) == 1
 }
 
@@ -98,7 +98,7 @@ test_invoice_access_token_valid_capi_get_invoice_events{
         fixtures.invoice_access_token_valid,
         fixtures.op_capi_get_invoice_events
     ])
-    count(result.forbidden) == 0
+    not result.forbidden
     count(result.allowed) == 1
 }
 
@@ -109,7 +109,7 @@ test_invoice_access_token_valid_capi_create_payment{
         fixtures.invoice_access_token_valid,
         fixtures.op_capi_create_payment
     ])
-    count(result.forbidden) == 0
+    not result.forbidden
     count(result.allowed) == 1
 }
 
@@ -120,7 +120,7 @@ test_invoice_access_token_valid_capi_get_payments{
         fixtures.invoice_access_token_valid,
         fixtures.op_capi_get_payments
     ])
-    count(result.forbidden) == 0
+    not result.forbidden
     count(result.allowed) == 1
 }
 
@@ -131,6 +131,6 @@ test_invoice_access_token_valid_capi_get_payment_by_id{
         fixtures.invoice_access_token_valid,
         fixtures.op_capi_get_payment_by_id
     ])
-    count(result.forbidden) == 0
+    not result.forbidden
     count(result.allowed) == 1
 }

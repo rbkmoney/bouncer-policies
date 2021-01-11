@@ -11,24 +11,12 @@ import data.service.authz.org
 import data.service.authz.judgement
 
 assertions = a {
-    restrictions_check
-    a := {
+    a0 := {
         "forbidden" : { why | forbidden[why] },
         "allowed"   : { why | allowed[why] },
         "restrictions": { what.type: what.restrictions[what.type] | restrictions[what] }
     }
-}
-
-assertions = a {
-    not restrictions_check
-    a := {
-        "forbidden" : { why | forbidden[why] },
-        "allowed"   : { why | allowed[why] }
-    }
-}
-
-restrictions_check {
-    count(restrictions[what]) > 0
+    a := { name: values | values := a0[name]; count(values) > 0 }
 }
 
 judgement := judgement.judge(assertions)

@@ -1,16 +1,16 @@
 package service.authz.judgement
 
 judge(assertions) = jm {
-    count(assertions.forbidden) > 0
+    assertions.forbidden
     jm := {
         "resolution": ["forbidden", assertions.forbidden]
     }
 }
 
 judge(assertions) = jm {
-    count(assertions.forbidden) == 0
+    not assertions.forbidden
     assertions.restrictions
-    count(assertions.allowed) > 0
+    assertions.allowed
     jm := {
         "resolution": ["restricted", assertions.allowed],
         "restrictions": assertions.restrictions
@@ -18,17 +18,17 @@ judge(assertions) = jm {
 }
 
 judge(assertions) = jm {
-    count(assertions.forbidden) == 0
+    not assertions.forbidden
     not assertions.restrictions
-    count(assertions.allowed) > 0
+    assertions.allowed
     jm := {
         "resolution": ["allowed", assertions.allowed]
     }
 }
 
 judge(assertions) = jm {
-    count(assertions.forbidden) == 0
-    count(assertions.allowed) == 0
+    not assertions.forbidden
+    not assertions.allowed
     jm := {
         "resolution": ["forbidden", []]
     }

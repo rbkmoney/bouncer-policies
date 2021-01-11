@@ -55,7 +55,6 @@ allowed[why] {
 
 session_token_allowed[why] {
     utils.user_is_owner(op.party.id)
-    input_matches_payment_processing_context
     why := {
         "code": "org_ownership_allows_operation",
         "description": "User is owner of organization that is subject of this operation"
@@ -64,7 +63,6 @@ session_token_allowed[why] {
 
 session_token_allowed[why] {
     user_role_id := utils.user_roles_by_operation(op.party.id, api_name, op.id)[_].id
-    input_matches_payment_processing_context
     why := {
         "code": "org_role_allows_operation",
         "description": sprintf("User has role that permits this operation: %v", [user_role_id])
@@ -73,7 +71,6 @@ session_token_allowed[why] {
 
 session_token_allowed[why] {
     is_session_token_operation
-    input_matches_payment_processing_context
     why := {
         "code": "session_token_allows_operation",
         "description": "Session token allows this operation"
@@ -81,54 +78,6 @@ session_token_allowed[why] {
 }
 
 ##
-
-matching_shop(shop_id) {
-    op.shop.id
-    op.shop.id == shop_id
-}
-
-matching_shop(shop_id) {
-    not op.shop.id
-}
-
-matching_invoice {
-    op.invoice.id
-    op.invoice.id == payment_processing.invoice.id
-    op.party.id == payment_processing.invoice.party.id
-    matching_shop(payment_processing.invoice.shop.id)
-}
-
-matching_invoice {
-    not op.invoice.id
-}
-
-matching_invoice_template {
-    op.invoice_template.id
-    op.invoice_template.id == payment_processing.invoice_template.id
-    op.party.id == payment_processing.invoice_template.party.id
-    matching_shop(payment_processing.invoice_template.shop.id)
-}
-
-matching_invoice_template {
-    not op.invoice_template.id
-}
-
-matching_customer {
-    op.customer.id
-    op.customer.id == payment_processing.customer.id
-    op.party.id == payment_processing.customer.party.id
-    matching_shop(payment_processing.customer.shop.id)
-}
-
-matching_customer {
-    not op.customer.id
-}
-
-input_matches_payment_processing_context {
-    matching_invoice
-    matching_invoice_template
-    matching_customer
-}
 
 has_access {
     not missing_access
@@ -169,18 +118,10 @@ has_party_access(id) {
     true
 }
 
-has_party_access(id) {
-    utils.user_is_owner(id)
-}
-
 has_shop_access(id, party_id) {
     roles := utils.user_roles_by_operation(party_id, api_name, op.id)
     role := roles[_]
     user_role_has_shop_access(id, role)
-}
-
-has_shop_access(id, party_id) {
-    utils.user_is_administrator(op.party.id)
 }
 
 has_shop_access(id, party_id) {

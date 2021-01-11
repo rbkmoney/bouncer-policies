@@ -40,6 +40,5 @@ customer_matches_token_scope {
 is_customer_access_token_operation
     { op.id == "GetCustomerById" }
     { op.id == "CreateBinding" }
-    { op.id == "GetBindings" }
     { op.id == "GetBinding" }
     { op.id == "GetCustomerEvents" }

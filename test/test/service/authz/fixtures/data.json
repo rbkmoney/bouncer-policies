@@ -490,17 +490,6 @@
         }
     },
 
-    "op_capi_get_bindings": {
-        "capi": {
-            "op": {
-                "id": "GetBindings",
-                "customer": { "id": "CUSTOMER" },
-                "shop": { "id": "SHOP" },
-                "party": { "id": "PARTY" }
-            }
-        }
-    },
-
     "op_capi_empty": {
         "capi": {
             "op": {}

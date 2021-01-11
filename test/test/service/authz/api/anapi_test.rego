@@ -5,7 +5,7 @@ import data.test.service.authz.util
 import data.test.service.authz.fixtures
 
 test_anapi_restricted {
-    result := api.assertions with input as util.deepmerge([
+    result := api.assertions_w_restrictions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_default,
@@ -18,7 +18,7 @@ test_anapi_restricted {
 }
 
 test_anapi_allowed_org_owner {
-    result := api.assertions with input as util.deepmerge([
+    result := api.assertions_w_restrictions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_owner,
@@ -31,7 +31,7 @@ test_anapi_allowed_org_owner {
 }
 
 test_anapi_allowed_operation_no_shops {
-    result := api.assertions with input as util.deepmerge([
+    result := api.assertions_w_restrictions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_owner,
@@ -44,7 +44,7 @@ test_anapi_allowed_operation_no_shops {
 }
 
 test_anapi_restricted_several_shops_operation {
-    result := api.assertions with input as util.deepmerge([
+    result := api.assertions_w_restrictions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_default,
@@ -57,7 +57,7 @@ test_anapi_restricted_several_shops_operation {
 }
 
 test_anapi_restricted_several_shops_several_roles_operation {
-    result := api.assertions with input as util.deepmerge([
+    result := api.assertions_w_restrictions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_several_roles,
@@ -70,7 +70,7 @@ test_anapi_restricted_several_shops_several_roles_operation {
 }
 
 test_anapi_forbidden_operation_no_role {
-    result := api.assertions with input as util.deepmerge([
+    result := api.assertions_w_restrictions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_default,
@@ -83,7 +83,7 @@ test_anapi_forbidden_operation_no_role {
 }
 
 test_anapi_forbidden_operation_no_role_2 {
-    result := api.assertions with input as util.deepmerge([
+    result := api.assertions_w_restrictions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_default_other_role,
@@ -96,7 +96,7 @@ test_anapi_forbidden_operation_no_role_2 {
 }
 
 test_anapi_forbidden_operation_no_role_3 {
-    result := api.assertions with input as util.deepmerge([
+    result := api.assertions_w_restrictions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_no_roles,
@@ -109,7 +109,7 @@ test_anapi_forbidden_operation_no_role_3 {
 }
 
 test_anapi_forbidden_operation_no_shops {
-    result := api.assertions with input as util.deepmerge([
+    result := api.assertions_w_restrictions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_default_other_role,
@@ -122,7 +122,7 @@ test_anapi_forbidden_operation_no_shops {
 }
 
 test_anapi_forbidden_operation_auth_invalid {
-    result := api.assertions with input as util.deepmerge([
+    result := api.assertions_w_restrictions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_default,

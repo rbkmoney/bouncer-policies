@@ -7,7 +7,6 @@
                         "GetMyParty",
                         "GetPayments",
                         "GetPaymentByID",
-                        "GetShops",
                         "CreateWebhook",
                         "GetWebhooks",
                         "GetWebhookByID",
@@ -35,8 +34,7 @@
                         "GetRefundByID",
                         "GetPayoutTools",
                         "GetPayoutToolByID",
-                        "CreatePayout",
-                        "GetShops"
+                        "CreatePayout"
                     ]
                 },
                 "AnalyticsAPI" : {
@@ -69,8 +67,7 @@
                         "GetPayments",
                         "GetPaymentByID",
                         "GetPayoutTools",
-                        "CreatePayout",
-                        "GetShops"
+                        "CreatePayout"
                     ]
                 },
                 "AnalyticsAPI" : {

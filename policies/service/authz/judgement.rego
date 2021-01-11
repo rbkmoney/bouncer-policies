@@ -9,7 +9,7 @@ judge(assertions) = jm {
 
 judge(assertions) = jm {
     count(assertions.forbidden) == 0
-    assertions.restrictions != {}
+    assertions.restrictions
     count(assertions.allowed) > 0
     jm := {
         "resolution": ["restricted", assertions.allowed],
@@ -19,7 +19,7 @@ judge(assertions) = jm {
 
 judge(assertions) = jm {
     count(assertions.forbidden) == 0
-    assertions.restrictions == {}
+    not assertions.restrictions
     count(assertions.allowed) > 0
     jm := {
         "resolution": ["allowed", assertions.allowed]

@@ -10,18 +10,28 @@ import data.service.authz.roles
 import data.service.authz.org
 import data.service.authz.judgement
 
-assertions := {
-    "forbidden" : { why | forbidden[why] },
-    "allowed"   : { why | allowed[why] }
+assertions = a {
+    restrictions_check
+    a := {
+        "forbidden" : { why | forbidden[why] },
+        "allowed"   : { why | allowed[why] },
+        "restrictions": { what.type: what.restrictions[what.type] | restrictions[what] }
+    }
 }
 
-assertions_w_restrictions := {
-    "forbidden" : { why | forbidden[why] },
-    "allowed"   : { why | allowed[why] },
-    "restrictions": { what.type: what.restrictions[what.type] | restrictions[what] }
+assertions = a {
+    not restrictions_check
+    a := {
+        "forbidden" : { why | forbidden[why] },
+        "allowed"   : { why | allowed[why] }
+    }
 }
 
-judgement := judgement.judge(assertions_w_restrictions)
+restrictions_check {
+    count(restrictions[what]) > 0
+}
+
+judgement := judgement.judge(assertions)
 
 # Set of assertions which tell why operation under the input context is forbidden.
 # When the set is empty operation is not explicitly forbidden.

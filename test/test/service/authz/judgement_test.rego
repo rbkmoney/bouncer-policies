@@ -12,14 +12,14 @@ test_judgement {
 }
 
 test_judgement_forbidden {
-    assertions := api.assertions_w_restrictions with input as {}
+    assertions := api.assertions with input as {}
     result := judgement.judge(assertions).resolution
     result[0] == "forbidden"
     count(result[1]) == 1
 }
 
 test_judgement_forbidden_1 {
-    assertions := api.assertions_w_restrictions with input as util.deepmerge([
+    assertions := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.invoice_access_token_valid_party_2,
@@ -31,7 +31,7 @@ test_judgement_forbidden_1 {
 }
 
 test_judgement_restricted {
-    assertions := api.assertions_w_restrictions with input as util.deepmerge([
+    assertions := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_default,
@@ -46,7 +46,7 @@ test_judgement_restricted {
 }
 
 test_judgement_allowed {
-    assertions := api.assertions_w_restrictions with input as util.deepmerge([
+    assertions := api.assertions with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.invoice_access_token_valid,

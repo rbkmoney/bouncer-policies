@@ -5,6 +5,7 @@
                 "CommonAPI" : {
                     "operations": [
                         "GetMyParty",
+                        "GetInvoiceByID",
                         "GetPayments",
                         "GetPaymentByID",
                         "CreateWebhook",
@@ -27,6 +28,7 @@
                 "CommonAPI" : {
                     "operations": [
                         "GetMyParty",
+                        "GetInvoiceByID",
                         "GetPayments",
                         "GetPaymentByID",
                         "CreateRefund",

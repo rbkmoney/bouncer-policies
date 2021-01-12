@@ -3,7 +3,7 @@ package service.authz.api.capi
 import data.service.authz.api.capi.invoice_access_token
 import data.service.authz.api.capi.customer_access_token
 import data.service.authz.api.capi.invoice_template_access_token
-import data.service.authz.api.utils
+import data.service.authz.api.user
 import data.service.authz.access
 
 import input.capi.op
@@ -54,7 +54,7 @@ allowed[why] {
 }
 
 session_token_allowed[why] {
-    utils.user_is_owner(op.party.id)
+    user.is_owner(op.party.id)
     why := {
         "code": "org_ownership_allows_operation",
         "description": "User is owner of organization that is subject of this operation"
@@ -62,7 +62,7 @@ session_token_allowed[why] {
 }
 
 session_token_allowed[why] {
-    user_role_id := utils.user_roles_by_operation(op.party.id, api_name, op.id)[_].id
+    user_role_id := user.roles_by_operation(op.party.id, api_name, op.id)[_].id
     why := {
         "code": "org_role_allows_operation",
         "description": sprintf("User has role that permits this operation: %v", [user_role_id])
@@ -114,18 +114,18 @@ has_entity_access("customer") {
 }
 
 has_party_access(id) {
-    _ := utils.org_by_operation(id)
+    _ := user.org_by_party(id)
     true
 }
 
 has_shop_access(id, party_id) {
-    roles := utils.user_roles_by_operation(party_id, api_name, op.id)
+    roles := user.roles_by_operation(party_id, api_name, op.id)
     role := roles[_]
     user_role_has_shop_access(id, role)
 }
 
 has_shop_access(id, party_id) {
-    utils.user_is_owner(party_id)
+    user.is_owner(party_id)
 }
 
 user_role_has_shop_access(shop_id, role) {

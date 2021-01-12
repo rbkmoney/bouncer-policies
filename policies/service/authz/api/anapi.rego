@@ -1,6 +1,6 @@
 package service.authz.api.anapi
 
-import data.service.authz.api.utils
+import data.service.authz.api.user
 
 import input.anapi.op
 import data.service.authz.roles
@@ -23,8 +23,8 @@ forbidden[why] {
 # Restrictions
 
 restrictions[what] {
-    not utils.user_is_owner(op.party.id)
-    utils.user_roles_by_operation(op.party.id, api_name, op.id)[_]
+    not user.is_owner(op.party.id)
+    user.roles_by_operation(op.party.id, api_name, op.id)[_]
     what := {
         "anapi": {
             "op": {
@@ -36,7 +36,7 @@ restrictions[what] {
 
 op_shop_in_scope[shop] {
     some i
-    user_roles := utils.user_roles_by_operation(op.party.id, api_name, op.id)
+    user_roles := user.roles_by_operation(op.party.id, api_name, op.id)
     op.shops[i].id == user_roles[_].scope.shop.id
     shop := op.shops[i]
 }
@@ -48,7 +48,7 @@ op_shop_in_scope[shop] {
 # ```
 
 allowed[why] {
-    utils.user_is_owner(op.party.id)
+    user.is_owner(op.party.id)
     why := {
         "code": "org_ownership_allows_operation",
         "description": "User is owner of organization that is subject of this operation"
@@ -56,7 +56,7 @@ allowed[why] {
 }
 
 allowed[why] {
-    user_roles := utils.user_roles_by_operation(op.party.id, api_name, op.id)
+    user_roles := user.roles_by_operation(op.party.id, api_name, op.id)
     user_role_id := user_roles[_].id
     why := {
         "code": "org_role_allows_operation",

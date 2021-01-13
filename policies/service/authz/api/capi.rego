@@ -39,6 +39,15 @@ allowed[why] {
 }
 
 allowed[why] {
+    input.auth.method == "SessionToken"
+    is_session_token_operation
+    why := {
+        "code": "session_token_allows_operation",
+        "description": "Session token allows this operation"
+    }
+}
+
+allowed[why] {
     input.auth.method == "InvoiceAccessToken"
     invoice_access_token.allowed[why]
 }
@@ -69,14 +78,6 @@ session_token_allowed[why] {
     }
 }
 
-session_token_allowed[why] {
-    is_session_token_operation
-    why := {
-        "code": "session_token_allows_operation",
-        "description": "Session token allows this operation"
-    }
-}
-
 ##
 
 has_access {
@@ -85,6 +86,7 @@ has_access {
 
 missing_access {
     entity := access_by_operation[_]
+    entity
     not has_entity_access(entity)
 }
 

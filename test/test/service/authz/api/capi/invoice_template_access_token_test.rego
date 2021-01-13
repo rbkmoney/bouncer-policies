@@ -11,7 +11,7 @@ test_invoice_template_access_token_valid_capi_get_invoice_template_by_id{
         fixtures.invoice_template_access_token_valid,
         fixtures.op_capi_get_invoice_template_by_id
     ])
-    count(result.forbidden) == 0
+    not result.forbidden
     count(result.allowed) == 1
 }
 
@@ -22,7 +22,7 @@ test_invoice_template_access_token_valid_capi_create_invoice_with_template{
         fixtures.invoice_template_access_token_valid,
         fixtures.op_capi_create_invoice_with_template
     ])
-    count(result.forbidden) == 0
+    not result.forbidden
     count(result.allowed) == 1
 }
 
@@ -33,6 +33,6 @@ test_invoice_template_access_token_valid_capi_get_invoice_payment_methods_by_tem
         fixtures.invoice_template_access_token_valid,
         fixtures.op_capi_get_invoice_payment_methods_by_template_id
     ])
-    count(result.forbidden) == 0
+    not result.forbidden
     count(result.allowed) == 1
 }

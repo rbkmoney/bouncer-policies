@@ -7,12 +7,6 @@ is_owner(party_id) {
     input.user.id == organization.owner.id
 }
 
-is_administrator(party_id) {
-    organization := org_by_party(party_id)
-    user_role := organization.roles[_]
-    "Administrator" == user_role.id
-}
-
 roles_by_operation(party_id, api_name, op_id) = user_roles {
     organization := org_by_party(party_id)
     user_roles := { user_role |

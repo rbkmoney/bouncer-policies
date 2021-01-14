@@ -24,6 +24,15 @@
         }
     },
 
+    "op_capi_create_webhook": {
+        "capi": {
+            "op": {
+                "id": "CreateWebhook",
+                "party": {"id": "PARTY"}
+            }
+        }
+    },
+
     "op_capi_create_invoice": {
         "capi": {
             "op": {

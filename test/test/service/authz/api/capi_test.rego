@@ -29,6 +29,17 @@ test_get_refunds_forbidden_context_mismatch {
     not result.allowed
 }
 
+test_forbidden_create_payment_resource {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_capi_create_payment_resource
+    ])
+    result.forbidden
+}
+
 test_forbidden_invoicing_context_no_shop {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,
@@ -212,6 +223,18 @@ test_capi_session_token_and_owner_allowed {
         fixtures.user_owner,
         fixtures.session_token_valid,
         fixtures.op_capi_get_binding
+    ])
+    not result.forbidden
+    count(result.allowed) == 1
+}
+
+test_create_webhook_allowed {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator,
+        fixtures.session_token_valid,
+        fixtures.op_capi_create_webhook
     ])
     not result.forbidden
     count(result.allowed) == 1

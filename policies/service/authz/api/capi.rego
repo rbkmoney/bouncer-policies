@@ -81,12 +81,11 @@ session_token_allowed[why] {
 ##
 
 has_access {
-    not missing_access
+    entity := access_by_operation[_]
+    not missing_access(entity)
 }
 
-missing_access {
-    entity := access_by_operation[_]
-    entity
+missing_access(entity) {
     not has_entity_access(entity)
 }
 

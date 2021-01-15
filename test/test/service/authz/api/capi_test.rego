@@ -239,3 +239,9 @@ test_create_webhook_allowed {
     not result.forbidden
     count(result.allowed) == 1
 }
+
+test_peration_access_mismatch {
+    result := api.assertions with input as capi_public_operation_ctx with input.capi.op as {"id" : "NewOperation"}
+    not result.forbidden
+    not result.allowed
+}

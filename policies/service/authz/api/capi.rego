@@ -81,6 +81,8 @@ session_token_allowed[why] {
 ##
 
 has_access {
+    # We assume that the user has no access for any operation not explicitly listed in the "access" document.
+    # Thus any new operation won't be silently allowed.
     access_by_operation[_]
     not missing_access
 }

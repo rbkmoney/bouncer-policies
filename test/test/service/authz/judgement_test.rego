@@ -8,14 +8,14 @@ import data.test.service.authz.fixtures
 test_judgement {
     result := api.judgement with input as {}
     result.resolution[0] == "forbidden"
-    count(result.resolution[1]) == 1
+    count(result.resolution[1]) > 0
 }
 
 test_judgement_forbidden {
     assertions := api.assertions with input as {}
     result := judgement.judge(assertions).resolution
     result[0] == "forbidden"
-    count(result[1]) == 1
+    count(result[1]) > 0
 }
 
 test_judgement_forbidden_1 {

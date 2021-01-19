@@ -547,7 +547,23 @@
     "session_token_valid": {
         "auth": {
             "method": "SessionToken",
+            "expiration": "2021-01-01T00:00:00Z",
+            "token": {"id": "TÓKEN"}
+        }
+    },
+
+    "session_token_missing_id": {
+        "auth": {
+            "method": "SessionToken",
             "expiration": "2021-01-01T00:00:00Z"
+        }
+    },
+
+    "session_token_empty_id": {
+        "auth": {
+            "method": "SessionToken",
+            "expiration": "2021-01-01T00:00:00Z",
+            "token": {"id": ""}
         }
     },
 
@@ -555,6 +571,7 @@
         "auth": {
             "method": "InvoiceAccessToken",
             "expiration": "2021-01-01T00:00:00Z",
+            "token": { "id": "TÓKEN" },
             "scope": [
                 {
                     "invoice": { "id": "INVOICE" },
@@ -568,6 +585,7 @@
         "auth": {
             "method": "InvoiceAccessToken",
             "expiration": "2021-01-01T00:00:00Z",
+            "token": { "id": "TÓKEN" },
             "scope": [
                 {
                     "invoice": { "id": "INVOICE" },
@@ -581,6 +599,7 @@
         "auth": {
             "method": "InvoiceAccessToken",
             "expiration": "2020-02-02T00:00:00Z",
+            "token": { "id": "TÓKEN" },
             "scope": [
                 {
                     "invoice": { "id": "INVOICE" }
@@ -593,6 +612,7 @@
         "auth": {
             "method": "InvoiceTemplateAccessToken",
             "expiration": "2021-01-01T00:00:00Z",
+            "token": { "id": "TÓKEN" },
             "scope": [
                 {
                     "invoice_template": { "id": "INVOICE_TEMPLATE" },
@@ -606,6 +626,7 @@
         "auth": {
             "method": "CustomerAccessToken",
             "expiration": "2021-01-01T00:00:00Z",
+            "token": { "id": "TÓKEN" },
             "scope": [
                 {
                     "customer": { "id": "CUSTOMER" },
@@ -834,7 +855,7 @@
             ]
         }
     },
-    
+
     "user_with_role_without_scope": {
         "user": {
             "id": "USER",

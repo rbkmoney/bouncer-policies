@@ -63,6 +63,27 @@ forbidden[why] {
 }
 
 forbidden[why] {
+    not input.auth.token.id
+    why := {
+        "code": "access_token_missing_id",
+        "description": "Requester access token is missing ID"
+    }
+}
+
+forbidden[why] {
+    token := input.auth.token
+    blacklist := blacklists.access_token.entries
+    token.id == blacklist[_]
+    why := {
+        "code": "access_token_blacklisted",
+        "description": sprintf(
+            "Requester access token is blacklisted with id: %s",
+            [token.id]
+        )
+    }
+}
+
+forbidden[why] {
     input.anapi
     anapi.forbidden[why]
 }
@@ -75,6 +96,11 @@ forbidden[why] {
 warnings[why] {
     not blacklists.source_ip_range
     why := "Blacklist 'source_ip_range' is not defined, blacklisting by IP will NOT WORK."
+}
+
+warnings[why] {
+    not blacklists.access_token.entries
+    why := "Blacklist 'access_token' is not defined, blacklisting by specific JWTs will NOT WORK."
 }
 
 warnings[why] {

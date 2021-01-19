@@ -42,3 +42,23 @@ test_token_blacklisted_local_ipv6 {
     ])
     result.forbidden[_].code == "ip_range_blacklisted"
 }
+
+test_token_missing_id_forbidden {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.session_token_missing_id,
+        fixtures.op_capi_create_invoice
+    ])
+    result.forbidden[_].code == "access_token_missing_id"
+}
+
+test_token_w_empty_id_blacklisted {
+    result := api.assertions with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.session_token_empty_id,
+        fixtures.op_capi_create_invoice
+    ])
+    result.forbidden[_].code == "access_token_blacklisted"
+}

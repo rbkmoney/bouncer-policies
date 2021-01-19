@@ -65,19 +65,19 @@ forbidden[why] {
 forbidden[why] {
     not input.auth.token.id
     why := {
-        "code": "access_token_missing_id",
-        "description": "Requester access token is missing ID"
+        "code": "auth_token_missing_id",
+        "description": "Requester auth token is missing ID"
     }
 }
 
 forbidden[why] {
     token := input.auth.token
-    blacklist := blacklists.access_token.entries
+    blacklist := blacklists.auth_token.entries
     token.id == blacklist[_]
     why := {
-        "code": "access_token_blacklisted",
+        "code": "auth_token_blacklisted",
         "description": sprintf(
-            "Requester access token is blacklisted with id: %s",
+            "Requester auth token is blacklisted with id: %s",
             [token.id]
         )
     }
@@ -99,8 +99,8 @@ warnings[why] {
 }
 
 warnings[why] {
-    not blacklists.access_token.entries
-    why := "Blacklist 'access_token' is not defined, blacklisting by specific JWTs will NOT WORK."
+    not blacklists.auth_token.entries
+    why := "Blacklist 'auth_token' is not defined, blacklisting by specific JWTs will NOT WORK."
 }
 
 warnings[why] {

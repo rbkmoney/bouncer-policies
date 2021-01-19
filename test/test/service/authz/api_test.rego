@@ -50,7 +50,7 @@ test_token_missing_id_forbidden {
         fixtures.session_token_missing_id,
         fixtures.op_capi_create_invoice
     ])
-    result.forbidden[_].code == "access_token_missing_id"
+    result.forbidden[_].code == "auth_token_missing_id"
 }
 
 test_token_w_empty_id_blacklisted {
@@ -60,5 +60,5 @@ test_token_w_empty_id_blacklisted {
         fixtures.session_token_empty_id,
         fixtures.op_capi_create_invoice
     ])
-    result.forbidden[_].code == "access_token_blacklisted"
+    result.forbidden[_].code == "auth_token_blacklisted"
 }

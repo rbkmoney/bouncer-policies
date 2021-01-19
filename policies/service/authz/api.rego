@@ -49,7 +49,7 @@ forbidden[why] {
 
 forbidden[why] {
     ip := input.requester.ip
-    blacklist := blacklists.source_ip_range
+    blacklist := blacklists.source_ip_range.entries
     matches := net.cidr_contains_matches(blacklist, ip)
     matches[_]
     ranges := [ range | matches[_][0] = i; range := blacklist[i] ]
@@ -94,7 +94,7 @@ forbidden[why] {
 }
 
 warnings[why] {
-    not blacklists.source_ip_range
+    not blacklists.source_ip_range.entries
     why := "Blacklist 'source_ip_range' is not defined, blacklisting by IP will NOT WORK."
 }
 

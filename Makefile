@@ -66,7 +66,7 @@ test: manifest
 			--explain full \
 			--ignore input.json
 
-RUN_TEST_COVERAGE := $(DOCKER) run --rm $(TEST_VOLUMES) $(TEST_IMAGE) test --coverage $(TEST_BUNDLE_DIRS)
+RUN_TEST_COVERAGE = $(DOCKER) run --rm $(TEST_VOLUMES) $(TEST_IMAGE) test --coverage $(TEST_BUNDLE_DIRS)
 
 test_coverage: manifest
 	python3 test_coverage.py "$(RUN_TEST_COVERAGE)" $(TEST_COVERAGE_THRESHOLD)

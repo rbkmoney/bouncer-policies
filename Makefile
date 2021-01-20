@@ -5,6 +5,7 @@ UTILS_PATH := build_utils
 TEMPLATES_PATH := .
 
 SERVICE_NAME := bouncer-policies
+BUILD_IMAGE_NAME := build-erlang
 BUILD_IMAGE_TAG := 1333d0926b203e00c47e4fad7e10d2252a020305
 CALL_ANYWHERE := \
 	submodules \

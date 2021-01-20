@@ -19,9 +19,7 @@ build('bouncer-policies', 'docker-host') {
     }
 
     runStage('validate test fixtures') {
-      withGithubPrivkey {
-        sh "make -s wc_validate"
-      }
+      sh "make -s wc_validate"
     }
     runStage('tests coverage') {
       sh "make test_coverage"

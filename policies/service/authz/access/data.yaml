@@ -1,0 +1,156 @@
+title: Entity Access Matrix
+description: >
+  This matrix dictates which API operations should enforce access control
+  upon which entities.
+
+  It's structured in following layers:
+    1. API name,
+    2. access requirement,
+    3. entity name,
+    4. list of operations which should enforce access control to this entity
+       under this requirement.
+
+  The "mandatory" access implies that a corresponding entity MUST be present
+  in the operation context in input. On the other hand, the "discretionary"
+  access implies that a corresponding entity MAY NOT be present in the
+  operation context and if so the policy will not be enforced.
+
+api:
+  CommonAPI:
+    mandatory:
+      shop:
+        operations:
+          - "CreateCustomer"
+          - "CreateInvoiceTemplate"
+          - "CreateInvoice"
+          - "CreatePayout"
+
+          - "ActivateShop"
+          - "SuspendShop"
+          - "GetShopByID"
+          - "GetShopByIDForParty"
+          - "ActivateShopForParty"
+          - "SuspendShopForParty"
+
+          - "GetPaymentConversionStats"
+          - "GetPaymentRevenueStats"
+          - "GetPaymentGeoStats"
+          - "GetPaymentRateStats"
+          - "GetPaymentMethodStats"
+
+          - "SearchInvoices"
+          - "SearchPayments"
+          - "SearchPayouts"
+          - "SearchRefunds"
+
+          - "GetReports"
+          - "GetReportsForParty"
+          - "GetReport"
+          - "GetReportForParty"
+          - "CreateReport"
+          - "CreateReportForParty"
+          - "DownloadFile"
+          - "DownloadFileForParty"
+
+      invoice:
+        operations:
+          - "CreateInvoiceAccessToken"
+          - "GetInvoiceByID"
+          - "GetInvoiceByExternalID"
+          - "FulfillInvoice"
+          - "RescindInvoice"
+          - "GetInvoiceEvents"
+          - "GetInvoicePaymentMethods"
+          - "CreatePayment"
+          - "GetPayments"
+          - "GetPaymentByID"
+          - "GetPaymentByExternalID"
+          - "CancelPayment"
+          - "CapturePayment"
+          - "CreateRefund"
+          - "GetRefunds"
+          - "GetRefundByID"
+          - "GetRefundByExternalID"
+          - "GetChargebacks"
+          - "GetChargebackByID"
+
+      invoice_template:
+        operations:
+          - "GetInvoiceTemplateByID"
+          - "UpdateInvoiceTemplate"
+          - "DeleteInvoiceTemplate"
+          - "CreateInvoiceWithTemplate"
+          - "GetInvoicePaymentMethodsByTemplateID"
+
+      customer:
+        operations:
+          - "GetCustomerById"
+          - "DeleteCustomer"
+          - "GetCustomerEvents"
+          - "CreateCustomerAccessToken"
+          - "CreateBinding"
+          - "GetBindings"
+          - "GetBinding"
+
+      webhook:
+        operations:
+          - "GetWebhookByID"
+          - "DeleteWebhookByID"
+
+      report:
+        operations:
+          - "GetReport"
+          - "GetReportForParty"
+          - "DownloadFile"
+          - "DownloadFileForParty"
+
+      file:
+        operations:
+          - "DownloadFile"
+          - "DownloadFileForParty"
+
+      payout:
+        operations:
+          - "GetPayout"
+
+      party:
+        operations:
+
+          - "GetClaims"
+          - "GetClaimByID"
+          - "CreateClaim"
+          - "RevokeClaimByID"
+
+          - "GetContracts"
+          - "GetContractByID"
+          - "GetContractAdjustments"
+          - "GetContractAdjustmentByID"
+          - "GetContractsForParty"
+          - "GetContractByIDForParty"
+          - "GetContractAdjustmentsForParty"
+          - "GetContractAdjustmentByIDForParty"
+          - "GetPayoutTools"
+          - "GetPayoutToolByID"
+          - "GetPayoutToolsForParty"
+          - "GetPayoutToolByIDForParty"
+
+          - "GetMyParty"
+          - "ActivateMyParty"
+          - "SuspendMyParty"
+
+          - "GetShops"
+          - "GetShopsForParty"
+
+          - "CreateWebhook"
+          - "GetWebhooks"
+
+    discretionary:
+      invoice:
+        operations:
+          - "SearchInvoices"
+          - "SearchPayments"
+          - "SearchRefunds"
+
+      payout:
+        operations:
+          - "SearchPayouts"

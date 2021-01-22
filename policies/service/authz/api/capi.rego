@@ -81,19 +81,33 @@ session_token_allowed[why] {
 ##
 
 has_access {
+    # NOTE
     # We assume that the user has no access for any operation not explicitly listed in the "access" document.
     # Thus any new operation won't be silently allowed.
-    access_by_operation[_]
-    not missing_access
+    access_by_operation.mandatory[_]
+    not missing_mandatory_access
+    not missing_discretionary_access
 }
 
-missing_access {
-    entity := access_by_operation[_]
+missing_mandatory_access {
+    entity := access_by_operation.mandatory[_]
     not has_entity_access(entity)
 }
 
-access_by_operation[entity] {
-    access[api_name][entity].operations[_] == op.id
+missing_discretionary_access {
+    entity := access_by_operation.discretionary[_]
+    op_entity_specified(entity)
+    not has_entity_access(entity)
+}
+
+access_by_operation := {
+    requirement: names |
+        entities := access.api[api_name][requirement]
+        names := {
+            name |
+                entity := entities[name]
+                entity.operations[_] == op.id
+        }
 }
 
 has_entity_access("party") {
@@ -115,6 +129,34 @@ has_entity_access("invoice_template") {
 has_entity_access("customer") {
     op.customer.id
     has_customer_access(op.customer.id)
+}
+
+op_entity_specified("party") {
+    op.party.id
+}
+op_entity_specified("shop") {
+    op.shop.id
+}
+op_entity_specified("invoice") {
+    op.invoice.id
+}
+op_entity_specified("invoice_template") {
+    op.invoice_template.id
+}
+op_entity_specified("customer") {
+    op.customer.id
+}
+op_entity_specified("report") {
+    op.report.id
+}
+op_entity_specified("file") {
+    op.file.id
+}
+op_entity_specified("webhook") {
+    op.webhook.id
+}
+op_entity_specified("payout") {
+    op.payout.id
 }
 
 has_party_access(id) {

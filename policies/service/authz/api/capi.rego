@@ -8,6 +8,9 @@ import data.service.authz.access
 
 import input.capi.op
 import input.payment_processing
+import input.payouts
+import input.webhooks
+import input.reports
 
 api_name := "CommonAPI"
 
@@ -130,6 +133,22 @@ has_entity_access("customer") {
     op.customer.id
     has_customer_access(op.customer.id)
 }
+has_entity_access("report") {
+    op.report.id
+    has_report_access(op.report.id)
+}
+has_entity_access("file") {
+    op.file.id
+    has_file_access(op.file.id)
+}
+has_entity_access("payout") {
+    op.payout.id
+    has_payout_access(op.payout.id)
+}
+has_entity_access("webhook") {
+    op.webhook.id
+    has_webhook_access(op.webhook.id)
+}
 
 op_entity_specified("party") {
     op.party.id
@@ -201,6 +220,32 @@ has_customer_access(id) {
     customer.id == id
     has_party_access(customer.party.id)
     has_shop_access(customer.shop.id, customer.party.id)
+}
+
+has_report_access(id) {
+    report := reports.report
+    report.id == id
+    has_party_access(report.party.id)
+    has_shop_access(report.shop.id, report.party.id)
+}
+
+has_file_access(id) {
+    report := reports.report
+    report.files[_].id == id
+    has_report_access(report.id)
+}
+
+has_payout_access(id) {
+    payout := payouts.payout
+    payout.id == id
+    has_party_access(payout.party.id)
+    has_shop_access(payout.shop.id, payout.party.id)
+}
+
+has_webhook_access(id) {
+    webhook := webhooks.webhook
+    webhook.id == id
+    has_party_access(webhook.party.id)
 }
 
 is_session_token_operation

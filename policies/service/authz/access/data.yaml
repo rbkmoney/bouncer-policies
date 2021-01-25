@@ -49,12 +49,8 @@ api:
 
           - "GetReports"
           - "GetReportsForParty"
-          - "GetReport"
-          - "GetReportForParty"
           - "CreateReport"
           - "CreateReportForParty"
-          - "DownloadFile"
-          - "DownloadFileForParty"
 
       invoice:
         operations:
@@ -149,6 +145,13 @@ api:
           - "GetWebhooks"
 
     discretionary:
+      shop:
+        operations:
+          - "GetReport"
+          - "GetReportForParty"
+          - "DownloadFile"
+          - "DownloadFileForParty"
+
       invoice:
         operations:
           - "SearchInvoices"

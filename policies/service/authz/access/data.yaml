@@ -15,6 +15,10 @@ description: >
   access implies that a corresponding entity MAY NOT be present in the
   operation context and if so the policy will not be enforced.
 
+  The "universal" access requirement marks operations which are exempt from
+  access control (i.e. universally allowed). Since there are no entities to
+  enforce access for, such list is not split by entity names.
+
 api:
   CommonAPI:
     mandatory:
@@ -154,3 +158,16 @@ api:
       payout:
         operations:
           - "SearchPayouts"
+
+    universal:
+      operations:
+      - "GetAccountByID"
+      - "GetCategories"
+      - "GetCategoryByRef"
+      - "GetLocationsNames"
+      - "GetPaymentInstitutions"
+      - "GetPaymentInstitutionByRef"
+      - "GetPaymentInstitutionPaymentTerms"
+      - "GetPaymentInstitutionPayoutMethods"
+      - "GetPaymentInstitutionPayoutSchedules"
+      - "GetScheduleByRef"

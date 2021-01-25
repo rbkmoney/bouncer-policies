@@ -7,6 +7,7 @@ package service.authz.api.capi.invoice_template_access_token
 # ```
 
 import input.capi.op
+import input.payment_processing
 
 allowed[why] {
     is_invoice_template_access_token_operation
@@ -19,8 +20,8 @@ allowed[why] {
 
 invoice_template_matches_token_scope {
     scope := input.auth.scope[_]
-    scope.party.id == op.party.id
     scope.invoice_template.id == op.invoice_template.id
+    scope.party.id == payment_processing.invoice_template.party.id
 }
 
 is_invoice_template_access_token_operation

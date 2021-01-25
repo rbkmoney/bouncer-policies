@@ -15,6 +15,13 @@ roles_by_operation(party_id, api_name, op_id) = user_roles {
     }
 }
 
+operations_by_role(api_name, user_role) = operations {
+    operations := {
+        operation |
+            operation := roles.roles[user_role.id].apis[api_name].operations[_]
+    }
+}
+
 org_by_party(party_id) = org {
     org := input.user.orgs[_]
     org.id == party_id

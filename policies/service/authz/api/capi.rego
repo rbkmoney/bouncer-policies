@@ -13,6 +13,7 @@ import input.webhooks
 import input.reports
 
 api_name := "CommonAPI"
+access_matrix := access.api[api_name]
 
 # Set of assertions which tell why operation under the input context is forbidden.
 # Each element must be an object of the following form:
@@ -29,6 +30,11 @@ forbidden[why] {
     }
 }
 
+forbidden[why] {
+    input.auth.method == "SessionToken"
+    access_violations[why]
+}
+
 # Set of assertions which tell why operation under the input context is allowed.
 # Each element must be an object of the following form:
 # ```
@@ -37,17 +43,8 @@ forbidden[why] {
 
 allowed[why] {
     input.auth.method == "SessionToken"
-    has_access
+    count(access_violations) == 0
     session_token_allowed[why]
-}
-
-allowed[why] {
-    input.auth.method == "SessionToken"
-    is_session_token_operation
-    why := {
-        "code": "session_token_allows_operation",
-        "description": "Session token allows this operation"
-    }
 }
 
 allowed[why] {
@@ -66,7 +63,15 @@ allowed[why] {
 }
 
 session_token_allowed[why] {
-    user.is_owner(op.party.id)
+    operation_universal
+    why := {
+        "code": "operation_universal",
+        "description": "Operation is universally allowed"
+    }
+}
+
+session_token_allowed[why] {
+    access_status.owner
     why := {
         "code": "org_ownership_allows_operation",
         "description": "User is owner of organization that is subject of this operation"
@@ -74,191 +79,198 @@ session_token_allowed[why] {
 }
 
 session_token_allowed[why] {
-    user_role_id := user.roles_by_operation(op.party.id, api_name, op.id)[_].id
+    role := access_status.roles[_]
+    operations := user.operations_by_role(api_name, role)
+    operations[_] == op.id
     why := {
         "code": "org_role_allows_operation",
-        "description": sprintf("User has role that permits this operation: %v", [user_role_id])
+        "description": sprintf("User has role that permits this operation: %v", [role.id])
     }
 }
 
 ##
 
-has_access {
+access_status = status {
     # NOTE
-    # We assume that the user has no access for any operation not explicitly listed in the "access" document.
-    # Thus any new operation won't be silently allowed.
-    access_by_operation.mandatory[_]
-    not missing_mandatory_access
-    not missing_discretionary_access
+    # This is intentional. In there are no violations then the access status set
+    # MUST NOT contain conflicting (i.e. more than one) status assertions.
+    # Otherwise evaluation will end with a runtime error. Usually it would mean
+    # that either incoming context or access matrix (access/data.yaml) is
+    # malformed.
+    status := access_status_set[_]
 }
 
-missing_mandatory_access {
-    entity := access_by_operation.mandatory[_]
-    not has_entity_access(entity)
+access_status_set[status] {
+    entity := operation_access_request[requirement][name]
+    status := entity_access_requirement_status(name, requirement)
+    # NOTE
+    # This discards discretionary access status assertions (i.e. `status := true`).
+    is_object(status)
 }
 
-missing_discretionary_access {
-    entity := access_by_operation.discretionary[_]
-    op_entity_specified(entity)
-    not has_entity_access(entity)
+access_violations[violation] {
+    violation := access_status_set[_].violation
 }
 
-access_by_operation := {
-    requirement: names |
-        entities := access.api[api_name][requirement]
-        names := {
-            name |
-                entity := entities[name]
-                entity.operations[_] == op.id
-        }
+entity_access_requirement_status(name, req) = status {
+    req == access_mandatory
+    status := entity_access_status[name]
+} else = status {
+    req == access_discretionary
+    not op_entity_specified[name]
+    status := true
+} else = status {
+    req == access_discretionary
+    entity_access_status[name]
+    status := true
+} else = status {
+    violation := {
+        "code": "missing_access",
+        "description": sprintf(
+            "Missing %s access for %s with id = %v",
+            [req, name, format_entity_id(name)]
+        )
+    }
+    status := {"violation": violation}
 }
 
-has_entity_access("party") {
-    op.party.id
-    has_party_access(op.party.id)
-}
-has_entity_access("shop") {
-    op.shop.id
-    has_shop_access(op.shop.id, op.party.id)
-}
-has_entity_access("invoice") {
-    op.invoice.id
-    has_invoice_access(op.invoice.id)
-}
-has_entity_access("invoice_template") {
-    op.invoice_template.id
-    has_invoice_template_access(op.invoice_template.id)
-}
-has_entity_access("customer") {
-    op.customer.id
-    has_customer_access(op.customer.id)
-}
-has_entity_access("report") {
-    op.report.id
-    has_report_access(op.report.id)
-}
-has_entity_access("file") {
-    op.file.id
-    has_file_access(op.file.id)
-}
-has_entity_access("payout") {
-    op.payout.id
-    has_payout_access(op.payout.id)
-}
-has_entity_access("webhook") {
-    op.webhook.id
-    has_webhook_access(op.webhook.id)
+op_entity_specified[name] {
+    op[name].id
 }
 
-op_entity_specified("party") {
-    op.party.id
-}
-op_entity_specified("shop") {
-    op.shop.id
-}
-op_entity_specified("invoice") {
-    op.invoice.id
-}
-op_entity_specified("invoice_template") {
-    op.invoice_template.id
-}
-op_entity_specified("customer") {
-    op.customer.id
-}
-op_entity_specified("report") {
-    op.report.id
-}
-op_entity_specified("file") {
-    op.file.id
-}
-op_entity_specified("webhook") {
-    op.webhook.id
-}
-op_entity_specified("payout") {
-    op.payout.id
+format_entity_id(name) = s {
+    s := op[name].id
+} else = s {
+    s := "undefined"
 }
 
-has_party_access(id) {
-    _ := user.org_by_party(id)
-    true
+access_mandatory := "mandatory"
+access_discretionary := "discretionary"
+
+access_requirements := {
+    access_mandatory,
+    access_discretionary
 }
 
-has_shop_access(id, party_id) {
-    roles := user.roles_by_operation(party_id, api_name, op.id)
-    role := roles[_]
-    user_role_has_shop_access(id, role)
+operation_access_request[requirement] = names {
+    requirement := access_requirements[_]
+    entities := access_matrix[requirement]
+    names := { name | entities[name].operations[_] == op.id }
 }
 
-has_shop_access(id, party_id) {
+operation_universal {
+    access_matrix.universal.operations[_] == op.id
+}
+
+entity_access_status["party"] = status {
+    status := party_access_status(op.party.id)
+}
+entity_access_status["shop"] = status {
+    status := shop_access_status(op.shop.id, op.party.id)
+}
+entity_access_status["invoice"] = status {
+    status := invoice_access_status(op.invoice.id)
+}
+entity_access_status["invoice_template"] = status {
+    status := invoice_template_access_status(op.invoice_template.id)
+}
+entity_access_status["customer"] = status {
+    status := customer_access_status(op.customer.id)
+}
+entity_access_status["report"] = status {
+    status := report_access_status(op.report.id)
+}
+entity_access_status["file"] = status {
+    status := file_access_status(op.file.id)
+}
+entity_access_status["payout"] = status {
+    status := payout_access_status(op.payout.id)
+}
+entity_access_status["webhook"] = status {
+    status := webhook_access_status(op.webhook.id)
+}
+
+party_access_status(id) = status {
+    user.is_owner(id)
+    status := {"owner": true}
+} else = status {
+    userorg := user.org_by_party(id)
+    roles := {
+        role |
+            role := userorg.roles[_]
+            user_role_has_party_access(role)
+    }
+    roles[_]
+    status := {"roles": roles}
+}
+
+shop_access_status(id, party_id) = status {
     user.is_owner(party_id)
+    status := {"owner": true}
+} else = status {
+    userorg := user.org_by_party(party_id)
+    roles := {
+        role |
+            role := userorg.roles[_]
+            user_role_has_shop_access(id, role)
+    }
+    roles[_]
+    status := {"roles": roles}
 }
 
 user_role_has_shop_access(shop_id, role) {
     role.scope.shop
     shop_id == role.scope.shop.id
 }
-user_role_has_shop_access(shop_id, role) {
+user_role_has_shop_access(_, role) {
+    user_role_has_party_access(role)
+}
+
+user_role_has_party_access(role) {
     not role.scope
 }
 
-has_invoice_access(id) {
+invoice_access_status(id) = status {
     invoice := payment_processing.invoice
     invoice.id == id
-    has_party_access(invoice.party.id)
-    has_shop_access(invoice.shop.id, invoice.party.id)
+    status := shop_access_status(invoice.shop.id, invoice.party.id)
 }
 
-has_invoice_template_access(id) {
+invoice_template_access_status(id) = status {
     invoice_template := payment_processing.invoice_template
     invoice_template.id == id
-    has_party_access(invoice_template.party.id)
-    has_shop_access(invoice_template.shop.id, invoice_template.party.id)
+    status := shop_access_status(invoice_template.shop.id, invoice_template.party.id)
 }
 
-has_customer_access(id) {
+customer_access_status(id) = status {
     customer := payment_processing.customer
     customer.id == id
-    has_party_access(customer.party.id)
-    has_shop_access(customer.shop.id, customer.party.id)
+    status := shop_access_status(customer.shop.id, customer.party.id)
 }
 
-has_report_access(id) {
+report_access_status(id) = status {
     report := reports.report
     report.id == id
-    has_party_access(report.party.id)
-    has_shop_access(report.shop.id, report.party.id)
+    status := shop_access_status(report.shop.id, report.party.id)
 }
 
-has_file_access(id) {
+file_access_status(id) = status {
     report := reports.report
     report.files[_].id == id
-    has_report_access(report.id)
+    status := report_access_status(report.id)
 }
 
-has_payout_access(id) {
+payout_access_status(id) = status {
     payout := payouts.payout
     payout.id == id
-    has_party_access(payout.party.id)
-    has_shop_access(payout.shop.id, payout.party.id)
+    status := shop_access_status(payout.shop.id, payout.party.id)
 }
 
-has_webhook_access(id) {
+webhook_access_status(id) = status {
     webhook := webhooks.webhook
     webhook.id == id
-    has_party_access(webhook.party.id)
+    status := party_access_status(webhook.party.id)
 }
-
-is_session_token_operation
-    { op.id == "GetAccountByID" }
-    { op.id == "GetCategories" }
-    { op.id == "GetCategoryByRef" }
-    { op.id == "GetLocationsNames" }
-    { op.id == "GetPaymentInstitutions" }
-    { op.id == "GetPaymentInstitutionByRef" }
-    { op.id == "GetPaymentInstitutionPaymentTerms" }
-    { op.id == "GetPaymentInstitutionPayoutMethods" }
-    { op.id == "GetPaymentInstitutionPayoutSchedules" }
-    { op.id == "GetScheduleByRef" }
 
 forbidden_session_token_operation
     { op.id == "CreatePaymentResource" }

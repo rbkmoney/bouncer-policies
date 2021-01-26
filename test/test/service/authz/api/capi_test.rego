@@ -307,6 +307,50 @@ test_delete_webhook_forbidden_default_user {
     ])
 }
 
+test_download_file_allowed_administrator {
+    util.is_allowed with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator_shop,
+        fixtures.session_token_valid,
+        fixtures.op_capi_download_file,
+        fixtures.reports_report
+    ])
+}
+
+test_download_missing_file_forbidden {
+    util.is_forbidden with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator_shop,
+        fixtures.session_token_valid,
+        fixtures.op_capi_download_missing_file,
+        fixtures.reports_report
+    ])
+}
+
+test_download_file_invalid_shop_forbidden {
+    util.is_forbidden with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator_shop,
+        fixtures.session_token_valid,
+        fixtures.op_capi_download_file_invalid_shop,
+        fixtures.reports_report
+    ])
+}
+
+test_download_file_invalid_party_forbidden {
+    util.is_forbidden with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator_owner_another_party,
+        fixtures.session_token_valid,
+        fixtures.op_capi_download_file_invalid_party,
+        fixtures.reports_report
+    ])
+}
+
 test_unknown_operation_forbidden_no_access {
     util.is_forbidden with input as capi_public_operation_ctx with input.capi.op as {"id" : "NewOperation"}
 }

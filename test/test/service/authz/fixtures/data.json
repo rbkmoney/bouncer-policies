@@ -303,6 +303,54 @@
         }
     },
 
+    "op_capi_download_file": {
+        "capi": {
+            "op": {
+                "id": "DownloadFileForParty",
+                "party": {"id": "PARTY"},
+                "shop": {"id": "SHOP"},
+                "report": {"id": "REPORT"},
+                "file": {"id": "FILE"}
+            }
+        }
+    },
+
+    "op_capi_download_missing_file": {
+        "capi": {
+            "op": {
+                "id": "DownloadFileForParty",
+                "party": {"id": "PARTY"},
+                "shop": {"id": "SHOP"},
+                "report": {"id": "REPORT"},
+                "file": {"id": "NOFILE"}
+            }
+        }
+    },
+
+    "op_capi_download_file_invalid_shop": {
+        "capi": {
+            "op": {
+                "id": "DownloadFileForParty",
+                "party": {"id": "PARTY"},
+                "shop": {"id": "SHOP_2"},
+                "report": {"id": "REPORT"},
+                "file": {"id": "NOFILE"}
+            }
+        }
+    },
+
+    "op_capi_download_file_invalid_party": {
+        "capi": {
+            "op": {
+                "id": "DownloadFileForParty",
+                "party": {"id": "PARTY_2"},
+                "shop": {"id": "SHOP"},
+                "report": {"id": "REPORT"},
+                "file": {"id": "NOFILE"}
+            }
+        }
+    },
+
     "payproc_invoice": {
         "payment_processing": {
             "invoice": {
@@ -410,6 +458,19 @@
                     "topic": "invoice",
                     "shop": {"id": "SHOP"}
                 }
+            }
+        }
+    },
+
+    "reports_report": {
+        "reports": {
+            "report": {
+                "id": "REPORT",
+                "party": {"id": "PARTY"},
+                "shop": {"id": "SHOP"},
+                "files": [
+                    {"id": "FILE"}
+                ]
             }
         }
     },
@@ -678,6 +739,44 @@
                             "id": "Administrator"
                         }
                     ]
+                }
+            ]
+        }
+    },
+
+    "user_administrator_shop": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": { "id": "OWNER" },
+                    "roles": [
+                        {
+                            "id": "Administrator",
+                            "scope": {"shop": {"id": "SHOP"}}
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
+    "user_administrator_owner_another_party": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": { "id": "OWNER" },
+                    "roles": [
+                        {"id": "Administrator"}
+                    ]
+                },
+                {
+                    "id": "PARTY_2",
+                    "owner": { "id": "USER" },
+                    "roles": []
                 }
             ]
         }

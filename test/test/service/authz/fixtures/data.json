@@ -304,6 +304,17 @@
         }
     },
 
+    "op_capi_search_specific_payout": {
+        "capi": {
+            "op": {
+                "id": "SearchPayouts",
+                "payout": { "id": "PAYOUT" },
+                "shop": { "id": "SHOP" },
+                "party": { "id": "PARTY" }
+            }
+        }
+    },
+
     "op_capi_delete_webhook": {
         "capi": {
             "op": {
@@ -481,6 +492,17 @@
                 "files": [
                     {"id": "FILE"}
                 ]
+            }
+        }
+    },
+
+    "payouts_payout": {
+        "payouts": {
+            "payout": {
+                "id": "PAYOUT",
+                "party": { "id": "PARTY" },
+                "contract": { "id": "CONTRACT" },
+                "shop": { "id": "SHOP" }
             }
         }
     },

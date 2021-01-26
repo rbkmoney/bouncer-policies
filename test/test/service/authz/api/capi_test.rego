@@ -274,6 +274,17 @@ test_search_specific_invoice_allowed {
     ])
 }
 
+test_search_specific_payout_allowed {
+    util.is_allowed with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator_shop,
+        fixtures.session_token_valid,
+        fixtures.op_capi_search_specific_payout,
+        fixtures.payouts_payout
+    ])
+}
+
 test_search_foreign_invoice_forbidden {
     util.is_forbidden with input as util.deepmerge([
         fixtures.env_default,

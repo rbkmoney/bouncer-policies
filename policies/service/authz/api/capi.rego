@@ -15,6 +15,14 @@ import input.reports
 api_name := "CommonAPI"
 access_matrix := access.api[api_name]
 
+access_mandatory := "mandatory"
+access_discretionary := "discretionary"
+
+access_requirements := {
+    access_mandatory,
+    access_discretionary
+}
+
 # Set of assertions which tell why operation under the input context is forbidden.
 # Each element must be an object of the following form:
 # ```
@@ -145,14 +153,6 @@ format_entity_id(name) = s {
     s := op[name].id
 } else = s {
     s := "undefined"
-}
-
-access_mandatory := "mandatory"
-access_discretionary := "discretionary"
-
-access_requirements := {
-    access_mandatory,
-    access_discretionary
 }
 
 operation_access_request[requirement] = names {

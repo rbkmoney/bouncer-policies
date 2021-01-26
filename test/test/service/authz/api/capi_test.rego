@@ -313,7 +313,7 @@ test_search_another_party_invoice_allowed_owner_another_party {
 }
 
 test_search_another_party_invoice_forbidden_manager_another_party {
-    util.is_allowed with input as util.deepmerge([
+    util.is_forbidden with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_administrator_manager_another_party,

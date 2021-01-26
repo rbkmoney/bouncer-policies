@@ -831,7 +831,7 @@
                     "roles": [
                         {
                             "id": "Manager",
-                            "scope": { "shop": { "id": "SHOP" } }
+                            "scope": { "shop": { "id": "SHOP_2" } }
                         }
                     ]
                 }

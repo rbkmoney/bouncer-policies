@@ -109,7 +109,7 @@ access_status = status {
 }
 
 access_status_set[status] {
-    entity := operation_access_request[requirement][name]
+    operation_access_request[requirement][name]
     status := entity_access_requirement_status(name, requirement)
     # NOTE
     # This discards discretionary access status assertions (i.e. `status := true`).

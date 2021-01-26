@@ -135,6 +135,9 @@ entity_access_requirement_status(name, req) = status {
 }
 
 op_entity_specified[name] {
+    # NOTE
+    # Please take care to not misuse this when introducing something not exactly
+    # entity-like in the protocol.
     op[name].id
 }
 

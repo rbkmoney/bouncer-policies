@@ -108,6 +108,16 @@
         }
     },
 
+    "op_capi_create_payment_insufficient_input": {
+        "capi": {
+            "op": {
+                "id": "CreatePayment",
+                "party": { "id": "PARTY" },
+                "shop": { "id": "SHOP" }
+            }
+        }
+    },
+
     "op_capi_cancel_payment": {
         "capi": {
             "op": {

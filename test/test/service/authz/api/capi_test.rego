@@ -86,6 +86,17 @@ test_insufficient_input_forbidden {
     ])
 }
 
+test_op_insufficient_input_forbidden {
+    util.is_forbidden with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator,
+        fixtures.session_token_valid,
+        fixtures.op_capi_create_payment_insufficient_input,
+        fixtures.payproc_invoice
+    ])
+}
+
 test_get_refund_by_id_allowed {
     result := api.assertions with input as util.deepmerge([
         fixtures.env_default,

@@ -307,6 +307,17 @@ test_delete_webhook_allowed_administrator {
     ])
 }
 
+test_delete_webhook_allowed_owner {
+    util.is_allowed with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator_owner_another_party,
+        fixtures.session_token_valid,
+        fixtures.op_capi_delete_webhook,
+        fixtures.webhooks_webhook_foreign
+    ])
+}
+
 test_delete_foreign_webhook_forbidden {
     util.is_forbidden with input as util.deepmerge([
         fixtures.env_default,

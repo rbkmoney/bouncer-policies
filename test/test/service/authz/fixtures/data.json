@@ -814,6 +814,31 @@
         }
     },
 
+    "user_administrator_manager_another_party": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "PARTY",
+                    "owner": { "id": "OWNER" },
+                    "roles": [
+                        {"id": "Administrator"}
+                    ]
+                },
+                {
+                    "id": "PARTY_2",
+                    "owner": { "id": "OWNER" },
+                    "roles": [
+                        {
+                            "id": "Manager",
+                            "scope": { "shop": { "id": "SHOP" } }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
     "user_several_roles": {
         "user": {
             "id": "USER",

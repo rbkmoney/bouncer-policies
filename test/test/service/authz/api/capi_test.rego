@@ -296,6 +296,33 @@ test_search_foreign_invoice_forbidden {
     ])
 }
 
+test_search_another_party_invoice_allowed_owner_another_party {
+    # NOTE
+    # This is kinda unusual: search within `PARTY` for specific invoice owned by
+    # `PARTY_2`. It's **allowed** because the user has, independently, an access
+    # to searches within `PARTY` **and** an access to invoice owned by `PARTY_2`,
+    # even though such request as a whole doesn't make sense.
+    util.is_allowed with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator_owner_another_party,
+        fixtures.session_token_valid,
+        fixtures.op_capi_search_specific_invoice,
+        fixtures.payproc_invoice_foreign
+    ])
+}
+
+test_search_another_party_invoice_forbidden_manager_another_party {
+    util.is_allowed with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator_manager_another_party,
+        fixtures.session_token_valid,
+        fixtures.op_capi_search_specific_invoice,
+        fixtures.payproc_invoice_foreign
+    ])
+}
+
 test_delete_webhook_allowed_administrator {
     util.is_allowed with input as util.deepmerge([
         fixtures.env_default,

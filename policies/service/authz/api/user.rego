@@ -24,5 +24,5 @@ operations_by_role(api_name, user_role) = operations {
 
 org_by_party(party_id) = org {
     org := input.user.orgs[_]
-    org.id == party_id
+    org.party.id == party_id
 }

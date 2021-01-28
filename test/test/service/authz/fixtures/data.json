@@ -720,8 +720,9 @@
             "id": "USER",
             "orgs": [
                 {
-                    "id": "PARTY",
+                    "id": "ORG",
                     "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY" },
                     "roles": [
                         {
                             "id": "OtherRole",
@@ -742,8 +743,9 @@
             "id": "USER",
             "orgs": [
                 {
-                    "id": "PARTY",
+                    "id": "ORG",
                     "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY" },
                     "roles": [
                         {
                             "id": "Manager",
@@ -764,8 +766,9 @@
             "id": "USER",
             "orgs": [
                 {
-                    "id": "PARTY",
+                    "id": "ORG",
                     "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY" },
                     "roles": [
                         {
                             "id": "Administrator"
@@ -781,8 +784,9 @@
             "id": "USER",
             "orgs": [
                 {
-                    "id": "PARTY",
+                    "id": "ORG",
                     "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY" },
                     "roles": [
                         {
                             "id": "Administrator",
@@ -799,15 +803,17 @@
             "id": "USER",
             "orgs": [
                 {
-                    "id": "PARTY",
+                    "id": "ORG",
                     "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY" },
                     "roles": [
                         {"id": "Administrator"}
                     ]
                 },
                 {
-                    "id": "PARTY_2",
+                    "id": "ORG_2",
                     "owner": { "id": "USER" },
+                    "party": { "id": "PARTY_2" },
                     "roles": []
                 }
             ]
@@ -819,15 +825,17 @@
             "id": "USER",
             "orgs": [
                 {
-                    "id": "PARTY",
+                    "id": "ORG",
                     "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY" },
                     "roles": [
                         {"id": "Administrator"}
                     ]
                 },
                 {
-                    "id": "PARTY_2",
+                    "id": "ORG_2",
                     "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY_2" },
                     "roles": [
                         {
                             "id": "Manager",
@@ -844,8 +852,9 @@
             "id": "USER",
             "orgs": [
                 {
-                    "id": "PARTY",
+                    "id": "ORG",
                     "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY" },
                     "roles": [
                         {
                             "id": "Manager",
@@ -882,8 +891,9 @@
             "id": "USER",
             "orgs": [
                 {
-                    "id": "PARTY",
+                    "id": "ORG",
                     "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY" },
                     "roles": [
                         {
                             "id": "Manager"
@@ -899,8 +909,9 @@
             "id": "USER",
             "orgs": [
                 {
-                    "id": "PARTY",
+                    "id": "ORG",
                     "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY" },
                     "roles": []
                 }
             ]
@@ -912,8 +923,9 @@
             "id": "OWNER",
             "orgs": [
                 {
-                    "id": "PARTY",
+                    "id": "ORG",
                     "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY" },
                     "roles": []
                 }
             ]

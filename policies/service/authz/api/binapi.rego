@@ -13,5 +13,5 @@ allowed[why] {
 }
 
 bin_lookup_allowed {
-    op.party.id == whitelists.bin_lookup_allowed_party_ids[_]
+    op.party.id == whitelists.binapi_party_ids.entries[_]
 }

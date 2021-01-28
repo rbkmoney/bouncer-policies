@@ -104,8 +104,8 @@ warnings[why] {
 }
 
 warnings[why] {
-    not whitelists.bin_lookup_allowed_party_ids
-    why := "Whitelist 'bin_lookup_allowed_party_ids' is not defined, whitelisting by partyID will NOT WORK."
+    not whitelists.binapi_party_ids.entries
+    why := "Whitelist 'binapi_party_ids' is not defined, whitelisting by partyID will NOT WORK."
 }
 
 # Set of assertions which tell why operation under the input context is allowed.

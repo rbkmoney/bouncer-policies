@@ -1,0 +1,5 @@
+title: Card BIN Lookup Whitelist
+description: >
+  Parties identified by ids listed here (and only those) are allowed to use our
+  BinAPI service.
+entries: []

@@ -10,7 +10,9 @@ test_lookup_card_info_allowed {
         fixtures.requester_default,
         fixtures.session_token_valid,
         fixtures.op_binapi_lookup_card_info
-    ]) with data.service.authz.whitelists.bin_lookup_allowed_party_ids as ["PARTY_2"]
+    ]) with data.service.authz.whitelists.binapi_party_ids as {
+        "entries": ["PARTY_2"]
+    }
     not result.forbidden
     count(result.allowed) == 1
     result.allowed[_].code == "session_token_allows_operation"
@@ -22,7 +24,9 @@ test_lookup_card_info_forbidden {
         fixtures.requester_default,
         fixtures.session_token_valid,
         fixtures.op_binapi_lookup_card_info
-    ]) with data.service.authz.whitelists.bin_lookup_allowed_party_ids as ["PARTY_3"]
+    ]) with data.service.authz.whitelists.binapi_party_ids as {
+        "entries": ["PARTY_3"]
+    }
     not result.forbidden
     not result.allowed
 }

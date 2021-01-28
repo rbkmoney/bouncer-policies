@@ -19,7 +19,7 @@ CALL_W_CONTAINER := \
 SERVICE_IMAGE_TAG ?= $(shell git rev-parse HEAD)
 SERVICE_IMAGE_PUSH_TAG ?= $(SERVICE_IMAGE_TAG)
 BASE_IMAGE_NAME := openpolicyagent/opa
-BASE_IMAGE_TAG := 0.24.0
+BASE_IMAGE_TAG := 0.26.0
 
 -include $(UTILS_PATH)/make_lib/utils_image.mk
 

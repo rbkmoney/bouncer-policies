@@ -1,8 +1,8 @@
 #!/bin/bash
 cat <<EOF
 
-# openpolicyagent/opa:0.24.0
-FROM openpolicyagent/opa@sha256:dd8233c85e13ca42b057962faf5579732c8b2874e469fbb19cea3f11f7372fd9
+# openpolicyagent/opa:0.26.0
+FROM openpolicyagent/opa@sha256:194124d6a0ef36a3f5fbf70aa5e84460969b2cb6fb1652d0c7016b8711c75519
 COPY ./policies /var/opa/roots
 WORKDIR /var/opa/roots
 

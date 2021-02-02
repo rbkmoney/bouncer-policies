@@ -131,12 +131,22 @@ test_invoice_access_token_allows_get_payment_by_id {
     count(result.allowed) == 1
 }
 
-test_invoice_access_token_forbids_get_payments {
-    util.is_forbidden with input as util.deepmerge([
+test_invoice_access_token_allows_get_payments {
+    util.is_allowed with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.invoice_access_token_valid,
         fixtures.op_capi_get_payments,
+        fixtures.payproc_invoice
+    ])
+}
+
+test_invoice_access_token_forbids_cancel_payment {
+    util.is_forbidden with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.invoice_access_token_valid,
+        fixtures.op_capi_cancel_payment,
         fixtures.payproc_invoice
     ])
 }

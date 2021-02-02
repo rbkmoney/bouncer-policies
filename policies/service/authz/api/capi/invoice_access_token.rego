@@ -44,3 +44,8 @@ is_invoice_access_token_operation
     { op.id == "GetInvoicePaymentMethods" }
     { op.id == "CreatePayment" }
     { op.id == "GetPaymentByID" }
+    # NOTE
+    # Looks like some third-party integrations depend on `GetPayments`
+    # availability with invoice access tokens.
+    # Should we eventually allow this for specific parties only?
+    { op.id == "GetPayments" }

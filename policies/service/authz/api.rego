@@ -38,12 +38,13 @@ forbidden[why] {
 }
 
 forbidden[why] {
+    not tolerate_expired_token
     exp := time.parse_rfc3339_ns(input.auth.expiration)
     now := time.parse_rfc3339_ns(input.env.now)
     now > exp
     why := {
         "code": "auth_expired",
-        "description": sprintf("Authorization is expired at: %s", [input.auth.expiration])
+        "description": sprintf("Authorization expired at: %s", [input.auth.expiration])
     }
 }
 
@@ -91,6 +92,11 @@ forbidden[why] {
 forbidden[why] {
     input.capi
     capi.forbidden[why]
+}
+
+tolerate_expired_token {
+    input.capi
+    input.auth.method == "SessionToken"
 }
 
 warnings[why] {

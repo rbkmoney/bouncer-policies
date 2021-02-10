@@ -133,3 +133,58 @@ test_anapi_forbidden_operation_auth_invalid {
     count(result.allowed) == 1
     result.restrictions == fixtures.op_anapi_restrictions
 }
+
+test_get_report_allowed {
+    util.is_allowed with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_anapi_download_file,
+        fixtures.reports_report
+    ])
+}
+
+test_download_file_allowed_administrator {
+    util.is_allowed with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator_shop,
+        fixtures.session_token_valid,
+        fixtures.op_anapi_download_file,
+        fixtures.reports_report
+    ])
+}
+
+test_download_missing_file_forbidden {
+    util.is_forbidden with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator_shop,
+        fixtures.session_token_valid,
+        fixtures.op_anapi_download_missing_file,
+        fixtures.reports_report
+    ])
+}
+
+test_download_file_invalid_shop_forbidden {
+    util.is_forbidden with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator_shop,
+        fixtures.session_token_valid,
+        fixtures.op_anapi_download_file_invalid_shop,
+        fixtures.reports_report
+    ])
+}
+
+test_download_file_invalid_party_forbidden {
+    util.is_forbidden with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator_owner_another_party,
+        fixtures.session_token_valid,
+        fixtures.op_anapi_download_file_invalid_party,
+        fixtures.reports_report
+    ])
+}

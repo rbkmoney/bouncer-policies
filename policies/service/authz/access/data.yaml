@@ -174,3 +174,42 @@ api:
       - "GetPaymentInstitutionPayoutMethods"
       - "GetPaymentInstitutionPayoutSchedules"
       - "GetScheduleByRef"
+  AnalyticsAPI:
+    mandatory:
+      party:
+        operations:
+          - "SearchInvoices"
+          - "SearchPayments"
+          - "SearchRefunds"
+          - "SearchPayouts"
+          - "SearchReports"
+          - "SearchChargebacks"
+          - "GetReport"
+          - "CreateReport"
+          - "CancelReport"
+          - "DownloadFile"
+          - "GetPaymentsToolDistribution"
+          - "GetPaymentsAmount"
+          - "GetAveragePayment"
+          - "GetPaymentsCount"
+          - "GetPaymentsErrorDistribution"
+          - "GetPaymentsSplitAmount"
+          - "GetPaymentsSplitCount"
+          - "GetRefundsAmount"
+          - "GetCurrentBalances"
+          - "GetPaymentsSubErrorDistribution"
+          - "GetCurrentBalancesGroupByShop"
+
+      shop:
+        operations:
+          - "CreateReport"
+
+      report:
+        operations:
+          - "GetReport"
+          - "CancelReport"
+          - "DownloadFile"
+
+      file:
+        operations:
+          - "DownloadFile"

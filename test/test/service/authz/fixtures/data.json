@@ -715,6 +715,63 @@
         }
     },
 
+    "op_anapi_get_report": {
+        "anapi": {
+            "op": {
+                "id": "GetReport",
+                "party": { "id": "PARTY"},
+                "report": {"id": "REPORT"}
+            }
+        }
+    },
+
+    "op_anapi_download_file": {
+        "anapi": {
+            "op": {
+                "id": "DownloadFile",
+                "party": {"id": "PARTY"},
+                "report": {"id": "REPORT"},
+                "file": {"id": "FILE"}
+            }
+        }
+    },
+
+    "op_anapi_download_missing_file": {
+        "anapi": {
+            "op": {
+                "id": "DownloadFile",
+                "party": {"id": "PARTY"},
+                "shop": {"id": "SHOP"},
+                "report": {"id": "REPORT"},
+                "file": {"id": "NOFILE"}
+            }
+        }
+    },
+
+    "op_anapi_download_file_invalid_shop": {
+        "anapi": {
+            "op": {
+                "id": "DownloadFile",
+                "party": {"id": "PARTY"},
+                "shop": {"id": "SHOP_2"},
+                "report": {"id": "REPORT"},
+                "file": {"id": "NOFILE"}
+            }
+        }
+    },
+
+    "op_anapi_download_file_invalid_party": {
+        "anapi": {
+            "op": {
+                "id": "DownloadFile",
+                "party": {"id": "PARTY_2"},
+                "shop": {"id": "SHOP"},
+                "report": {"id": "REPORT"},
+                "file": {"id": "NOFILE"}
+            }
+        }
+    },
+
     "user_default_other_role": {
         "user": {
             "id": "USER",

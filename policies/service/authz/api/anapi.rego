@@ -10,7 +10,6 @@ import data.service.authz.roles
 api_name := "AnalyticsAPI"
 access_matrix := access.api[api_name]
 
-
 access_mandatory := "mandatory"
 access_requirements := {
     access_mandatory
@@ -37,22 +36,15 @@ forbidden[why] {
 # Restrictions
 
 restrictions[what] {
-    not user.is_owner(op.party.id)
-    user.roles_by_operation(op.party.id, api_name, op.id)[_]
+    count(access_violations) == 0
+    access_status.compliant_shops
     what := {
         "anapi": {
             "op": {
-                "shops": [shop | shop := op_shop_in_scope[_]]
+                "shops": access_status.compliant_shops
             }
         }
     }
-}
-
-op_shop_in_scope[shop] {
-    some i
-    user_roles := user.roles_by_operation(op.party.id, api_name, op.id)
-    op.shops[i].id == user_roles[_].scope.shop.id
-    shop := op.shops[i]
 }
 
 # Set of assertions which tell why operation under the input context is allowed.
@@ -133,8 +125,8 @@ operation_access_request[requirement] = names {
     names := { name | entities[name].operations[_] == op.id }
 }
 
-entity_access_status["party"] = status {
-    status := party_access_status(op.party.id)
+entity_access_status["shops"] = status {
+    status := shops_access_status(op.shops, op.party.id)
 }
 entity_access_status["shop"] = status {
     status := shop_access_status(op.shop.id, op.party.id)
@@ -146,20 +138,29 @@ entity_access_status["file"] = status {
     status := file_access_status(op.file.id)
 }
 
-dd := user.org_by_party(op.party.id)
-
-party_access_status(id) = status {
-    user.is_owner(id)
+shops_access_status(shops, party_id) = status {
+    user.is_owner(party_id)
     status := {"owner": true}
 } else = status {
-    userorg := user.org_by_party(id)
+    userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
-            user_role_has_party_access(role)
+            shop := shops[_]
+            user_role_has_shop_access(shop.id, role)
     }
+    compliant_shops := [
+        shop |
+            role := roles[_]
+            operations := user.operations_by_role(api_name, role)
+            operations[_] == op.id
+            shop := role.scope.shop
+    ]
     roles[_]
-    status := {"roles": roles}
+    status := {
+        "roles": roles,
+        "compliant_shops": compliant_shops
+    }
 }
 
 shop_access_status(id, party_id) = status {

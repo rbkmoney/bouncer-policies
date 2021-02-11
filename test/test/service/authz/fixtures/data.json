@@ -725,6 +725,16 @@
         }
     },
 
+    "op_anapi_create_report": {
+        "anapi": {
+            "op": {
+                "id": "CreateReport",
+                "party": { "id": "PARTY"},
+                "shop": {"id": "SHOP"}
+            }
+        }
+    },
+
     "op_anapi_download_file": {
         "anapi": {
             "op": {
@@ -806,6 +816,29 @@
                     "roles": [
                         {
                             "id": "Manager",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
+    "user_bookkeeper": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "ORG",
+                    "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY" },
+                    "roles": [
+                        {
+                            "id": "Bookkeeper",
                             "scope": {
                                 "shop": {
                                     "id": "SHOP"

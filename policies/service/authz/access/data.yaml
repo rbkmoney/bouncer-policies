@@ -176,7 +176,7 @@ api:
       - "GetScheduleByRef"
   AnalyticsAPI:
     mandatory:
-      party:
+      shops:
         operations:
           - "SearchInvoices"
           - "SearchPayments"
@@ -184,10 +184,6 @@ api:
           - "SearchPayouts"
           - "SearchReports"
           - "SearchChargebacks"
-          - "GetReport"
-          - "CreateReport"
-          - "CancelReport"
-          - "DownloadFile"
           - "GetPaymentsToolDistribution"
           - "GetPaymentsAmount"
           - "GetAveragePayment"

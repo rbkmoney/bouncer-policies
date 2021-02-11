@@ -28,6 +28,13 @@ is_allowed {
     judgement.resolution[0] == "allowed"
 }
 
+is_restricted_with(restrictions) {
+    judgement := data.service.authz.api.judgement
+    trace(sprintf("<!> judgement = %v", [judgement]))
+    judgement.resolution[0] == "restricted"
+    judgement.restrictions == restrictions
+}
+
 is_forbidden {
     judgement := data.service.authz.api.judgement
     trace(sprintf("<!> judgement = %v", [judgement]))

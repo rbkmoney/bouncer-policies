@@ -14,6 +14,16 @@ test_anapi_restricted {
     ])
 }
 
+test_anapi_restricted_operation_no_shops {
+    result := api.judgement with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_default,
+        fixtures.session_token_valid,
+        fixtures.op_anapi_no_shops
+    ])
+}
+
 test_anapi_allowed_org_owner {
     util.is_allowed with input as util.deepmerge([
         fixtures.env_default,
@@ -49,6 +59,16 @@ test_anapi_restricted_several_shops_several_roles_operation {
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_several_roles,
+        fixtures.session_token_valid,
+        fixtures.op_anapi_several_shops
+    ])
+}
+
+test_anapi_restricted_several_shops_several_roles_another_party_operation {
+    util.is_restricted_with(fixtures.op_anapi_restrictions_several_shops) with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_several_roles_another_party,
         fixtures.session_token_valid,
         fixtures.op_anapi_several_shops
     ])

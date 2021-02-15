@@ -976,6 +976,60 @@
         }
     },
 
+    "user_several_roles_another_party": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "ORG",
+                    "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY" },
+                    "roles": [
+                        {
+                            "id": "Manager",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP"
+                                }
+                            }
+                        },
+                        {
+                            "id": "Manager",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP2"
+                                }
+                            }
+                        },
+                        {
+                            "id": "OtherRole",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP3"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "ORG_2",
+                    "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY_2" },
+                    "roles": [
+                        {
+                            "id": "Manager",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP4"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
     "user_with_role_without_scope": {
         "user": {
             "id": "USER",

@@ -37,14 +37,22 @@ forbidden[why] {
 
 restrictions[what] {
     count(access_violations) == 0
-    access_status.compliant_shops
+    access_status.shops_restrictions
     what := {
         "anapi": {
             "op": {
-                "shops": access_status.compliant_shops
+                "shops": restricted_shops
             }
         }
     }
+}
+
+restricted_shops = shops {
+    shops := [
+        shop |
+            role := filter_operation_roles(access_status.roles)[_]
+            shop := role.scope.shop
+    ]
 }
 
 # Set of assertions which tell why operation under the input context is allowed.
@@ -68,9 +76,7 @@ session_token_allowed[why] {
 }
 
 session_token_allowed[why] {
-    role := access_status.roles[_]
-    operations := user.operations_by_role(api_name, role)
-    operations[_] == op.id
+    role := filter_operation_roles(access_status.roles)[_]
     why := {
         "code": "org_role_allows_operation",
         "description": sprintf("User has role that permits this operation: %v", [role.id])
@@ -126,7 +132,7 @@ operation_access_request[requirement] = names {
 }
 
 entity_access_status["shops"] = status {
-    status := shops_access_status(op.shops, op.party.id)
+    status := shops_access_status(op.party.id)
 }
 entity_access_status["shop"] = status {
     status := shop_access_status(op.shop.id, op.party.id)
@@ -138,28 +144,16 @@ entity_access_status["file"] = status {
     status := file_access_status(op.file.id)
 }
 
-shops_access_status(shops, party_id) = status {
+shops_access_status(party_id) = status {
     user.is_owner(party_id)
     status := {"owner": true}
 } else = status {
     userorg := user.org_by_party(party_id)
-    roles := {
-        role |
-            role := userorg.roles[_]
-            shop := shops[_]
-            user_role_has_shop_access(shop.id, role)
-    }
-    compliant_shops := [
-        shop |
-            role := roles[_]
-            operations := user.operations_by_role(api_name, role)
-            operations[_] == op.id
-            shop := role.scope.shop
-    ]
+    roles := { role | role := userorg.roles[_]}
     roles[_]
     status := {
         "roles": roles,
-        "compliant_shops": compliant_shops
+        "shops_restrictions": true
     }
 }
 
@@ -199,4 +193,13 @@ file_access_status(id) = status {
     report := reports.report
     report.files[_].id == id
     status := report_access_status(report.id)
+}
+
+filter_operation_roles(roles) = operation_roles {
+    operation_roles := {
+        role |
+            role := roles[_]
+            operations := user.operations_by_role(api_name, role)
+            operations[_] == op.id
+    }
 }

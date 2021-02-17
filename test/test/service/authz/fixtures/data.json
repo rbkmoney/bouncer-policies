@@ -869,6 +869,32 @@
         }
     },
 
+    "user_administrator_manager": {
+        "user": {
+            "id": "USER",
+            "orgs": [
+                {
+                    "id": "ORG",
+                    "owner": { "id": "OWNER" },
+                    "party": { "id": "PARTY" },
+                    "roles": [
+                        {
+                            "id": "Administrator"
+                        },
+                        {
+                            "id": "Manager",
+                            "scope": {
+                                "shop": {
+                                    "id": "SHOP"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
     "user_administrator_shop": {
         "user": {
             "id": "USER",

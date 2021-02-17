@@ -74,8 +74,18 @@ test_anapi_restricted_several_shops_several_roles_another_party_operation {
     ])
 }
 
+test_anapi_administrator_manager {
+    util.is_allowed with input as util.deepmerge([
+        fixtures.env_default,
+        fixtures.requester_default,
+        fixtures.user_administrator_manager,
+        fixtures.session_token_valid,
+        fixtures.op_anapi
+    ])
+}
+
 test_anapi_forbidden_operation_no_role {
-    result := api.assertions with input as util.deepmerge([
+    util.is_forbidden with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_default,

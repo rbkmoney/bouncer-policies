@@ -37,7 +37,7 @@ forbidden[why] {
 
 restrictions[what] {
     count(access_violations) == 0
-    access_status.shops_restrictions
+    need_restrictions
     what := {
         "anapi": {
             "op": {
@@ -50,7 +50,7 @@ restrictions[what] {
 restricted_shops = shops {
     shops := [
         shop |
-            role := filter_operation_roles(access_status.roles)[_]
+            role := operation_filtered_roles[_]
             shop := role.scope.shop
     ]
 }
@@ -76,7 +76,7 @@ session_token_allowed[why] {
 }
 
 session_token_allowed[why] {
-    role := filter_operation_roles(access_status.roles)[_]
+    role := operation_filtered_roles[_]
     why := {
         "code": "org_role_allows_operation",
         "description": sprintf("User has role that permits this operation: %v", [role.id])
@@ -179,6 +179,17 @@ user_role_has_shop_access(_, role) {
     user_role_has_party_access(role)
 }
 
+need_restrictions {
+    not access_status.owner
+    access_status.shops_restrictions
+    not user_roles_have_party_access(operation_filtered_roles)
+}
+
+user_roles_have_party_access(roles) {
+    role := roles[_]
+    user_role_has_party_access(role)
+}
+
 user_role_has_party_access(role) {
     not role.scope
 }
@@ -195,10 +206,10 @@ file_access_status(id) = status {
     status := report_access_status(report.id)
 }
 
-filter_operation_roles(roles) = operation_roles {
+operation_filtered_roles = operation_roles {
     operation_roles := {
         role |
-            role := roles[_]
+            role := access_status.roles[_]
             operations := user.operations_by_role(api_name, role)
             operations[_] == op.id
     }

@@ -50,7 +50,7 @@ restrictions[what] {
 restricted_shops = shops {
     shops := [
         shop |
-            role := operation_filtered_roles[_]
+            role := operation_roles[_]
             shop := role.scope.shop
     ]
 }
@@ -76,7 +76,7 @@ session_token_allowed[why] {
 }
 
 session_token_allowed[why] {
-    role := operation_filtered_roles[_]
+    role := operation_roles[_]
     why := {
         "code": "org_role_allows_operation",
         "description": sprintf("User has role that permits this operation: %v", [role.id])
@@ -182,11 +182,11 @@ user_role_has_shop_access(_, role) {
 need_restrictions {
     not access_status.owner
     access_status.shops_restrictions
-    not user_roles_have_party_access(operation_filtered_roles)
+    not user_has_party_access
 }
 
-user_roles_have_party_access(roles) {
-    role := roles[_]
+user_has_party_access {
+    role := operation_roles[_]
     user_role_has_party_access(role)
 }
 
@@ -206,11 +206,9 @@ file_access_status(id) = status {
     status := report_access_status(report.id)
 }
 
-operation_filtered_roles = operation_roles {
-    operation_roles := {
-        role |
-            role := access_status.roles[_]
-            operations := user.operations_by_role(api_name, role)
-            operations[_] == op.id
-    }
+operation_roles := {
+    role |
+        role := access_status.roles[_]
+        operations := user.operations_by_role(api_name, role)
+        operations[_] == op.id
 }

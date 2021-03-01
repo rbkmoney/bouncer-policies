@@ -644,10 +644,7 @@
         "anapi": {
             "op": {
                 "id": "SearchInvoices",
-                "party": { "id": "PARTY"},
-                "shops": [
-                    { "id": "SHOP" }
-                ]
+                "party": { "id": "PARTY"}
             }
         }
     },
@@ -656,8 +653,7 @@
         "anapi": {
             "op": {
                 "id": "SearchInvoices",
-                "party": { "id": "PARTY"},
-                "shops": []
+                "party": { "id": "PARTY"}
             }
         }
     },
@@ -666,12 +662,7 @@
         "anapi": {
             "op": {
                 "id": "SearchInvoices",
-                "party": { "id": "PARTY"},
-                "shops": [
-                    { "id": "SHOP" },
-                    { "id": "SHOP2" },
-                    { "id": "SHOP3" }
-                ]
+                "party": { "id": "PARTY"}
             }
         }
     },
@@ -680,37 +671,7 @@
         "anapi": {
             "op": {
                 "id": "SearchReports",
-                "party": { "id": "PARTY"},
-                "shops": [
-                    { "id": "SHOP" }
-                ]
-            }
-        }
-    },
-
-    "op_anapi_restrictions": {
-        "anapi": {
-            "op": {
-                "shops": [
-                    {
-                        "id": "SHOP"
-                    }
-                ]
-            }
-        }
-    },
-
-    "op_anapi_restrictions_several_shops": {
-        "anapi": {
-            "op": {
-                "shops": [
-                    {
-                        "id": "SHOP"
-                    },
-                    {
-                        "id": "SHOP2"
-                    }
-                ]
+                "party": { "id": "PARTY"}
             }
         }
     },

@@ -33,15 +33,20 @@ submodules: $(SUBTARGETS)
 .PHONY: manifest test
 
 VALIDATOR := $(CURDIR)/validator.escript
-INSTANCES := $(shell find test/test/service -type f -path '*/fixtures/*.json')
-ifeq ($(INSTANCES),)
-$(error No fixtures to validate found, you probably need to update a search pattern)
+CONTEXT_INSTANCES := $(shell find test/test/service -type f -path '*/fixtures/*.json')
+RESTRICTIONS_INSTANCES := $(shell find test/test/service -type f -path '*/restrictions_fixtures/*.json')
+ifeq ($(CONTEXT_INSTANCES),)
+$(error No context fixtures to validate found, you probably need to update a search pattern)
+endif
+ifeq ($(RESTRICTIONS_INSTANCES),)
+$(error No restrictions fixtures to validate found, you probably need to update a search pattern)
 endif
 
 .PHONY: $(VALIDATOR)
 
 validate: $(VALIDATOR)
-	$(foreach inst, $(INSTANCES), $(VALIDATOR) $(inst))
+	$(foreach inst, $(CONTEXT_INSTANCES), $(VALIDATOR) $(inst) 'Context')
+	$(foreach inst, $(RESTRICTIONS_INSTANCES), $(VALIDATOR) $(inst) 'Restrictions')
 
 MANIFEST := $(CURDIR)/policies/.manifest
 REVISION := $(SERVICE_IMAGE_TAG)

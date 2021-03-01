@@ -3,9 +3,10 @@ package test.authz.api.anapi
 import data.service.authz.api
 import data.test.service.authz.util
 import data.test.service.authz.fixtures
+import data.test.service.authz.restrictions_fixtures
 
 test_anapi_restricted {
-    util.is_restricted_with(fixtures.op_anapi_restrictions) with input as util.deepmerge([
+    util.is_restricted_with(restrictions_fixtures.op_anapi_restrictions) with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_default,
@@ -45,7 +46,7 @@ test_anapi_allowed_operation_no_shops {
 }
 
 test_anapi_restricted_several_shops_operation {
-    util.is_restricted_with(fixtures.op_anapi_restrictions) with input as util.deepmerge([
+    util.is_restricted_with(restrictions_fixtures.op_anapi_restrictions) with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_default,
@@ -55,7 +56,7 @@ test_anapi_restricted_several_shops_operation {
 }
 
 test_anapi_restricted_several_shops_several_roles_operation {
-    util.is_restricted_with(fixtures.op_anapi_restrictions_several_shops) with input as util.deepmerge([
+    util.is_restricted_with(restrictions_fixtures.op_anapi_restrictions_several_shops) with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_several_roles,
@@ -65,7 +66,7 @@ test_anapi_restricted_several_shops_several_roles_operation {
 }
 
 test_anapi_restricted_several_shops_several_roles_another_party_operation {
-    util.is_restricted_with(fixtures.op_anapi_restrictions_several_shops) with input as util.deepmerge([
+    util.is_restricted_with(restrictions_fixtures.op_anapi_restrictions_several_shops) with input as util.deepmerge([
         fixtures.env_default,
         fixtures.requester_default,
         fixtures.user_several_roles_another_party,

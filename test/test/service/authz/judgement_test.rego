@@ -4,6 +4,7 @@ import data.service.authz.judgement
 import data.service.authz.api
 import data.test.service.authz.util
 import data.test.service.authz.fixtures
+import data.test.service.authz.restrictions_fixtures
 
 test_judgement {
     result := api.judgement with input as {}
@@ -39,7 +40,7 @@ test_judgement_restricted {
         fixtures.op_anapi
     ])
     result0 := judgement.judge(assertions)
-    result0.restrictions == fixtures.op_anapi_restrictions
+    result0.restrictions == restrictions_fixtures.op_anapi_restrictions
     result1 := result0.resolution
     result1[0] == "restricted"
     count(result1[1]) > 0

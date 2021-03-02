@@ -175,7 +175,7 @@ api:
       - "GetPaymentInstitutionPayoutSchedules"
       - "GetScheduleByRef"
   AnalyticsAPI:
-    mandatory:
+    restricted:
       shops:
         operations:
           - "SearchInvoices"
@@ -196,6 +196,7 @@ api:
           - "GetPaymentsSubErrorDistribution"
           - "GetCurrentBalancesGroupByShop"
 
+    mandatory:
       shop:
         operations:
           - "CreateReport"

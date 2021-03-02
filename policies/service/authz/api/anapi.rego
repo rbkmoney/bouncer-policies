@@ -11,8 +11,10 @@ api_name := "AnalyticsAPI"
 access_matrix := access.api[api_name]
 
 access_mandatory := "mandatory"
+access_restricted := "restricted"
 access_requirements := {
-    access_mandatory
+    access_mandatory,
+    access_restricted
 }
 
 # Set of assertions which tell why operation under the input context is forbidden.
@@ -109,6 +111,10 @@ entity_access_requirement_status(name, req) = status {
     req == access_mandatory
     status := entity_access_status[name]
 } else = status {
+    req == access_restricted
+    restricted_status := {"shops_restrictions": true}
+    status := object.union(entity_access_status[name], restricted_status)
+} else = status {
     violation := {
         "code": "missing_access",
         "description": sprintf(
@@ -152,8 +158,7 @@ shops_access_status(party_id) = status {
     roles := { role | role := userorg.roles[_]}
     roles[_]
     status := {
-        "roles": roles,
-        "shops_restrictions": true
+        "roles": roles
     }
 }
 

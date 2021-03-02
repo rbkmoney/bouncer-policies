@@ -8,10 +8,10 @@
 
 -spec encode(format(), jsx:json_term(), validator:struct()) ->
     {ok, _Content} | {error, _}.
-encode(thrift, Context, Struct) ->
+encode(thrift, Mapping, Struct) ->
     Codec = thrift_strict_binary_codec:new(),
     {StructType, _} = Struct,
-    try to_thrift(Context, Struct) of
+    try to_thrift(Mapping, Struct) of
         CtxThrift ->
             case thrift_strict_binary_codec:write(Codec, StructType, CtxThrift) of
                 {ok, Codec1} ->
@@ -25,10 +25,10 @@ encode(thrift, Context, Struct) ->
 
 -spec to_thrift(jsx:json_term(), validator:struct()) ->
     validator:thrift_record() | no_return().
-to_thrift(Context, Struct) ->
+to_thrift(Mapping, Struct) ->
     {{struct, _, {Module, StructName}}, StructRecord} = Struct,
     {struct, _, StructDef} = Module:struct_info(StructName),
-    to_thrift_struct(StructDef, Context, StructRecord).
+    to_thrift_struct(StructDef, Mapping, StructRecord).
 
 to_thrift_struct(StructDef, Map, Acc) ->
     % NOTE
@@ -51,7 +51,7 @@ to_thrift_struct([], MapLeft, _Idx, Acc) ->
         0 ->
             Acc;
         _ ->
-            throw({?MODULE, {excess_context_data, MapLeft}})
+            throw({?MODULE, {excess_mapping_data, MapLeft}})
     end.
 
 to_thrift_value({struct, struct, {Mod, Name}}, V = #{}) ->

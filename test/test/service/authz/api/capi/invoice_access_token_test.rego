@@ -2,14 +2,14 @@ package test.service.authz.api.capi.invoice_access_token
 
 import data.service.authz.api
 import data.test.service.authz.util
-import data.test.service.authz.fixtures
+import data.test.service.authz.fixtures.context
 
 test_invoice_access_token_valid_1 {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.invoice_access_token_valid,
-        fixtures.op_capi_create_payment_resource
+        context.env_default,
+        context.requester_default,
+        context.invoice_access_token_valid,
+        context.op_capi_create_payment_resource
     ])
     not result.forbidden
     result.allowed[_].code == "invoice_access_token_allows_tokenization"
@@ -17,11 +17,11 @@ test_invoice_access_token_valid_1 {
 
 test_invoice_access_token_valid_2 {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.invoice_access_token_valid,
-        fixtures.op_capi_get_invoice,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.invoice_access_token_valid,
+        context.op_capi_get_invoice,
+        context.payproc_invoice
     ])
     not result.forbidden
     result.allowed[_].code == "invoice_access_token_allows_operation"
@@ -29,20 +29,20 @@ test_invoice_access_token_valid_2 {
 
 test_invoice_access_token_expired {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.invoice_access_token_expired,
-        fixtures.op_capi_create_payment_resource
+        context.env_default,
+        context.requester_default,
+        context.invoice_access_token_expired,
+        context.op_capi_create_payment_resource
     ])
     result.forbidden[_].code == "auth_expired"
 }
 
 test_invoice_access_token_invalid_party {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.invoice_access_token_valid_party_2,
-        fixtures.op_capi_create_payment_resource
+        context.env_default,
+        context.requester_default,
+        context.invoice_access_token_valid_party_2,
+        context.op_capi_create_payment_resource
     ])
     not result.forbidden
     not result.allowed
@@ -50,11 +50,11 @@ test_invoice_access_token_invalid_party {
 
 test_invoice_access_token_invalid_invoice {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.invoice_access_token_valid,
-        fixtures.op_capi_get_invoice_2,
-        fixtures.payproc_invoice_2
+        context.env_default,
+        context.requester_default,
+        context.invoice_access_token_valid,
+        context.op_capi_get_invoice_2,
+        context.payproc_invoice_2
     ])
     not result.forbidden
     not result.allowed
@@ -62,11 +62,11 @@ test_invoice_access_token_invalid_invoice {
 
 test_invoice_access_token_invalid_operation_1 {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.invoice_access_token_valid,
-        fixtures.op_capi_create_refund,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.invoice_access_token_valid,
+        context.op_capi_create_refund,
+        context.payproc_invoice
     ])
     not result.forbidden
     not result.allowed
@@ -74,10 +74,10 @@ test_invoice_access_token_invalid_operation_1 {
 
 test_invoice_access_token_invalid_operation_2 {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.invoice_access_token_valid,
-        fixtures.op_capi_create_invoice
+        context.env_default,
+        context.requester_default,
+        context.invoice_access_token_valid,
+        context.op_capi_create_invoice
     ])
     not result.forbidden
     not result.allowed
@@ -85,11 +85,11 @@ test_invoice_access_token_invalid_operation_2 {
 
 test_invoice_access_token_allows_get_invoice_payment_methods {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.invoice_access_token_valid,
-        fixtures.op_capi_get_invoice_payment_methods,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.invoice_access_token_valid,
+        context.op_capi_get_invoice_payment_methods,
+        context.payproc_invoice
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -97,11 +97,11 @@ test_invoice_access_token_allows_get_invoice_payment_methods {
 
 test_invoice_access_token_allows_get_invoice_events {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.invoice_access_token_valid,
-        fixtures.op_capi_get_invoice_events,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.invoice_access_token_valid,
+        context.op_capi_get_invoice_events,
+        context.payproc_invoice
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -109,11 +109,11 @@ test_invoice_access_token_allows_get_invoice_events {
 
 test_invoice_access_token_allows_create_payment {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.invoice_access_token_valid,
-        fixtures.op_capi_create_payment,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.invoice_access_token_valid,
+        context.op_capi_create_payment,
+        context.payproc_invoice
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -121,11 +121,11 @@ test_invoice_access_token_allows_create_payment {
 
 test_invoice_access_token_allows_get_payment_by_id {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.invoice_access_token_valid,
-        fixtures.op_capi_get_payment_by_id,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.invoice_access_token_valid,
+        context.op_capi_get_payment_by_id,
+        context.payproc_invoice
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -133,20 +133,20 @@ test_invoice_access_token_allows_get_payment_by_id {
 
 test_invoice_access_token_allows_get_payments {
     util.is_allowed with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.invoice_access_token_valid,
-        fixtures.op_capi_get_payments,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.invoice_access_token_valid,
+        context.op_capi_get_payments,
+        context.payproc_invoice
     ])
 }
 
 test_invoice_access_token_forbids_cancel_payment {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.invoice_access_token_valid,
-        fixtures.op_capi_cancel_payment,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.invoice_access_token_valid,
+        context.op_capi_cancel_payment,
+        context.payproc_invoice
     ])
 }

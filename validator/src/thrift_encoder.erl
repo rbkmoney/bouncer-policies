@@ -10,7 +10,7 @@
     {ok, _Content} | {error, _}.
 encode(thrift, Context, Struct) ->
     Codec = thrift_strict_binary_codec:new(),
-    {StructType, _, _} = Struct,
+    {StructType, _} = Struct,
     try to_thrift(Context, Struct) of
         CtxThrift ->
             case thrift_strict_binary_codec:write(Codec, StructType, CtxThrift) of
@@ -26,8 +26,8 @@ encode(thrift, Context, Struct) ->
 -spec to_thrift(jsx:json_term(), validator:struct()) ->
     validator:thrift_record() | no_return().
 to_thrift(Context, Struct) ->
-    {_, StructInfo, StructRecord} = Struct,
-    {struct, _, StructDef} = StructInfo,
+    {{struct, _, {Module, StructName}}, StructRecord} = Struct,
+    {struct, _, StructDef} = Module:struct_info(StructName),
     to_thrift_struct(StructDef, Context, StructRecord).
 
 to_thrift_struct(StructDef, Map, Acc) ->

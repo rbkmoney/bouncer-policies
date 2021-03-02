@@ -16,43 +16,51 @@
 
 -type struct() :: {
     {struct, struct, {bouncer_context_v1_thrift, 'ContextFragment'} | {bouncer_restriction_thrift, 'Restrictions'}},
-    bouncer_context_v1_thrift:struct_info() | bouncer_restriction_thrift:struct_info(),
     thrift_record()
 }.
 
 %%
 
 -spec main(_Args :: [string()]) -> no_return().
-main([Filepath, StructName]) ->
-    Struct = validate_struct(StructName),
-    #{total := Total, valid := Valid, errors := Errors} = validate_file(Filepath, Struct),
+main([]) ->
+    abort(?INPUT_ERROR, "No input file");
+main(Filepaths) ->
+    {Total, Valid, Errors} = lists:foldl(
+        fun(Filepath, {TotalAcc, ValidAcc, ErrorsAcc}) ->
+            {Total, Valid, Errors} = validate_filepath(Filepath),
+            {TotalAcc + Total, ValidAcc + Valid, maps:merge(ErrorsAcc, Errors)}
+        end,
+        {0, 0, #{}},
+        Filepaths
+    ),
     case Valid of
         Total ->
             abort(?SUCCESS, "~p of ~p instance(s) valid", [Valid, Total]);
         _ ->
             abort(?VALIDATION_FAILED, "~p of ~p instance(s) INVALID", [maps:size(Errors), Total])
-    end;
-main([_]) ->
-    abort(?INPUT_ERROR, "No input file or StructName");
-main([]) ->
-    abort(?INPUT_ERROR, "No input file and StructName");
-main(_Args) ->
-    abort(?INPUT_ERROR, "Too many arguments").
+    end.
+
+validate_filepath(Filepath) ->
+    #{total := Total, valid := Valid, errors := Errors} = validate_file(Filepath),
+    {Total, Valid, Errors}.
 
 %%
 
-validate_file(Filepath, Struct) ->
+validate_file(Filepath) ->
     case file:read_file(Filepath) of
         {ok, Data} ->
-            validate_json(Data, Struct);
+            validate_json(Data);
         {error, Reason} ->
             abort(?INPUT_ERROR, "Input file read failed: ~0p", [Reason])
     end.
 
-validate_json(Data, Struct) ->
+validate_json(Data) ->
     try jsx:decode(Data, [{labels, atom}]) of
         Mapping ->
-            validate_instances(Mapping, Struct)
+            {Metadata, FilteredMapping} = get_json_metadata(Mapping),
+            StructName = maps:get(type, Metadata, undefined),
+            Struct = validate_struct(StructName),
+            validate_instances(FilteredMapping, Struct)
     catch error:badarg ->
         abort(?INPUT_ERROR, "Input file contains invalid JSON")
     end.
@@ -84,17 +92,20 @@ report_validation_success(I, Name) ->
 report_validation_error(I, Name, Reason) ->
     io:format(standard_error, "~3.B. Instance '~p' invalid: ~0p~n", [I, Name, Reason]).
 
--spec validate_struct(string()) -> struct().
-validate_struct("Context") ->
+get_json_metadata(#{'$metadata' := _Metadata} = Mapping) ->
+    maps:take('$metadata', Mapping);
+get_json_metadata(_MapWithoutMeta) ->
+    abort(?INPUT_ERROR, "No metadata in provided file").
+
+-spec validate_struct(string()) -> struct() | no_return().
+validate_struct(<<"Context">>) ->
     {
         {struct, struct, {bouncer_context_v1_thrift, 'ContextFragment'}},
-        bouncer_context_v1_thrift:struct_info('ContextFragment'),
         #bctx_v1_ContextFragment{}
     };
-validate_struct("Restrictions") ->
+validate_struct(<<"Restrictions">>) ->
     {
         {struct, struct, {bouncer_restriction_thrift, 'Restrictions'}},
-        bouncer_restriction_thrift:struct_info('Restrictions'),
         #brstn_Restrictions{}
     };
 validate_struct(StructName) ->

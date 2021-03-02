@@ -2,14 +2,14 @@ package test.service.authz.api.binapi
 
 import data.service.authz.api
 import data.test.service.authz.util
-import data.test.service.authz.fixtures
+import data.test.service.authz.fixtures.context
 
 test_lookup_card_info_allowed {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.session_token_valid,
-        fixtures.op_binapi_lookup_card_info
+        context.env_default,
+        context.requester_default,
+        context.session_token_valid,
+        context.op_binapi_lookup_card_info
     ]) with data.service.authz.whitelists.binapi_party_ids as {
         "entries": ["PARTY_2"]
     }
@@ -20,10 +20,10 @@ test_lookup_card_info_allowed {
 
 test_lookup_card_info_forbidden {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.session_token_valid,
-        fixtures.op_binapi_lookup_card_info
+        context.env_default,
+        context.requester_default,
+        context.session_token_valid,
+        context.op_binapi_lookup_card_info
     ]) with data.service.authz.whitelists.binapi_party_ids as {
         "entries": ["PARTY_3"]
     }

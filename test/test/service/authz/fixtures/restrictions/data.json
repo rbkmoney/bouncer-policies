@@ -1,4 +1,7 @@
 {
+    "$metadata": {
+        "type": "Restrictions"
+    },
 
     "op_anapi_restrictions": {
         "anapi": {

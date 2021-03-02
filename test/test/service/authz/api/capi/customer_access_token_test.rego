@@ -2,14 +2,14 @@ package test.service.authz.api.capi.customer_access_token
 
 import data.service.authz.api
 import data.test.service.authz.util
-import data.test.service.authz.fixtures
+import data.test.service.authz.fixtures.context
 
 test_customer_access_token_allows_create_payment_resource {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.customer_access_token_valid,
-        fixtures.op_capi_create_payment_resource
+        context.env_default,
+        context.requester_default,
+        context.customer_access_token_valid,
+        context.op_capi_create_payment_resource
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -17,11 +17,11 @@ test_customer_access_token_allows_create_payment_resource {
 
 test_customer_access_token_allows_get_customer_by_id {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.customer_access_token_valid,
-        fixtures.op_capi_get_customer_by_id,
-        fixtures.payproc_customer
+        context.env_default,
+        context.requester_default,
+        context.customer_access_token_valid,
+        context.op_capi_get_customer_by_id,
+        context.payproc_customer
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -29,11 +29,11 @@ test_customer_access_token_allows_get_customer_by_id {
 
 test_customer_access_token_allows_create_binding {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.customer_access_token_valid,
-        fixtures.op_capi_create_binding,
-        fixtures.payproc_customer
+        context.env_default,
+        context.requester_default,
+        context.customer_access_token_valid,
+        context.op_capi_create_binding,
+        context.payproc_customer
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -41,11 +41,11 @@ test_customer_access_token_allows_create_binding {
 
 test_customer_access_token_allows_get_binding {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.customer_access_token_valid,
-        fixtures.op_capi_get_binding,
-        fixtures.payproc_customer
+        context.env_default,
+        context.requester_default,
+        context.customer_access_token_valid,
+        context.op_capi_get_binding,
+        context.payproc_customer
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -53,11 +53,11 @@ test_customer_access_token_allows_get_binding {
 
 test_customer_access_token_allows_get_customer_events {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.customer_access_token_valid,
-        fixtures.op_capi_get_customer_events,
-        fixtures.payproc_customer
+        context.env_default,
+        context.requester_default,
+        context.customer_access_token_valid,
+        context.op_capi_get_customer_events,
+        context.payproc_customer
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -65,10 +65,10 @@ test_customer_access_token_allows_get_customer_events {
 
 test_customer_access_token_forbids_get_invoice {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.customer_access_token_valid,
-        fixtures.op_capi_get_invoice,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.customer_access_token_valid,
+        context.op_capi_get_invoice,
+        context.payproc_invoice
     ])
 }

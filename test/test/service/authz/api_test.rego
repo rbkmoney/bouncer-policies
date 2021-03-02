@@ -2,7 +2,7 @@ package test.service.authz.api
 
 import data.service.authz.api
 import data.test.service.authz.util
-import data.test.service.authz.fixtures
+import data.test.service.authz.fixtures.context
 
 test_no_warnings {
     count(api.warnings) == 0
@@ -25,40 +25,40 @@ test_empty_context_forbidden {
 
 test_token_blacklisted_local_ip {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_local,
-        fixtures.session_token_valid,
-        fixtures.op_capi_create_invoice
+        context.env_default,
+        context.requester_local,
+        context.session_token_valid,
+        context.op_capi_create_invoice
     ])
     result.forbidden[_].code == "ip_range_blacklisted"
 }
 
 test_token_blacklisted_local_ipv6 {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_local_ipv6,
-        fixtures.session_token_valid,
-        fixtures.op_capi_create_invoice
+        context.env_default,
+        context.requester_local_ipv6,
+        context.session_token_valid,
+        context.op_capi_create_invoice
     ])
     result.forbidden[_].code == "ip_range_blacklisted"
 }
 
 test_token_missing_id_forbidden {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.session_token_missing_id,
-        fixtures.op_capi_create_invoice
+        context.env_default,
+        context.requester_default,
+        context.session_token_missing_id,
+        context.op_capi_create_invoice
     ])
     result.forbidden[_].code == "auth_token_missing_id"
 }
 
 test_token_w_empty_id_blacklisted {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.session_token_empty_id,
-        fixtures.op_capi_create_invoice
+        context.env_default,
+        context.requester_default,
+        context.session_token_empty_id,
+        context.op_capi_create_invoice
     ])
     result.forbidden[_].code == "auth_token_blacklisted"
 }

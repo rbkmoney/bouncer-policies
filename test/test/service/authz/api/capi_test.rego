@@ -2,16 +2,16 @@ package test.service.authz.api.capi
 
 import data.service.authz.api
 import data.test.service.authz.util
-import data.test.service.authz.fixtures
+import data.test.service.authz.fixtures.context
 
 test_get_refunds_allowed {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_get_refunds,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_get_refunds,
+        context.payproc_invoice
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -20,56 +20,56 @@ test_get_refunds_allowed {
 
 test_fulfill_invoice_forbidden_context_mismatch {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_default,
-        fixtures.session_token_valid,
-        fixtures.op_capi_fulfill_invoice,
-        fixtures.payproc_invoice_another_shop
+        context.env_default,
+        context.requester_default,
+        context.user_default,
+        context.session_token_valid,
+        context.op_capi_fulfill_invoice,
+        context.payproc_invoice_another_shop
     ])
 }
 
 test_forbidden_create_payment_resource {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_default,
-        fixtures.session_token_valid,
-        fixtures.op_capi_create_payment_resource
+        context.env_default,
+        context.requester_default,
+        context.user_default,
+        context.session_token_valid,
+        context.op_capi_create_payment_resource
     ])
     result.forbidden
 }
 
 test_forbidden_invoicing_context_no_shop {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_fulfill_invoice,
-        fixtures.payproc_invoice_no_shop_context
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_fulfill_invoice,
+        context.payproc_invoice_no_shop_context
     ])
 }
 
 test_forbidden_invoicing_context_no_party {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_fulfill_invoice,
-        fixtures.payproc_invoice_no_party_context
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_fulfill_invoice,
+        context.payproc_invoice_no_party_context
     ])
 }
 
 test_create_invoice_access_token_allowed {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_create_invoice_access_token,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_create_invoice_access_token,
+        context.payproc_invoice
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -77,34 +77,34 @@ test_create_invoice_access_token_allowed {
 
 test_insufficient_input_forbidden {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_get_refund_by_id,
-        fixtures.payproc_insufficient_input
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_get_refund_by_id,
+        context.payproc_insufficient_input
     ])
 }
 
 test_op_insufficient_input_forbidden {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_create_payment_insufficient_input,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_create_payment_insufficient_input,
+        context.payproc_invoice
     ])
 }
 
 test_get_refund_by_id_allowed {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_get_refund_by_id,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_get_refund_by_id,
+        context.payproc_invoice
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -112,23 +112,23 @@ test_get_refund_by_id_allowed {
 
 test_rescind_invoice_allowed {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_default,
-        fixtures.session_token_valid,
-        fixtures.op_capi_rescind_invoice,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.user_default,
+        context.session_token_valid,
+        context.op_capi_rescind_invoice,
+        context.payproc_invoice
     ])
     not result.forbidden
     count(result.allowed) == 1
 }
 
 capi_public_operation_ctx = util.deepmerge([
-    fixtures.env_default,
-    fixtures.requester_default,
-    fixtures.user_default,
-    fixtures.session_token_valid,
-    fixtures.op_capi_empty
+    context.env_default,
+    context.requester_default,
+    context.user_default,
+    context.session_token_valid,
+    context.op_capi_empty
 ])
 
 test_capi_allowed_by_session_token_1 {
@@ -193,12 +193,12 @@ test_capi_allowed_by_session_token_10 {
 
 test_update_invoice_template_allowed {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_update_invoice_template,
-        fixtures.payproc_invoice_template
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_update_invoice_template,
+        context.payproc_invoice_template
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -206,12 +206,12 @@ test_update_invoice_template_allowed {
 
 test_create_binding_allowed {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_create_binding,
-        fixtures.payproc_customer
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_create_binding,
+        context.payproc_customer
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -219,12 +219,12 @@ test_create_binding_allowed {
 
 test_get_binding_allowed {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_get_binding,
-        fixtures.payproc_customer
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_get_binding,
+        context.payproc_customer
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -232,22 +232,22 @@ test_get_binding_allowed {
 
 test_capi_session_token_and_owner_allowed {
     util.is_allowed with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_owner,
-        fixtures.session_token_valid,
-        fixtures.op_capi_get_binding,
-        fixtures.payproc_customer
+        context.env_default,
+        context.requester_default,
+        context.user_owner,
+        context.session_token_valid,
+        context.op_capi_get_binding,
+        context.payproc_customer
     ])
 }
 
 test_create_webhook_allowed {
     result := api.assertions with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_create_webhook
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_create_webhook
     ])
     not result.forbidden
     count(result.allowed) == 1
@@ -255,44 +255,44 @@ test_create_webhook_allowed {
 
 test_search_invoices_allowed {
     util.is_allowed with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_search_invoices
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_search_invoices
     ])
 }
 
 test_search_specific_invoice_allowed {
     util.is_allowed with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_search_specific_invoice,
-        fixtures.payproc_invoice
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_search_specific_invoice,
+        context.payproc_invoice
     ])
 }
 
 test_search_specific_payout_allowed {
     util.is_allowed with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator_shop,
-        fixtures.session_token_valid,
-        fixtures.op_capi_search_specific_payout,
-        fixtures.payouts_payout
+        context.env_default,
+        context.requester_default,
+        context.user_administrator_shop,
+        context.session_token_valid,
+        context.op_capi_search_specific_payout,
+        context.payouts_payout
     ])
 }
 
 test_search_foreign_invoice_forbidden {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_search_specific_invoice,
-        fixtures.payproc_invoice_foreign
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_search_specific_invoice,
+        context.payproc_invoice_foreign
     ])
 }
 
@@ -303,111 +303,111 @@ test_search_another_party_invoice_allowed_owner_another_party {
     # to searches within `PARTY` **and** an access to invoice owned by `PARTY_2`,
     # even though such request as a whole doesn't make sense.
     util.is_allowed with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator_owner_another_party,
-        fixtures.session_token_valid,
-        fixtures.op_capi_search_specific_invoice,
-        fixtures.payproc_invoice_foreign
+        context.env_default,
+        context.requester_default,
+        context.user_administrator_owner_another_party,
+        context.session_token_valid,
+        context.op_capi_search_specific_invoice,
+        context.payproc_invoice_foreign
     ])
 }
 
 test_search_another_party_invoice_forbidden_manager_another_party {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator_manager_another_party,
-        fixtures.session_token_valid,
-        fixtures.op_capi_search_specific_invoice,
-        fixtures.payproc_invoice_foreign
+        context.env_default,
+        context.requester_default,
+        context.user_administrator_manager_another_party,
+        context.session_token_valid,
+        context.op_capi_search_specific_invoice,
+        context.payproc_invoice_foreign
     ])
 }
 
 test_delete_webhook_allowed_administrator {
     util.is_allowed with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_delete_webhook,
-        fixtures.webhooks_webhook
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_delete_webhook,
+        context.webhooks_webhook
     ])
 }
 
 test_delete_webhook_allowed_owner {
     util.is_allowed with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator_owner_another_party,
-        fixtures.session_token_valid,
-        fixtures.op_capi_delete_webhook,
-        fixtures.webhooks_webhook_foreign
+        context.env_default,
+        context.requester_default,
+        context.user_administrator_owner_another_party,
+        context.session_token_valid,
+        context.op_capi_delete_webhook,
+        context.webhooks_webhook_foreign
     ])
 }
 
 test_delete_foreign_webhook_forbidden {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator,
-        fixtures.session_token_valid,
-        fixtures.op_capi_delete_webhook,
-        fixtures.webhooks_webhook_foreign
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_capi_delete_webhook,
+        context.webhooks_webhook_foreign
     ])
 }
 
 test_delete_webhook_forbidden_default_user {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_default,
-        fixtures.session_token_valid,
-        fixtures.op_capi_delete_webhook,
-        fixtures.webhooks_webhook
+        context.env_default,
+        context.requester_default,
+        context.user_default,
+        context.session_token_valid,
+        context.op_capi_delete_webhook,
+        context.webhooks_webhook
     ])
 }
 
 test_download_file_allowed_administrator {
     util.is_allowed with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator_shop,
-        fixtures.session_token_valid,
-        fixtures.op_capi_download_file,
-        fixtures.reports_report
+        context.env_default,
+        context.requester_default,
+        context.user_administrator_shop,
+        context.session_token_valid,
+        context.op_capi_download_file,
+        context.reports_report
     ])
 }
 
 test_download_missing_file_forbidden {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator_shop,
-        fixtures.session_token_valid,
-        fixtures.op_capi_download_missing_file,
-        fixtures.reports_report
+        context.env_default,
+        context.requester_default,
+        context.user_administrator_shop,
+        context.session_token_valid,
+        context.op_capi_download_missing_file,
+        context.reports_report
     ])
 }
 
 test_download_file_invalid_shop_forbidden {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator_shop,
-        fixtures.session_token_valid,
-        fixtures.op_capi_download_file_invalid_shop,
-        fixtures.reports_report
+        context.env_default,
+        context.requester_default,
+        context.user_administrator_shop,
+        context.session_token_valid,
+        context.op_capi_download_file_invalid_shop,
+        context.reports_report
     ])
 }
 
 test_download_file_invalid_party_forbidden {
     util.is_forbidden with input as util.deepmerge([
-        fixtures.env_default,
-        fixtures.requester_default,
-        fixtures.user_administrator_owner_another_party,
-        fixtures.session_token_valid,
-        fixtures.op_capi_download_file_invalid_party,
-        fixtures.reports_report
+        context.env_default,
+        context.requester_default,
+        context.user_administrator_owner_another_party,
+        context.session_token_valid,
+        context.op_capi_download_file_invalid_party,
+        context.reports_report
     ])
 }
 

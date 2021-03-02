@@ -1,4 +1,7 @@
 {
+    "$metadata": {
+        "type": "Context"
+    },
 
     "env_default": {
         "env": {

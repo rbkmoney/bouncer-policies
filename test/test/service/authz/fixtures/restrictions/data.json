@@ -1,0 +1,33 @@
+{
+    "$metadata": {
+        "type": "Restrictions"
+    },
+
+    "op_anapi_restrictions": {
+        "anapi": {
+            "op": {
+                "shops": [
+                    {
+                        "id": "SHOP"
+                    }
+                ]
+            }
+        }
+    },
+
+    "op_anapi_restrictions_several_shops": {
+        "anapi": {
+            "op": {
+                "shops": [
+                    {
+                        "id": "SHOP"
+                    },
+                    {
+                        "id": "SHOP2"
+                    }
+                ]
+            }
+        }
+    }
+
+}

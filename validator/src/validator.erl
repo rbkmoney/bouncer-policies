@@ -109,7 +109,7 @@ validate_struct(<<"Restrictions">>) ->
         #brstn_Restrictions{}
     };
 validate_struct(StructName) ->
-    abort(?INPUT_ERROR, "StructName: '~p' is invalid. Permitted values: 'Context', 'Restrictions'", [StructName]).
+    abort(?INPUT_ERROR, "Invalid metadata: type '~s' is not one of: 'Context', 'Restrictions'", [StructName]).
 
 %%
 

@@ -17,27 +17,18 @@
 %%
 
 -spec main(_Args :: [string()]) -> no_return().
-main([]) ->
-    abort(?INPUT_ERROR, "No input file");
-main(Filepaths) ->
-    {Total, Valid, Errors} = lists:foldl(
-        fun(Filepath, {TotalAcc, ValidAcc, ErrorsAcc}) ->
-            {Total, Valid, Errors} = validate_filepath(Filepath),
-            {TotalAcc + Total, ValidAcc + Valid, maps:merge(ErrorsAcc, Errors)}
-        end,
-        {0, 0, #{}},
-        Filepaths
-    ),
+main([Filepath]) ->
+    #{total := Total, valid := Valid, errors := Errors} = validate_file(Filepath),
     case Valid of
         Total ->
             abort(?SUCCESS, "~p of ~p instance(s) valid", [Valid, Total]);
         _ ->
             abort(?VALIDATION_FAILED, "~p of ~p instance(s) INVALID", [maps:size(Errors), Total])
-    end.
-
-validate_filepath(Filepath) ->
-    #{total := Total, valid := Valid, errors := Errors} = validate_file(Filepath),
-    {Total, Valid, Errors}.
+    end;
+main([]) ->
+    abort(?INPUT_ERROR, "No input file");
+main(_Args) ->
+    abort(?INPUT_ERROR, "Too many arguments").
 
 %%
 

@@ -40,8 +40,11 @@ endif
 
 .PHONY: $(VALIDATOR)
 
-validate: $(VALIDATOR)
-	$(VALIDATOR) $(foreach inst, $(INSTANCES), $(inst))
+INSTANCE_TARGETS := $(foreach inst, $(INSTANCES), $(inst).validate)
+%.validate: %
+	$(VALIDATOR) $^
+
+validate: $(VALIDATOR) $(INSTANCE_TARGETS)
 
 MANIFEST := $(CURDIR)/policies/.manifest
 REVISION := $(SERVICE_IMAGE_TAG)

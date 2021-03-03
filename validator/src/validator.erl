@@ -5,19 +5,14 @@
 
 -export([main/1]).
 
--export_type([thrift_record/0]).
 -export_type([struct/0]).
 
 -define(SUCCESS, 0).
 -define(INPUT_ERROR, 1).
 -define(VALIDATION_FAILED, 2).
 
--type thrift_record() :: bouncer_context_v1_thrift:'ContextFragment'() | bouncer_restriction_thrift:'Restrictions'().
-
--type struct() :: {
-    {struct, struct, {bouncer_context_v1_thrift, 'ContextFragment'} | {bouncer_restriction_thrift, 'Restrictions'}},
-    thrift_record()
-}.
+-type struct() ::
+    {struct, struct, {bouncer_context_v1_thrift, 'ContextFragment'} | {bouncer_restriction_thrift, 'Restrictions'}}.
 
 %%
 
@@ -99,15 +94,9 @@ get_json_metadata(_MapWithoutMeta) ->
 
 -spec validate_struct(string()) -> struct() | no_return().
 validate_struct(<<"Context">>) ->
-    {
-        {struct, struct, {bouncer_context_v1_thrift, 'ContextFragment'}},
-        #bctx_v1_ContextFragment{}
-    };
+    {struct, struct, {bouncer_context_v1_thrift, 'ContextFragment'}};
 validate_struct(<<"Restrictions">>) ->
-    {
-        {struct, struct, {bouncer_restriction_thrift, 'Restrictions'}},
-        #brstn_Restrictions{}
-    };
+    {struct, struct, {bouncer_restriction_thrift, 'Restrictions'}};
 validate_struct(StructName) ->
     abort(?INPUT_ERROR, "Invalid metadata: type '~s' is not one of: 'Context', 'Restrictions'", [StructName]).
 

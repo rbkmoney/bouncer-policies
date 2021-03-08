@@ -19,6 +19,11 @@ description: >
   access control (i.e. universally allowed). Since there are no entities to
   enforce access for, such list is not split by entity names.
 
+  The "restricted" access implies that a corresponding entity MAY BE restricted
+  in context of given API. Right now policy expects that restrictions will list
+  all possible entities that can be worked on with given context, so that
+  filtering of said entities can be performed by relevant API implementations.
+
 api:
   CommonAPI:
     mandatory:

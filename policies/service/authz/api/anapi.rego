@@ -39,22 +39,7 @@ forbidden[why] {
 
 restrictions[what] {
     count(access_violations) == 0
-    need_restrictions
-    what := {
-        "anapi": {
-            "op": {
-                "shops": restricted_shops
-            }
-        }
-    }
-}
-
-restricted_shops = shops {
-    shops := [
-        shop |
-            role := operation_roles[_]
-            shop := role.scope.shop
-    ]
+    what := access_status.restrictions
 }
 
 # Set of assertions which tell why operation under the input context is allowed.
@@ -78,7 +63,7 @@ session_token_allowed[why] {
 }
 
 session_token_allowed[why] {
-    role := operation_roles[_]
+    role := operation_roles(access_status.roles)[_]
     why := {
         "code": "org_role_allows_operation",
         "description": sprintf("User has role that permits this operation: %v", [role.id])
@@ -112,8 +97,7 @@ entity_access_requirement_status(name, req) = status {
     status := entity_access_status[name]
 } else = status {
     req == access_restricted
-    restricted_status := {"shops_restrictions": true}
-    status := object.union(entity_access_status[name], restricted_status)
+    status := access_restrictions_status[name]
 } else = status {
     violation := {
         "code": "missing_access",
@@ -137,9 +121,6 @@ operation_access_request[requirement] = names {
     names := { name | entities[name].operations[_] == op.id }
 }
 
-entity_access_status["shops"] = status {
-    status := shops_access_status(op.party.id)
-}
 entity_access_status["shop"] = status {
     status := shop_access_status(op.shop.id, op.party.id)
 }
@@ -150,15 +131,47 @@ entity_access_status["file"] = status {
     status := file_access_status(op.file.id)
 }
 
-shops_access_status(party_id) = status {
+access_restrictions_status["shops"] = status {
+    status := shops_restrictions_status(op.party.id)
+}
+
+shops_restrictions_status(party_id) = status {
     user.is_owner(party_id)
     status := {"owner": true}
 } else = status {
+    roles := roleset_by_party_id(party_id)
+    rstrs := shops_restrictions(roles)
+    status := {
+        "roles": roles,
+        "restrictions": rstrs
+    }
+} else = status {
+    roles := roleset_by_party_id(party_id)
+    status := {
+        "roles": roles
+    }
+}
+
+roleset_by_party_id(party_id) = roles {
     userorg := user.org_by_party(party_id)
     roles := { role | role := userorg.roles[_]}
     roles[_]
-    status := {
-        "roles": roles
+}
+
+shops_restrictions(roles) = rstrs {
+    ors := operation_roles(roles)
+    not user_has_party_access(roles)
+    shops := [
+        shop |
+            role := ors[_]
+            shop := role.scope.shop
+    ]
+    rstrs := {
+        "anapi": {
+            "op": {
+                "shops": shops
+            }
+        }
     }
 }
 
@@ -184,14 +197,8 @@ user_role_has_shop_access(_, role) {
     user_role_has_party_access(role)
 }
 
-need_restrictions {
-    not access_status.owner
-    access_status.shops_restrictions
-    not user_has_party_access
-}
-
-user_has_party_access {
-    role := operation_roles[_]
+user_has_party_access(roles) {
+    role := roles[_]
     user_role_has_party_access(role)
 }
 
@@ -211,9 +218,11 @@ file_access_status(id) = status {
     status := report_access_status(report.id)
 }
 
-operation_roles := {
-    role |
-        role := access_status.roles[_]
-        operations := user.operations_by_role(api_name, role)
-        operations[_] == op.id
+operation_roles(roles) = ors {
+    ors := {
+        role |
+            role := roles[_]
+            operations := user.operations_by_role(api_name, role)
+            operations[_] == op.id
+    }
 }

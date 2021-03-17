@@ -232,6 +232,7 @@ api:
           - "expelOrgMember"
           - "removeMemberRole"
           - "getOrg"
+          - "joinOrg"
           - "getOrgRole"
           - "cancelOrgMembership"
           - "inquireOrgMembership"

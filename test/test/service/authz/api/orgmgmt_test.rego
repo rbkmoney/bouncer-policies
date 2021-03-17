@@ -73,3 +73,13 @@ test_forbidden_not_org_in_request {
         context.op_orgmgmt_without_org
     ])
 }
+
+test_allowed_universal_opeartion {
+    util.is_allowed with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.user_default,
+        context.session_token_valid,
+        context.op_orgmgmt_create_org
+    ])
+}

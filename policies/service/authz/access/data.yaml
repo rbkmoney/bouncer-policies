@@ -236,3 +236,7 @@ api:
           - "cancelOrgMembership"
           - "inquireOrgMembership"
           - "listOrgMembership"
+    universal:
+      operations:
+        - "createOrg"
+        - "listOrgMembership"

@@ -51,6 +51,14 @@ allowed[why] {
 }
 
 session_token_allowed[why] {
+    operation_universal
+    why := {
+        "code": "operation_universal",
+        "description": "Operation is universally allowed"
+    }
+}
+
+session_token_allowed[why] {
     access_status.owner
     why := {
         "code": "org_ownership_allows_operation",
@@ -79,6 +87,10 @@ access_status = status {
 
 access_violations[violation] {
     violation := access_status_set[_].violation
+}
+
+operation_universal {
+    access_matrix.universal.operations[_] == op.id
 }
 
 access_status_set[status] {

@@ -58,7 +58,7 @@ test_forbidden_another_auth_method {
     util.is_forbidden with input as util.deepmerge([
         context.env_default,
         context.requester_default,
-        context.user_default,
+        context.user_administrator,
         context.invoice_access_token_valid,
         context.op_orgmgmt_get_org_member
     ])
@@ -68,7 +68,7 @@ test_forbidden_not_org_in_request {
     util.is_forbidden with input as util.deepmerge([
         context.env_default,
         context.requester_default,
-        context.user_default,
+        context.user_administrator,
         context.session_token_valid,
         context.op_orgmgmt_without_org
     ])
@@ -81,5 +81,15 @@ test_allowed_universal_opeartion {
         context.user_default,
         context.session_token_valid,
         context.op_orgmgmt_create_org
+    ])
+}
+
+test_forbidden_user_with_manager_role {
+    util.is_forbidden with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.user_default,
+        context.session_token_valid,
+        context.op_orgmgmt_create_invitation
     ])
 }

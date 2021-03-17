@@ -62,6 +62,15 @@
         }
     },
 
+    "op_orgmgmt_join_org": {
+        "orgmgmt": {
+            "op": {
+                "id": "joinOrg",
+                "organization": {"id": "PARTY"}
+            }
+        }
+    },
+
     "op_capi_create_payment_resource": {
         "capi": {
             "op": {

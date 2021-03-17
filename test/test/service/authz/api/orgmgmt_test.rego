@@ -93,3 +93,13 @@ test_forbidden_user_with_manager_role {
         context.op_orgmgmt_create_invitation
     ])
 }
+
+test_allowed_user_without_role {
+    util.is_allowed with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.user_no_roles,
+        context.session_token_valid,
+        context.op_orgmgmt_join_org
+    ])
+}

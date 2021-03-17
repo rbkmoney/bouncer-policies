@@ -34,6 +34,7 @@ forbidden[why] {
 
 forbidden[why] {
     input.auth.method == "SessionToken"
+    not role_free_operation
     access_violations[why]
 }
 
@@ -48,6 +49,16 @@ allowed[why] {
     input.auth.method == "SessionToken"
     count(access_violations) == 0
     session_token_allowed[why]
+}
+
+allowed[why] {
+    input.auth.method == "SessionToken"
+    op.organization.id
+    role_free_operation
+    why := {
+        "code": "without_role_allows_operation",
+        "description": "Operation is allowed without role"
+    }
 }
 
 session_token_allowed[why] {
@@ -146,3 +157,6 @@ operation_roles[role] {
     operations := user.operations_by_role(api_name, role)
     operations[_] == op.id
 }
+
+role_free_operation
+    { op.id == "joinOrg" }

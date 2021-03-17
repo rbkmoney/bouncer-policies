@@ -45,6 +45,14 @@
         }
     },
 
+    "op_orgmgmt_without_org": {
+        "orgmgmt": {
+            "op": {
+                "id": "getOrgMember"
+            }
+        }
+    },
+
     "op_capi_create_payment_resource": {
         "capi": {
             "op": {

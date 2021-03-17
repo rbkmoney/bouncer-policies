@@ -63,3 +63,13 @@ test_forbidden_another_auth_method {
         context.op_orgmgmt_get_org_member
     ])
 }
+
+test_forbidden_not_org_in_request {
+    util.is_forbidden with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.user_default,
+        context.session_token_valid,
+        context.op_orgmgmt_without_org
+    ])
+}

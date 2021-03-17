@@ -18,6 +18,33 @@
         }
     },
 
+    "op_orgmgmt_get_org_member": {
+        "orgmgmt": {
+            "op": {
+                "id": "getOrgMember",
+                "organization": {"id": "PARTY"}
+            }
+        }
+    },
+
+    "op_orgmgmt_not_exist_operation": {
+        "orgmgmt": {
+            "op": {
+                "id": "nonExist",
+                "organization": {"id": "PARTY"}
+            }
+        }
+    },
+
+    "op_orgmgmt_foreign_org": {
+        "orgmgmt": {
+            "op": {
+                "id": "getOrgMember",
+                "organization": {"id": "PARTY3"}
+            }
+        }
+    },
+
     "op_capi_create_payment_resource": {
         "capi": {
             "op": {

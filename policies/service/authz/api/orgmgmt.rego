@@ -25,6 +25,14 @@ access_requirements := {
 # ```
 
 forbidden[why] {
+    input.auth.method != "SessionToken"
+    why := {
+        "code": "unknown_auth_method_forbids_operation",
+        "description": sprintf("Unknown auth method for this operation: %v", [input.auth.method])
+    }
+}
+
+forbidden[why] {
     input.auth.method == "SessionToken"
     access_violations[why]
 }

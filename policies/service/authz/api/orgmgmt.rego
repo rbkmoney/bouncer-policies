@@ -51,12 +51,6 @@ allowed[why] {
     session_token_allowed[why]
 }
 
-allowed[why] {
-    input.auth.method == "SessionToken"
-    op.organization.id
-    session_token_allowed[why]
-}
-
 session_token_allowed[why] {
     operation_universal
     why := {

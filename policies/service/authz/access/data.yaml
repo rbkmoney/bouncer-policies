@@ -232,7 +232,6 @@ api:
           - "expelOrgMember"
           - "removeMemberRole"
           - "getOrg"
-          - "joinOrg"
           - "getOrgRole"
           - "cancelOrgMembership"
           - "inquireOrgMembership"
@@ -240,4 +239,5 @@ api:
     universal:
       operations:
         - "createOrg"
+        - "joinOrg"
         - "listOrgMembership"

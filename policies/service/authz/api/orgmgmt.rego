@@ -54,11 +54,7 @@ allowed[why] {
 allowed[why] {
     input.auth.method == "SessionToken"
     op.organization.id
-    role_free_operation
-    why := {
-        "code": "without_role_allows_operation",
-        "description": "Operation is allowed without role"
-    }
+    session_token_allowed[why]
 }
 
 session_token_allowed[why] {

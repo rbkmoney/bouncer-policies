@@ -110,11 +110,6 @@ tolerate_expired_token {
     input.auth.method == "SessionToken"
 }
 
-tolerate_expired_token {
-    input.orgmgmt
-    input.auth.method == "SessionToken"
-}
-
 warnings[why] {
     not blacklists.source_ip_range.entries
     why := "Blacklist 'source_ip_range' is not defined, blacklisting by IP will NOT WORK."

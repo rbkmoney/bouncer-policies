@@ -5,6 +5,7 @@ import data.service.authz.api.url_shortener
 import data.service.authz.api.binapi
 import data.service.authz.api.anapi
 import data.service.authz.api.capi
+import data.service.authz.api.orgmgmt
 import data.service.authz.blacklists
 import data.service.authz.whitelists
 import data.service.authz.roles
@@ -94,6 +95,11 @@ forbidden[why] {
     capi.forbidden[why]
 }
 
+forbidden[why] {
+    input.orgmgmt
+    orgmgmt.forbidden[why]
+}
+
 tolerate_expired_token {
     input.capi
     input.auth.method == "SessionToken"
@@ -143,6 +149,11 @@ allowed[why] {
 allowed[why] {
     input.anapi
     anapi.allowed[why]
+}
+
+allowed[why] {
+    input.orgmgmt
+    orgmgmt.allowed[why]
 }
 
 # Restrictions

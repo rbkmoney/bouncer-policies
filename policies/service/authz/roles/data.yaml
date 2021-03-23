@@ -25,6 +25,13 @@ roles:
           - "GetWebhooks"
           - "GetWebhookByID"
           - "DeleteWebhookByID"
+      OrgManagement:
+        operations:
+          - "getOrg"
+          - "getOrgRole"
+          - "cancelOrgMembership"
+          - "inquireOrgMembership"
+          - "listOrgMembership"
       AnalyticsAPI:
         operations:
           - "SearchInvoices"
@@ -73,6 +80,13 @@ roles:
           - "GetPaymentByID"
           - "GetPayoutTools"
           - "CreatePayout"
+      OrgManagement:
+        operations:
+          - "getOrg"
+          - "getOrgRole"
+          - "cancelOrgMembership"
+          - "inquireOrgMembership"
+          - "listOrgMembership"
       AnalyticsAPI:
         operations:
           - "SearchInvoices"
@@ -181,10 +195,22 @@ roles:
           - "DeleteWebhookByID"
       OrgManagement:
         operations:
-          - "ListInvitations"
-          - "CreateInvitation"
-          - "GetInvitation"
-          - "RevokeInvitation"
+          - "listInvitations"
+          - "createInvitation"
+          - "getInvitation"
+          - "revokeInvitation"
+          - "getOrgMember"
+          - "listOrgMembers"
+          - "listOrgRoles"
+          - "patchOrg"
+          - "assignMemberRole"
+          - "expelOrgMember"
+          - "removeMemberRole"
+          - "getOrg"
+          - "getOrgRole"
+          - "cancelOrgMembership"
+          - "inquireOrgMembership"
+          - "listOrgMembership"
       AnalyticsAPI:
         operations:
           - "SearchInvoices"

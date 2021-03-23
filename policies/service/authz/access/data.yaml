@@ -215,3 +215,29 @@ api:
       file:
         operations:
           - "DownloadFile"
+
+  OrgManagement:
+    mandatory:
+      organization:
+        operations:
+          - "listInvitations"
+          - "createInvitation"
+          - "getInvitation"
+          - "revokeInvitation"
+          - "getOrgMember"
+          - "listOrgMembers"
+          - "listOrgRoles"
+          - "patchOrg"
+          - "assignMemberRole"
+          - "expelOrgMember"
+          - "removeMemberRole"
+          - "getOrg"
+          - "getOrgRole"
+          - "cancelOrgMembership"
+          - "inquireOrgMembership"
+          - "listOrgMembership"
+    universal:
+      operations:
+        - "createOrg"
+        - "joinOrg"
+        - "listOrgMembership"

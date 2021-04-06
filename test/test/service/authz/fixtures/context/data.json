@@ -79,12 +79,13 @@
                 "member": {
                     "id": "MEMBER",
                     "orgs": [ {
-                        "id": "NOT_PARTY"
+                        "id": "ANOTHER_PARTY"
                     }]
                 }
             }
         }
     },
+
 
     "op_orgmgmt_expel_member_from_org": {
         "orgmgmt": {
@@ -97,6 +98,38 @@
                         "id": "PARTY"
                     }]
                 }
+            }
+        }
+    },
+
+    "op_orgmgmt_assign_member_role": {
+        "orgmgmt": {
+            "op": {
+                "id": "assignMemberRole",
+                "organization": {"id": "PARTY"},
+                "member": {
+                    "id": "MEMBER",
+                    "orgs": [ {
+                        "id": "PARTY"
+                    }]
+                },
+                "role": {"id": "ROLE"}
+            }
+        }
+    },
+
+    "op_orgmgmt_remove_member_role_in_another_org": {
+        "orgmgmt": {
+            "op": {
+                "id": "removeMemberRole",
+                "organization": {"id": "PARTY"},
+                "member": {
+                    "id": "MEMBER",
+                    "orgs": [ {
+                        "id": "ANOTHER_PARTY"
+                    }]
+                },
+                "role": {"id": "ROLE"}
             }
         }
     },

@@ -38,6 +38,12 @@ forbidden[why] {
     access_violations[why]
 }
 
+forbidden[why] {
+    input.auth.method == "SessionToken"
+    membership_operation
+    membership_violations[why]
+}
+
 
 # Set of assertions which tell why operation under the input context is allowed.
 # Each element must be an object of the following form:
@@ -150,3 +156,31 @@ operation_roles[role] {
 
 role_free_operation
     { op.id == "joinOrg" }
+
+membership_violations[violation]{
+   status := membership_rights_status(op.organization.id)
+   is_object(status)
+   violation := status.violation
+}
+
+membership_rights_status(id) = status {
+   op.member
+   org := op.member.orgs[_]
+   org.id == id
+   status := {"member": true}
+} else = status {
+   violation := {
+        "code": "missing_rights",
+        "description": sprintf(
+            "Missing rights for manage member with id = %s in organization with id = %s",
+            [op.member.id, id]
+        )
+   }
+   status := {"violation": violation}
+}
+
+membership_operation
+    { op.id == "getOrgMember" }
+    { op.id == "expelOrgMember" }
+    { op.id == "assignMemberRole" }
+    { op.id == "removeMemberRole" }

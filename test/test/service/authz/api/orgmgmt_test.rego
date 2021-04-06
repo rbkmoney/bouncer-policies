@@ -103,3 +103,23 @@ test_allowed_user_without_role {
         context.op_orgmgmt_join_org
     ])
 }
+
+test_forbidden_member_not_in_user_organization {
+    util.is_forbidden with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_orgmgmt_expel_member_from_another_org
+    ])
+}
+
+test_allowed_member_in_user_organization {
+    util.is_allowed with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.user_administrator,
+        context.session_token_valid,
+        context.op_orgmgmt_expel_member_from_org
+    ])
+}

@@ -71,6 +71,36 @@
         }
     },
 
+    "op_orgmgmt_expel_member_from_another_org": {
+        "orgmgmt": {
+            "op": {
+                "id": "expelOrgMember",
+                "organization": {"id": "PARTY"},
+                "member": {
+                    "id": "MEMBER",
+                    "orgs": [ {
+                        "id": "NOT_PARTY"
+                    }]
+                }
+            }
+        }
+    },
+
+    "op_orgmgmt_expel_member_from_org": {
+        "orgmgmt": {
+            "op": {
+                "id": "expelOrgMember",
+                "organization": {"id": "PARTY"},
+                "member": {
+                    "id": "MEMBER",
+                    "orgs": [ {
+                        "id": "PARTY"
+                    }]
+                }
+            }
+        }
+    },
+
     "op_capi_create_payment_resource": {
         "capi": {
             "op": {

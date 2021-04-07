@@ -170,9 +170,9 @@ membership_rights_status(id) = status {
    status := {"member": true}
 } else = status {
    violation := {
-        "code": "missing_rights",
+        "code": "missing_membership",
         "description": sprintf(
-            "Missing rights for manage member with id = %s in organization with id = %s",
+            "The employee with id = %s in not a memeber of organization with id = %s",
             [op.member.id, id]
         )
    }

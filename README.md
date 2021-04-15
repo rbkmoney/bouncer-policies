@@ -6,7 +6,7 @@ A repository with a set of access control policies consumable by the [bouncer][1
 
 New access control policies go to `/policies/service` directory. Each new policy **MUST** be accompanied by a set of test cases, those go `/test/test` directory. The `/policies` and the `/test` directories as a whole are [policy bundles][3], please follow documented conventions carefully.
 
-Each policy under `/policies/service` can be specified as _ruleset id_ when talking to [bouncer][1]. For example, ruleset identified with `"service/auth/api"` maps to `/policies/service/auth/api.rego` policy.
+Each policy under `/policies/service` can be specified as _ruleset id_ when talking to [bouncer][1]. For example, ruleset identified with `"service/authz/api"` maps to `/policies/service/authz/api.rego` policy.
 
 [Bouncer][1] expects each policy to define document with the name `"assertions"`, with following structure:
 ```

@@ -414,3 +414,54 @@ test_download_file_invalid_party_forbidden {
 test_unknown_operation_forbidden_no_access {
     util.is_forbidden with input as capi_public_operation_ctx with input.capi.op as {"id" : "NewOperation"}
 }
+
+test_create_invoice_with_api_token {
+    util.is_allowed with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.api_key_token_valid,
+        context.op_capi_create_invoice
+    ])
+}
+
+test_create_invoice_with_different_api_token {
+    util.is_forbidden with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.api_key_token_different_party,
+        context.op_capi_create_invoice
+    ])
+}
+
+test_create_webhook_allowed_with_api_token {
+    util.is_allowed with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.api_key_token_valid,
+        context.op_capi_create_webhook
+    ])
+}
+
+test_create_webhook_forbidden_with_api_token {
+    util.is_forbidden with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.api_key_token_different_party,
+        context.op_capi_create_webhook
+    ])
+}
+
+test_forbid_no_api_token_scope {
+    util.is_forbidden with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.api_key_token_no_scope,
+        context.op_capi_create_invoice
+    ])
+    util.is_forbidden with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.api_key_token_no_scope,
+        context.op_capi_create_webhook
+    ])
+}

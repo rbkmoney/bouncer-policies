@@ -43,6 +43,20 @@ forbidden[why] {
     access_violations[why]
 }
 
+forbidden[why] {
+    input.auth.method == "ApiKeyToken"
+    forbidden_api_key_token_operation
+    why := {
+        "code": "operation_not_allowed_for_api_key_token",
+        "description": "Operation not allowed for api key token"
+    }
+}
+
+forbidden[why] {
+    input.auth.method == "ApiKeyToken"
+    access_violations[why]
+}
+
 # Set of assertions which tell why operation under the input context is allowed.
 # Each element must be an object of the following form:
 # ```
@@ -53,6 +67,12 @@ allowed[why] {
     input.auth.method == "SessionToken"
     count(access_violations) == 0
     session_token_allowed[why]
+}
+
+allowed[why] {
+    input.auth.method == "ApiKeyToken"
+    count(access_violations) == 0
+    api_key_token_allowed[why]
 }
 
 allowed[why] {
@@ -93,6 +113,22 @@ session_token_allowed[why] {
     why := {
         "code": "org_role_allows_operation",
         "description": sprintf("User has role that permits this operation: %v", [role.id])
+    }
+}
+
+api_key_token_allowed[why] {
+    operation_universal
+    why := {
+        "code": "operation_universal",
+        "description": "Operation is universally allowed"
+    }
+}
+
+api_key_token_allowed[why] {
+    access_status.in_scope
+    why := {
+        "code": "api_key_scope_matches",
+        "description": "Api key scope matches operation party"
     }
 }
 
@@ -193,11 +229,11 @@ entity_access_status["webhook"] = status {
     status := webhook_access_status(op.webhook.id)
 }
 
-party_access_status(id) = status {
-    user.is_owner(id)
+party_access_status(party_id) = status {
+    user.is_owner(party_id)
     status := {"owner": true}
 } else = status {
-    userorg := user.org_by_party(id)
+    userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
@@ -205,6 +241,11 @@ party_access_status(id) = status {
     }
     roles[_]
     status := {"roles": roles}
+} else = status {
+    not input.user
+    scope := input.auth.scope[_]
+    scope.party.id == party_id
+    status := {"in_scope": true}
 }
 
 shop_access_status(id, party_id) = status {
@@ -219,6 +260,11 @@ shop_access_status(id, party_id) = status {
     }
     roles[_]
     status := {"roles": roles}
+} else = status {
+    not input.user
+    scope := input.auth.scope[_]
+    scope.party.id == party_id
+    status := {"in_scope": true}
 }
 
 user_role_has_shop_access(shop_id, role) {
@@ -276,4 +322,7 @@ webhook_access_status(id) = status {
 }
 
 forbidden_session_token_operation
+    { op.id == "CreatePaymentResource" }
+
+forbidden_api_key_token_operation
     { op.id == "CreatePaymentResource" }

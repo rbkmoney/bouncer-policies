@@ -101,6 +101,10 @@ forbidden[why] {
 }
 
 tolerate_expired_token {
+    input.auth.method == "ApiKeyToken"
+}
+
+tolerate_expired_token {
     input.capi
     input.auth.method == "SessionToken"
 }

@@ -649,6 +649,61 @@
         }
     },
 
+    "api_key_token_valid": {
+        "auth": {
+            "method": "ApiKeyToken",
+            "token": {"id": "TÓKEN"},
+            "scope": [
+                {
+                    "party": { "id": "PARTY" }
+                }
+            ]
+        }
+    },
+
+    "api_key_token_different_party": {
+        "auth": {
+            "method": "ApiKeyToken",
+            "token": {"id": "TÓKEN"},
+            "scope": [
+                {
+                    "party": { "id": "PARTY_2" }
+                }
+            ]
+        }
+    },
+
+    "api_key_token_no_scope": {
+        "auth": {
+            "method": "ApiKeyToken",
+            "token": {"id": "TÓKEN"},
+            "scope": []
+        }
+    },
+
+    "api_key_token_missing_id": {
+        "auth": {
+            "method": "ApiKeyToken",
+            "scope": [
+                {
+                    "party": { "id": "PARTY" }
+                }
+            ]
+        }
+    },
+
+    "api_key_token_empty_id": {
+        "auth": {
+            "method": "ApiKeyToken",
+            "token": {"id": ""},
+            "scope": [
+                {
+                    "party": { "id": "PARTY" }
+                }
+            ]
+        }
+    },
+
     "invoice_access_token_valid": {
         "auth": {
             "method": "InvoiceAccessToken",

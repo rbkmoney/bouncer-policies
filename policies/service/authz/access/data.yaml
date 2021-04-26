@@ -235,7 +235,6 @@ api:
           - "getOrgRole"
           - "cancelOrgMembership"
           - "inquireOrgMembership"
-          - "listOrgMembership"
     universal:
       operations:
         - "createOrg"

@@ -649,6 +649,13 @@
         }
     },
 
+    "session_token_no_expiration": {
+        "auth": {
+            "method": "SessionToken",
+            "token": {"id": "TÓKEN"}
+        }
+    },
+
     "api_key_token_valid": {
         "auth": {
             "method": "ApiKeyToken",

@@ -39,6 +39,15 @@ forbidden[why] {
 }
 
 forbidden[why] {
+    not tolerate_no_expiration
+    not input.auth.expiration
+    why := {
+        "code": "auth_no_token_expiration",
+        "description": "Tokens without expiration are not allowed"
+    }
+}
+
+forbidden[why] {
     not tolerate_expired_token
     exp := time.parse_rfc3339_ns(input.auth.expiration)
     now := time.parse_rfc3339_ns(input.env.now)
@@ -100,7 +109,7 @@ forbidden[why] {
     orgmgmt.forbidden[why]
 }
 
-tolerate_expired_token {
+tolerate_no_expiration {
     input.auth.method == "ApiKeyToken"
 }
 

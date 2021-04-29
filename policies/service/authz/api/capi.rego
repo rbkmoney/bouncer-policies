@@ -5,6 +5,7 @@ import data.service.authz.api.capi.customer_access_token
 import data.service.authz.api.capi.invoice_template_access_token
 import data.service.authz.api.user
 import data.service.authz.access
+import data.service.authz.auth_methods
 
 import input.capi.op
 import input.payment_processing
@@ -14,6 +15,7 @@ import input.reports
 
 api_name := "CommonAPI"
 access_matrix := access.api[api_name]
+auth_method_matrix := auth_methods.apis[api_name]
 
 access_mandatory := "mandatory"
 access_discretionary := "discretionary"
@@ -30,30 +32,15 @@ access_requirements := {
 # ```
 
 forbidden[why] {
-    input.auth.method == "SessionToken"
-    forbidden_session_token_operation
+    not allowed_auth_method_operation
     why := {
-        "code": "operation_not_allowed_for_session_token",
-        "description": "Operation not allowed for session token"
+        "code": "unknown_auth_method_forbids_operation",
+        "description": sprintf("Unknown auth method for this operation: %v", [input.auth.method])
     }
 }
 
 forbidden[why] {
-    input.auth.method == "SessionToken"
-    access_violations[why]
-}
-
-forbidden[why] {
-    input.auth.method == "ApiKeyToken"
-    forbidden_api_key_token_operation
-    why := {
-        "code": "operation_not_allowed_for_api_key_token",
-        "description": "Operation not allowed for api key token"
-    }
-}
-
-forbidden[why] {
-    input.auth.method == "ApiKeyToken"
+    allowed_auth_method_operation
     access_violations[why]
 }
 
@@ -321,8 +308,7 @@ webhook_access_status(id) = status {
     status := party_access_status(webhook.party.id)
 }
 
-forbidden_session_token_operation
-    { op.id == "CreatePaymentResource" }
-
-forbidden_api_key_token_operation
-    { op.id == "CreatePaymentResource" }
+allowed_auth_method_operation {
+    auth_methods := auth_method_matrix.operations[_][op.id]
+    auth_methods[_] == input.auth.method
+}

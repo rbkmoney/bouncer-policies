@@ -60,28 +60,28 @@ test_invoice_access_token_invalid_invoice {
     not result.allowed
 }
 
-test_invoice_access_token_invalid_operation_1 {
-    result := api.assertions with input as util.deepmerge([
-        context.env_default,
-        context.requester_default,
-        context.invoice_access_token_valid,
-        context.op_capi_create_refund,
-        context.payproc_invoice
-    ])
-    not result.forbidden
-    not result.allowed
-}
+# test_invoice_access_token_invalid_operation_1 {
+#     result := api.assertions with input as util.deepmerge([
+#         context.env_default,
+#         context.requester_default,
+#         context.invoice_access_token_valid,
+#         context.op_capi_create_refund,
+#         context.payproc_invoice
+#     ])
+#     not result.forbidden
+#     not result.allowed
+# }
 
-test_invoice_access_token_invalid_operation_2 {
-    result := api.assertions with input as util.deepmerge([
-        context.env_default,
-        context.requester_default,
-        context.invoice_access_token_valid,
-        context.op_capi_create_invoice
-    ])
-    not result.forbidden
-    not result.allowed
-}
+# test_invoice_access_token_invalid_operation_2 {
+#     result := api.assertions with input as util.deepmerge([
+#         context.env_default,
+#         context.requester_default,
+#         context.invoice_access_token_valid,
+#         context.op_capi_create_invoice
+#     ])
+#     not result.forbidden
+#     not result.allowed
+# }
 
 test_invoice_access_token_allows_get_invoice_payment_methods {
     result := api.assertions with input as util.deepmerge([

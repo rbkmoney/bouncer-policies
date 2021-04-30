@@ -4,9 +4,10 @@ description: >
   operations in out public APIs
 
   Document has the following structure:
+   * a set of available auth methods
    * a set of available APIs
-   * a set of available operations for each API
-   * a set of available authorization methods for each operation
+    * a set of available operations for each API
+      * a set of available authorization methods for each operation
 
 auth_methods:
   - "SessionToken"
@@ -138,6 +139,10 @@ apis:
       - "GetPayments":
         - "SessionToken"
         - "ApiKeyToken"
+        # NOTE
+        # Looks like some third-party integrations depend on `GetPayments`
+        # availability with invoice access tokens.
+        # Should we eventually allow this for specific parties only?
         - "InvoiceAccessToken"
       - "GetPaymentByID":
         - "SessionToken"

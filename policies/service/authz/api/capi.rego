@@ -40,7 +40,6 @@ forbidden[why] {
 }
 
 forbidden[why] {
-    allowed_auth_method_operation
     access_violations[why]
 }
 
@@ -51,31 +50,40 @@ forbidden[why] {
 # ```
 
 allowed[why] {
+    allowed_auth_method_operation
+    auth_method_allowed[why]
+}
+
+##
+
+auth_method_allowed[why] {
     input.auth.method == "SessionToken"
     count(access_violations) == 0
     session_token_allowed[why]
 }
 
-allowed[why] {
+auth_method_allowed[why] {
     input.auth.method == "ApiKeyToken"
     count(access_violations) == 0
     api_key_token_allowed[why]
 }
 
-allowed[why] {
+auth_method_allowed[why] {
     input.auth.method == "InvoiceAccessToken"
     invoice_access_token.allowed[why]
 }
 
-allowed[why] {
+auth_method_allowed[why] {
     input.auth.method == "CustomerAccessToken"
     customer_access_token.allowed[why]
 }
 
-allowed[why] {
+auth_method_allowed[why] {
     input.auth.method == "InvoiceTemplateAccessToken"
     invoice_template_access_token.allowed[why]
 }
+
+##
 
 session_token_allowed[why] {
     operation_universal
@@ -102,6 +110,8 @@ session_token_allowed[why] {
         "description": sprintf("User has role that permits this operation: %v", [role.id])
     }
 }
+
+##
 
 api_key_token_allowed[why] {
     operation_universal

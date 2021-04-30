@@ -19,7 +19,7 @@ allowed[why] {
 }
 
 allowed[why] {
-    is_invoice_access_token_operation
+    op.id != "CreatePaymentResource"
     invoice_matches_token_scope
     why := {
         "code": "invoice_access_token_allows_operation",
@@ -37,15 +37,3 @@ invoice_matches_token_scope {
     scope.invoice.id == op.invoice.id
     scope.party.id == payment_processing.invoice.party.id
 }
-
-is_invoice_access_token_operation
-    { op.id == "GetInvoiceByID" }
-    { op.id == "GetInvoiceEvents" }
-    { op.id == "GetInvoicePaymentMethods" }
-    { op.id == "CreatePayment" }
-    { op.id == "GetPaymentByID" }
-    # NOTE
-    # Looks like some third-party integrations depend on `GetPayments`
-    # availability with invoice access tokens.
-    # Should we eventually allow this for specific parties only?
-    { op.id == "GetPayments" }

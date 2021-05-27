@@ -15,7 +15,6 @@ import input.reports
 
 api_name := "CommonAPI"
 access_matrix := access.api[api_name]
-auth_method_matrix := auth_methods.apis[api_name]
 
 access_mandatory := "mandatory"
 access_discretionary := "discretionary"
@@ -32,7 +31,7 @@ access_requirements := {
 # ```
 
 forbidden[why] {
-    not allowed_auth_method_operation
+    not allowed_operation_for_auth_method
     why := {
         "code": "unknown_auth_method_forbids_operation",
         "description": sprintf("Unknown auth method for this operation: %v", [input.auth.method])
@@ -50,7 +49,7 @@ forbidden[why] {
 # ```
 
 allowed[why] {
-    allowed_auth_method_operation
+    allowed_operation_for_auth_method
     auth_method_allowed[why]
 }
 
@@ -318,7 +317,7 @@ webhook_access_status(id) = status {
     status := party_access_status(webhook.party.id)
 }
 
-allowed_auth_method_operation {
-    auth_methods := auth_method_matrix.operations[_][op.id]
-    auth_methods[_] == input.auth.method
+allowed_operation_for_auth_method {
+    operations_available := auth_methods.permissions[input.auth.method].apis[api_name].operations
+    operations_available[_] == op.id
 }

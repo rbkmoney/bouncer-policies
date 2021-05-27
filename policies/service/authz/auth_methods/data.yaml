@@ -1,384 +1,315 @@
 title: Auth Method Access Matrix
 description: >
   This document defines which authorization methods grant access to which
-  operations in out public APIs
+  operations in our public APIs
 
   Document has the following structure:
-   * a set of available auth methods
-   * a set of available APIs
-    * a set of available operations for each API
-      * a set of available authorization methods for each operation
-
-auth_methods:
+   * a set of all existing auth methods,
+   * a set of available auth methods,
+    * a set of available APIs for each of the available methods,
+      * a set of accessible operations for each of the APIs.
+methods:
   - "SessionToken"
   - "ApiKeyToken"
   - "InvoiceAccessToken"
   - "CustomerAccessToken"
   - "InvoiceTemplateAccessToken"
 
-apis:
-  CommonAPI:
-    operations:
-    # Shop
-      - "CreateCustomer":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "CreateInvoiceTemplate":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "CreateInvoice":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "CreatePayout":
-        - "SessionToken"
-        - "ApiKeyToken"
+permissions:
+  SessionToken:
+    apis:
+      CommonAPI:
+        operations:
+        # Shop
+          - "CreateCustomer"
+          - "CreateInvoiceTemplate"
+          - "CreateInvoice"
+          - "CreatePayout"
+          - "ActivateShop"
+          - "SuspendShop"
+          - "GetShopByID"
+          - "GetShopByIDForParty"
+          - "ActivateShopForParty"
+          - "SuspendShopForParty"
+          - "GetPaymentConversionStats"
+          - "GetPaymentRevenueStats"
+          - "GetPaymentGeoStats"
+          - "GetPaymentRateStats"
+          - "GetPaymentMethodStats"
+          - "SearchInvoices"
+          - "SearchPayments"
+          - "SearchPayouts"
+          - "SearchRefunds"
+          - "GetReports"
+          - "GetReportsForParty"
+          - "CreateReport"
+          - "CreateReportForParty"
+          - "GetReport"
+          - "GetReportForParty"
+          - "DownloadFile"
+          - "DownloadFileForParty"
 
-      - "ActivateShop":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "SuspendShop":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetShopByID":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetShopByIDForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "ActivateShopForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "SuspendShopForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # Invoice
+          - "CreateInvoiceAccessToken"
+          - "GetInvoiceByID"
+          - "GetInvoiceByExternalID"
+          - "FulfillInvoice"
+          - "RescindInvoice"
+          - "GetInvoiceEvents"
+          - "GetInvoicePaymentMethods"
+          - "CreatePayment"
+          - "GetPayments"
+          - "GetPaymentByID"
+          - "GetPaymentByExternalID"
+          - "CancelPayment"
+          - "CapturePayment"
+          - "CreateRefund"
+          - "GetRefunds"
+          - "GetRefundByID"
+          - "GetRefundByExternalID"
+          - "GetChargebacks"
+          - "GetChargebackByID"
+          - "SearchInvoices"
+          - "SearchPayments"
+          - "SearchRefunds"
 
-      - "GetPaymentConversionStats":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetPaymentRevenueStats":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetPaymentGeoStats":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetPaymentRateStats":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetPaymentMethodStats":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # Invoice Template
+          - "GetInvoiceTemplateByID"
+          - "UpdateInvoiceTemplate"
+          - "DeleteInvoiceTemplate"
+          - "CreateInvoiceWithTemplate"
+          - "GetInvoicePaymentMethodsByTemplateID"
 
-      - "SearchInvoices":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "SearchPayments":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "SearchPayouts":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "SearchRefunds":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # Customer
+          - "GetCustomerById"
+          - "DeleteCustomer"
+          - "GetCustomerEvents"
+          - "CreateCustomerAccessToken"
+          - "CreateBinding"
+          - "GetBindings"
+          - "GetBinding"
 
-      - "GetReports":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetReportsForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "CreateReport":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "CreateReportForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # Webhook
+          - "GetWebhookByID"
+          - "DeleteWebhookByID"
 
-      - "GetReport":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetReportForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "DownloadFile":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "DownloadFileForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # Report
+          - "GetReport"
+          - "GetReportForParty"
+          - "DownloadFile"
+          - "DownloadFileForParty"
 
-    # Invoice
-      - "CreateInvoiceAccessToken":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetInvoiceByID":
-        - "SessionToken"
-        - "ApiKeyToken"
-        - "InvoiceAccessToken"
-      - "GetInvoiceByExternalID":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "FulfillInvoice":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "RescindInvoice":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetInvoiceEvents":
-        - "SessionToken"
-        - "ApiKeyToken"
-        - "InvoiceAccessToken"
-      - "GetInvoicePaymentMethods":
-        - "SessionToken"
-        - "ApiKeyToken"
-        - "InvoiceAccessToken"
-      - "CreatePayment":
-        - "SessionToken"
-        - "ApiKeyToken"
-        - "InvoiceAccessToken"
-      - "GetPayments":
-        - "SessionToken"
-        - "ApiKeyToken"
-        # NOTE
-        # Looks like some third-party integrations depend on `GetPayments`
-        # availability with invoice access tokens.
-        # Should we eventually allow this for specific parties only?
-        - "InvoiceAccessToken"
-      - "GetPaymentByID":
-        - "SessionToken"
-        - "ApiKeyToken"
-        - "InvoiceAccessToken"
-      - "GetPaymentByExternalID":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "CancelPayment":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "CapturePayment":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "CreateRefund":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetRefunds":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetRefundByID":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetRefundByExternalID":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetChargebacks":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetChargebackByID":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # File
+          - "DownloadFile"
+          - "DownloadFileForParty"
 
-      - "SearchInvoices":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "SearchPayments":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "SearchRefunds":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # Payout
+          - "GetPayout"
+          - "SearchPayouts"
 
-    # Invoice Template
-      - "GetInvoiceTemplateByID":
-        - "SessionToken"
-        - "ApiKeyToken"
-        - "InvoiceTemplateAccessToken"
-      - "UpdateInvoiceTemplate":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "DeleteInvoiceTemplate":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "CreateInvoiceWithTemplate":
-        - "SessionToken"
-        - "ApiKeyToken"
-        - "InvoiceTemplateAccessToken"
-      - "GetInvoicePaymentMethodsByTemplateID":
-        - "SessionToken"
-        - "ApiKeyToken"
-        - "InvoiceTemplateAccessToken"
+        # Party
+          - "GetClaims"
+          - "GetClaimByID"
+          - "CreateClaim"
+          - "RevokeClaimByID"
+          - "GetContracts"
+          - "GetContractByID"
+          - "GetContractAdjustments"
+          - "GetContractAdjustmentByID"
+          - "GetContractsForParty"
+          - "GetContractByIDForParty"
+          - "GetContractAdjustmentsForParty"
+          - "GetContractAdjustmentByIDForParty"
+          - "GetPayoutTools"
+          - "GetPayoutToolByID"
+          - "GetPayoutToolsForParty"
+          - "GetPayoutToolByIDForParty"
+          - "GetMyParty"
+          - "ActivateMyParty"
+          - "SuspendMyParty"
+          - "GetShops"
+          - "GetShopsForParty"
+          - "CreateWebhook"
+          - "GetWebhooks"
 
-    # Customer
-      - "GetCustomerById":
-        - "SessionToken"
-        - "ApiKeyToken"
-        - "CustomerAccessToken"
-      - "DeleteCustomer":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetCustomerEvents":
-        - "SessionToken"
-        - "ApiKeyToken"
-        - "CustomerAccessToken"
-      - "CreateCustomerAccessToken":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "CreateBinding":
-        - "SessionToken"
-        - "ApiKeyToken"
-        - "CustomerAccessToken"
-      - "GetBindings":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetBinding":
-        - "SessionToken"
-        - "ApiKeyToken"
-        - "CustomerAccessToken"
+        # Universal
+          - "GetAccountByID"
+          - "GetCategories"
+          - "GetCategoryByRef"
+          - "GetLocationsNames"
+          - "GetPaymentInstitutions"
+          - "GetPaymentInstitutionByRef"
+          - "GetPaymentInstitutionPaymentTerms"
+          - "GetPaymentInstitutionPayoutMethods"
+          - "GetPaymentInstitutionPayoutSchedules"
+          - "GetScheduleByRef"
 
-    # Webhook
-      - "GetWebhookByID":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "DeleteWebhookByID":
-        - "SessionToken"
-        - "ApiKeyToken"
 
-    # Report
-      - "GetReport":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetReportForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "DownloadFile":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "DownloadFileForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
+  ApiKeyToken:
+    apis:
+      CommonAPI:
+        operations:
+        # Shop
+          - "CreateCustomer"
+          - "CreateInvoiceTemplate"
+          - "CreateInvoice"
+          - "CreatePayout"
+          - "ActivateShop"
+          - "SuspendShop"
+          - "GetShopByID"
+          - "GetShopByIDForParty"
+          - "ActivateShopForParty"
+          - "SuspendShopForParty"
+          - "GetPaymentConversionStats"
+          - "GetPaymentRevenueStats"
+          - "GetPaymentGeoStats"
+          - "GetPaymentRateStats"
+          - "GetPaymentMethodStats"
+          - "SearchInvoices"
+          - "SearchPayments"
+          - "SearchPayouts"
+          - "SearchRefunds"
+          - "GetReports"
+          - "GetReportsForParty"
+          - "CreateReport"
+          - "CreateReportForParty"
+          - "GetReport"
+          - "GetReportForParty"
+          - "DownloadFile"
+          - "DownloadFileForParty"
 
-    # File
-      - "DownloadFile":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "DownloadFileForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # Invoice
+          - "CreateInvoiceAccessToken"
+          - "GetInvoiceByID"
+          - "GetInvoiceByExternalID"
+          - "FulfillInvoice"
+          - "RescindInvoice"
+          - "GetInvoiceEvents"
+          - "GetInvoicePaymentMethods"
+          - "CreatePayment"
+          - "GetPayments"
+          - "GetPaymentByID"
+          - "GetPaymentByExternalID"
+          - "CancelPayment"
+          - "CapturePayment"
+          - "CreateRefund"
+          - "GetRefunds"
+          - "GetRefundByID"
+          - "GetRefundByExternalID"
+          - "GetChargebacks"
+          - "GetChargebackByID"
+          - "SearchInvoices"
+          - "SearchPayments"
+          - "SearchRefunds"
 
-    # Payout
-      - "GetPayout":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "SearchPayouts":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # Invoice Template
+          - "GetInvoiceTemplateByID"
+          - "UpdateInvoiceTemplate"
+          - "DeleteInvoiceTemplate"
+          - "CreateInvoiceWithTemplate"
+          - "GetInvoicePaymentMethodsByTemplateID"
 
-    # Party
-      - "GetClaims":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetClaimByID":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "CreateClaim":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "RevokeClaimByID":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # Customer
+          - "GetCustomerById"
+          - "DeleteCustomer"
+          - "GetCustomerEvents"
+          - "CreateCustomerAccessToken"
+          - "CreateBinding"
+          - "GetBindings"
+          - "GetBinding"
 
-      - "GetContracts":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetContractByID":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetContractAdjustments":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetContractAdjustmentByID":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetContractsForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetContractByIDForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetContractAdjustmentsForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetContractAdjustmentByIDForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetPayoutTools":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetPayoutToolByID":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetPayoutToolsForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetPayoutToolByIDForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # Webhook
+          - "GetWebhookByID"
+          - "DeleteWebhookByID"
 
-      - "GetMyParty":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "ActivateMyParty":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "SuspendMyParty":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # Report
+          - "GetReport"
+          - "GetReportForParty"
+          - "DownloadFile"
+          - "DownloadFileForParty"
 
-      - "GetShops":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetShopsForParty":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # File
+          - "DownloadFile"
+          - "DownloadFileForParty"
 
-      - "CreateWebhook":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetWebhooks":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # Payout
+          - "GetPayout"
+          - "SearchPayouts"
 
-    # Tokenization
-      - "CreatePaymentResource":
-        - "InvoiceAccessToken"
-        - "CustomerAccessToken"
+        # Party
+          - "GetClaims"
+          - "GetClaimByID"
+          - "CreateClaim"
+          - "RevokeClaimByID"
+          - "GetContracts"
+          - "GetContractByID"
+          - "GetContractAdjustments"
+          - "GetContractAdjustmentByID"
+          - "GetContractsForParty"
+          - "GetContractByIDForParty"
+          - "GetContractAdjustmentsForParty"
+          - "GetContractAdjustmentByIDForParty"
+          - "GetPayoutTools"
+          - "GetPayoutToolByID"
+          - "GetPayoutToolsForParty"
+          - "GetPayoutToolByIDForParty"
+          - "GetMyParty"
+          - "ActivateMyParty"
+          - "SuspendMyParty"
+          - "GetShops"
+          - "GetShopsForParty"
+          - "CreateWebhook"
+          - "GetWebhooks"
 
-    # Universal
-      - "GetAccountByID":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetCategories":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetCategoryByRef":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetLocationsNames":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetPaymentInstitutions":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetPaymentInstitutionByRef":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetPaymentInstitutionPaymentTerms":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetPaymentInstitutionPayoutMethods":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetPaymentInstitutionPayoutSchedules":
-        - "SessionToken"
-        - "ApiKeyToken"
-      - "GetScheduleByRef":
-        - "SessionToken"
-        - "ApiKeyToken"
+        # Universal
+          - "GetAccountByID"
+          - "GetCategories"
+          - "GetCategoryByRef"
+          - "GetLocationsNames"
+          - "GetPaymentInstitutions"
+          - "GetPaymentInstitutionByRef"
+          - "GetPaymentInstitutionPaymentTerms"
+          - "GetPaymentInstitutionPayoutMethods"
+          - "GetPaymentInstitutionPayoutSchedules"
+          - "GetScheduleByRef"
+
+  InvoiceAccessToken:
+    apis:
+      CommonAPI:
+        operations:
+        # Invoice
+          - "GetInvoiceByID"
+          - "GetInvoiceEvents"
+          - "GetInvoicePaymentMethods"
+          - "CreatePayment"
+          # NOTE
+          # Looks like some third-party integrations depend on `GetPayments`
+          # availability with invoice access tokens.
+          # Should we eventually allow this for specific parties only?
+          - "GetPayments"
+          - "GetPaymentByID"
+
+        # Tokenization
+          - "CreatePaymentResource"
+
+  CustomerAccessToken:
+    apis:
+      CommonAPI:
+        operations:
+        # Customer
+          - "GetCustomerById"
+          - "GetCustomerEvents"
+          - "CreateBinding"
+          - "GetBinding"
+
+        # Tokenization
+          - "CreatePaymentResource"
+
+  InvoiceTemplateAccessToken:
+    apis:
+      CommonAPI:
+        operations:
+        # Invoice Template
+          - "GetInvoiceTemplateByID"
+          - "CreateInvoiceWithTemplate"
+          - "GetInvoicePaymentMethodsByTemplateID"

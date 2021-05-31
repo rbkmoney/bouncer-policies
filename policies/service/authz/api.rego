@@ -11,7 +11,7 @@ import data.service.authz.whitelists
 import data.service.authz.roles
 import data.service.authz.org
 import data.service.authz.judgement
-import data.service.authz.auth_methods
+import data.service.authz.methods
 
 assertions = a {
     a0 := {
@@ -119,7 +119,7 @@ forbidden[why] {
 }
 
 known_auth_method {
-    auth_methods.methods[_] == input.auth.method
+    methods.methods[_] == input.auth.method
 }
 
 tolerate_no_expiration {

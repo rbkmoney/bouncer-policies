@@ -1,4 +1,4 @@
-title: Auth Method Access Matrix
+title: Method Access Matrix
 description: >
   This document defines which authorization methods grant access to which
   operations in our public APIs
@@ -154,17 +154,10 @@ permissions:
           - "CreateInvoiceTemplate"
           - "CreateInvoice"
           - "CreatePayout"
-          - "ActivateShop"
-          - "SuspendShop"
           - "GetShopByID"
           - "GetShopByIDForParty"
           - "ActivateShopForParty"
           - "SuspendShopForParty"
-          - "GetPaymentConversionStats"
-          - "GetPaymentRevenueStats"
-          - "GetPaymentGeoStats"
-          - "GetPaymentRateStats"
-          - "GetPaymentMethodStats"
           - "SearchInvoices"
           - "SearchPayments"
           - "SearchPayouts"

@@ -5,7 +5,7 @@ import data.service.authz.api.capi.customer_access_token
 import data.service.authz.api.capi.invoice_template_access_token
 import data.service.authz.api.user
 import data.service.authz.access
-import data.service.authz.auth_methods
+import data.service.authz.methods
 
 import input.capi.op
 import input.payment_processing
@@ -318,6 +318,6 @@ webhook_access_status(id) = status {
 }
 
 allowed_operation_for_auth_method {
-    operations_available := auth_methods.permissions[input.auth.method].apis[api_name].operations
+    operations_available := methods.permissions[input.auth.method].apis[api_name].operations
     operations_available[_] == op.id
 }

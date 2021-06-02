@@ -36,18 +36,6 @@ permissions:
           - "GetPaymentGeoStats"
           - "GetPaymentRateStats"
           - "GetPaymentMethodStats"
-          - "SearchInvoices"
-          - "SearchPayments"
-          - "SearchPayouts"
-          - "SearchRefunds"
-          - "GetReports"
-          - "GetReportsForParty"
-          - "CreateReport"
-          - "CreateReportForParty"
-          - "GetReport"
-          - "GetReportForParty"
-          - "DownloadFile"
-          - "DownloadFileForParty"
 
         # Invoice
           - "CreateInvoiceAccessToken"
@@ -94,10 +82,12 @@ permissions:
           - "DeleteWebhookByID"
 
         # Report
+          - "GetReports"
+          - "GetReportsForParty"
+          - "CreateReport"
+          - "CreateReportForParty"
           - "GetReport"
           - "GetReportForParty"
-          - "DownloadFile"
-          - "DownloadFileForParty"
 
         # File
           - "DownloadFile"
@@ -156,20 +146,6 @@ permissions:
           - "CreatePayout"
           - "GetShopByID"
           - "GetShopByIDForParty"
-          - "ActivateShopForParty"
-          - "SuspendShopForParty"
-          - "SearchInvoices"
-          - "SearchPayments"
-          - "SearchPayouts"
-          - "SearchRefunds"
-          - "GetReports"
-          - "GetReportsForParty"
-          - "CreateReport"
-          - "CreateReportForParty"
-          - "GetReport"
-          - "GetReportForParty"
-          - "DownloadFile"
-          - "DownloadFileForParty"
 
         # Invoice
           - "CreateInvoiceAccessToken"
@@ -216,10 +192,12 @@ permissions:
           - "DeleteWebhookByID"
 
         # Report
+          - "GetReports"
+          - "GetReportsForParty"
+          - "CreateReport"
+          - "CreateReportForParty"
           - "GetReport"
           - "GetReportForParty"
-          - "DownloadFile"
-          - "DownloadFileForParty"
 
         # File
           - "DownloadFile"
@@ -247,8 +225,6 @@ permissions:
           - "GetPayoutToolsForParty"
           - "GetPayoutToolByIDForParty"
           - "GetMyParty"
-          - "ActivateMyParty"
-          - "SuspendMyParty"
           - "GetShops"
           - "GetShopsForParty"
           - "CreateWebhook"

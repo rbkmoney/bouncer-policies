@@ -124,7 +124,7 @@ test_allowed_member_in_user_organization {
     ])
 }
 
-test_allowed_assign_memeber_role_for_user_in_the_same_organization {
+test_allowed_assign_member_role_for_user_in_the_same_organization {
     util.is_allowed with input as util.deepmerge([
         context.env_default,
         context.requester_default,
@@ -134,12 +134,22 @@ test_allowed_assign_memeber_role_for_user_in_the_same_organization {
     ])
 }
 
-test_forbidden_remove_memeber_role_for_user_in_another_organization {
+test_forbidden_remove_member_role_for_user_in_another_organization {
     util.is_forbidden with input as util.deepmerge([
         context.env_default,
         context.requester_default,
         context.user_administrator,
         context.session_token_valid,
         context.op_orgmgmt_remove_member_role_in_another_org
+    ])
+}
+
+test_forbidden_operation_not_allowed_for_role {
+    util.is_forbidden with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.user_bookkeeper,
+        context.session_token_valid,
+        context.op_orgmgmt_assign_member_role
     ])
 }

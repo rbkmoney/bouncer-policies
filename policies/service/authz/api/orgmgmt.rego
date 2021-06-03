@@ -44,6 +44,17 @@ forbidden[why] {
     membership_violations[why]
 }
 
+forbidden[why] {
+    input.auth.method == "SessionToken"
+    not access_status.owner
+    role := operation_roles[_]
+    not role
+    why := {
+        "code": "operation_not_in_list",
+        "description": sprintf("Unknown operation for role %s", role)
+    }
+}
+
 
 # Set of assertions which tell why operation under the input context is allowed.
 # Each element must be an object of the following form:

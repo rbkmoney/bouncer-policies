@@ -52,6 +52,9 @@ roles:
           - "GetPayoutTools"
           - "GetPayoutToolByID"
           - "CreatePayout"
+      OrgManagement:
+        operations:
+          - "cancelOrgMembership"
       AnalyticsAPI:
         operations:
           - "SearchInvoices"

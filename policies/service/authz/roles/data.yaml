@@ -38,7 +38,7 @@ roles:
           - "SearchPayments"
           - "SearchRefunds"
 
-  Bookkeeper:
+  Accountant:
     apis:
       CommonAPI:
         operations:

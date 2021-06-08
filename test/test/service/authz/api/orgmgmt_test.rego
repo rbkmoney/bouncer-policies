@@ -143,3 +143,23 @@ test_forbidden_remove_memeber_role_for_user_in_another_organization {
         context.op_orgmgmt_remove_member_role_in_another_org
     ])
 }
+
+test_forbidden_cancel_org_membership {
+    util.is_forbidden with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.user_no_roles,
+        context.session_token_valid,
+        context.op_orgmgmt_cancel_org_membership
+    ])
+}
+
+test_allowed_cancel_org_membership {
+    util.is_allowed with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.user_accountant,
+        context.session_token_valid,
+        context.op_orgmgmt_cancel_org_membership
+    ])
+}

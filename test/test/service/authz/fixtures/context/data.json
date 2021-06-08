@@ -102,6 +102,21 @@
         }
     },
 
+    "op_orgmgmt_cancel_org_membership": {
+        "orgmgmt": {
+            "op": {
+                "id": "cancelOrgMembership",
+                "organization": {"id": "PARTY"},
+                "member": {
+                    "id": "MEMBER",
+                    "orgs": [ {
+                        "id": "PARTY"
+                    }]
+                }
+            }
+        }
+    },
+
     "op_orgmgmt_assign_member_role": {
         "orgmgmt": {
             "op": {
@@ -908,7 +923,7 @@
         }
     },
 
-    "user_bookkeeper": {
+    "user_accountant": {
         "user": {
             "id": "USER",
             "orgs": [
@@ -918,7 +933,7 @@
                     "party": { "id": "PARTY" },
                     "roles": [
                         {
-                            "id": "Bookkeeper",
+                            "id": "Accountant",
                             "scope": {
                                 "shop": {
                                     "id": "SHOP"

@@ -150,7 +150,7 @@ test_create_report_allowed {
     util.is_allowed with input as util.deepmerge([
         context.env_default,
         context.requester_default,
-        context.user_bookkeeper,
+        context.user_accountant,
         context.session_token_valid,
         context.op_anapi_create_report
     ])
@@ -160,7 +160,7 @@ test_create_report_allowed_owner {
     util.is_allowed with input as util.deepmerge([
         context.env_default,
         context.requester_default,
-        context.user_bookkeeper,
+        context.user_accountant,
         context.session_token_valid,
         context.op_anapi_create_report
     ])

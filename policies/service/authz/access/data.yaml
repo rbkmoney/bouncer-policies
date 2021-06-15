@@ -201,11 +201,12 @@ api:
           - "GetPaymentsSubErrorDistribution"
           - "GetCurrentBalancesGroupByShop"
 
-    mandatory:
+    discretionary:
       shop:
         operations:
           - "CreateReport"
 
+    mandatory:
       report:
         operations:
           - "GetReport"

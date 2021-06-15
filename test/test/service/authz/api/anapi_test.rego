@@ -146,6 +146,17 @@ test_get_report_allowed {
     ])
 }
 
+test_get_report_allowed_without_shop {
+    util.is_allowed with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.user_owner,
+        context.session_token_valid,
+        context.op_anapi_get_report,
+        context.reports_report_without_shop
+    ])
+}
+
 test_create_report_allowed {
     util.is_allowed with input as util.deepmerge([
         context.env_default,

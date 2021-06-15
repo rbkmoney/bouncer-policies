@@ -630,6 +630,18 @@
         }
     },
 
+    "reports_report_without_shop": {
+        "reports": {
+            "report": {
+                "id": "REPORT",
+                "party": {"id": "PARTY"},
+                "files": [
+                    {"id": "FILE"}
+                ]
+            }
+        }
+    },
+
     "payouts_payout": {
         "payouts": {
             "payout": {

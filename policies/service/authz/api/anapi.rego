@@ -222,7 +222,12 @@ user_role_has_party_access(role) {
 report_access_status(id) = status {
     report := reports.report
     report.id == id
+    report.shop.id
     status := shop_access_status(report.shop.id, report.party.id)
+} else = status {
+    report := reports.report
+    report.id == id
+    status := party_access_status(report.party.id)
 }
 
 file_access_status(id) = status {

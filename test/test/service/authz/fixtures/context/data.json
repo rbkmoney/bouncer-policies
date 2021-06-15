@@ -830,6 +830,15 @@
         }
     },
 
+    "op_anapi_create_report_without_shop": {
+        "anapi": {
+            "op": {
+                "id": "CreateReport",
+                "party": { "id": "PARTY"}
+            }
+        }
+    },
+
     "op_anapi_download_file": {
         "anapi": {
             "op": {

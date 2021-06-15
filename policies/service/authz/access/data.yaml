@@ -207,6 +207,10 @@ api:
           - "CreateReport"
 
     mandatory:
+      party:
+        operations:
+          - "CreateReport"
+
       report:
         operations:
           - "GetReport"

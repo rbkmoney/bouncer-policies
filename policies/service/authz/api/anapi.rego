@@ -12,9 +12,11 @@ access_matrix := access.api[api_name]
 
 access_mandatory := "mandatory"
 access_restricted := "restricted"
+access_discretionary := "discretionary"
 access_requirements := {
     access_mandatory,
-    access_restricted
+    access_restricted,
+    access_discretionary
 }
 
 # Set of assertions which tell why operation under the input context is forbidden.
@@ -121,6 +123,13 @@ entity_access_requirement_status(name, req) = status {
     req == access_restricted
     status := entity_access_restrictions_status[name]
 } else = status {
+    req == access_discretionary
+    not op_entity_specified[name]
+    status := true
+} else = status {
+    req == access_discretionary
+    status := entity_access_status[name]
+} else = status {
     violation := {
         "code": "missing_access",
         "description": sprintf(
@@ -129,6 +138,13 @@ entity_access_requirement_status(name, req) = status {
         )
     }
     status := {"violation": violation}
+}
+
+op_entity_specified[name] {
+    # NOTE
+    # Please take care to not misuse this when introducing something not exactly
+    # entity-like in the protocol.
+    op[name].id
 }
 
 format_entity_id(name) = s {
@@ -151,6 +167,9 @@ entity_access_status["report"] = status {
 }
 entity_access_status["file"] = status {
     status := file_access_status(op.file.id)
+}
+entity_access_status["party"] = status {
+    status := party_access_status(op.party.id)
 }
 
 entity_access_restrictions_status["shops"] = status {

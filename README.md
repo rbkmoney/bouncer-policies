@@ -35,6 +35,7 @@ When evaluating some policy [bouncer][1] will provide [bouncer context][4] in a 
 Running `make test` in the project directory will execute all [test cases][5] in the `/test` bundle under docker container with OPA binary of the fixed version, consult Makefile to find out which version is currently in use.
 
 Please put all context instances used for testing purposes in data documents under `fixtures/` subdirectory, this way the validator can pick them up and validate against [Thrift schema][4]. Run `make wc_validate` to do that.
+Do not forget to upgrade bouncer proto version if needed using `cd validator && rebar3 upgrade bouncer_proto`.
 
 ## Running
 

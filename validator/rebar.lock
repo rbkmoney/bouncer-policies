@@ -1,7 +1,7 @@
 {"1.2.0",
 [{<<"bouncer_proto">>,
   {git,"https://github.com/rbkmoney/bouncer-proto.git",
-       {ref,"da66fd529e25be5cad436e8c88c8da5d83628154"}},
+       {ref,"60cedce6c0147558e3ba322387151d23b001d68b"}},
   0},
  {<<"jsx">>,{pkg,<<"jsx">>,<<"3.0.0">>},0},
  {<<"thrift">>,

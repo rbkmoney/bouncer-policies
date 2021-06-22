@@ -149,6 +149,33 @@
         }
     },
 
+    "op_claimmgmt_createClaim": {
+        "claimmgmt": {
+            "op": {
+                "id": "createClaim",
+                "party": { "id": "PARTY"}
+            }
+        }
+    },
+
+    "op_claimmgmt_searchClaims": {
+        "claimmgmt": {
+            "op": {
+                "id": "searchClaims",
+                "party": { "id": "ANOTHER_PARTY"}
+            }
+        }
+    },
+
+    "op_claimmgmt_not_exist_operation": {
+        "claimmgmt": {
+            "op": {
+              "id": "nonExist",
+              "party": {"id": "PARTY"}
+            }
+        }
+    },
+
     "op_capi_create_payment_resource": {
         "capi": {
             "op": {

@@ -56,7 +56,6 @@ api:
           - "GetReportsForParty"
           - "CreateReport"
           - "CreateReportForParty"
-
       invoice:
         operations:
           - "CreateInvoiceAccessToken"
@@ -201,8 +200,13 @@ api:
           - "GetPaymentsSubErrorDistribution"
           - "GetCurrentBalancesGroupByShop"
 
-    mandatory:
+    discretionary:
       shop:
+        operations:
+          - "CreateReport"
+
+    mandatory:
+      party:
         operations:
           - "CreateReport"
 
@@ -235,12 +239,25 @@ api:
           - "getOrgRole"
           - "cancelOrgMembership"
           - "inquireOrgMembership"
-          - "listOrgMembership"
     universal:
       operations:
         - "createOrg"
         - "joinOrg"
         - "listOrgMembership"
+        
+  ClaimManagement:
+    mandatory:
+      claim:
+        operations:
+          - "createClaim"
+          - "revokeClaimByID"
+          - "requestReviewClaimByID"
+          - "updateClaimByID"
+    universal:
+      operations:
+        - "getClaimByID"
+        - "searchClaims"
+        
   WalletAPI:
     mandatory:
       identity:

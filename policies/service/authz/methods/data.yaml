@@ -1,0 +1,357 @@
+title: Method Access Matrix
+description: >
+  This document defines which authorization methods grant access to which
+  operations in our public APIs
+
+  Document has the following structure:
+   * a set of all existing auth methods,
+   * a set of available auth methods,
+    * a set of available APIs for each of the available methods,
+      * a set of accessible operations for each of the APIs.
+
+methods:
+  - "SessionToken"
+  - "ApiKeyToken"
+  - "InvoiceAccessToken"
+  - "CustomerAccessToken"
+  - "InvoiceTemplateAccessToken"
+
+permissions:
+  SessionToken:
+    apis:
+      CommonAPI:
+        operations:
+          # Analytics
+          - "GetPaymentMethodStats"
+          - "GetPaymentRateStats"
+          - "GetPaymentGeoStats"
+          - "GetPaymentRevenueStats"
+          - "GetPaymentConversionStats"
+
+          #Search
+          - "SearchInvoices"
+          - "SearchPayments"
+          - "SearchRefunds"
+          - "SearchPayouts"
+
+          # Accounts
+          - "GetAccountByID"
+
+          # Categories
+          - "GetCategories"
+          - "GetCategoryByRef"
+
+          # Claims
+          - "CreateClaim"
+          - "GetClaims"
+          - "GetClaimByID"
+          - "RevokeClaimByID"
+
+          # Countries
+          - "GetCountries"
+          - "GetCountryByID"
+
+          # Customers
+          - "CreateCustomer"
+          - "GetCustomerById"
+          - "DeleteCustomer"
+          - "CreateCustomerAccessToken"
+          - "CreateBinding"
+          - "GetBindings"
+          - "GetBinding"
+          - "GetCustomerEvents"
+
+          # InvoiceTemplates
+          - "CreateInvoiceTemplate"
+          - "GetInvoiceTemplateByID"
+          - "UpdateInvoiceTemplate"
+          - "DeleteInvoiceTemplate"
+          - "CreateInvoiceWithTemplate"
+          - "GetInvoicePaymentMethodsByTemplateID"
+
+          # Invoices
+          - "GetInvoiceByExternalID"
+          - "CreateInvoice"
+          - "GetInvoiceByID"
+          - "CreateInvoiceAccessToken"
+          - "GetInvoiceEvents"
+          - "FulfillInvoice"
+          - "GetInvoicePaymentMethods"
+          - "RescindInvoice"
+
+          # Contracts
+          - "GetContracts"
+          - "GetContractsForParty"
+          - "GetContractByID"
+          - "GetContractByIDForParty"
+          - "GetContractAdjustments"
+          - "GetContractAdjustmentsForParty"
+          - "GetContractAdjustmentByID"
+          - "GetContractAdjustmentByIDForParty"
+
+          # Parties
+          - "GetMyParty"
+          - "ActivateMyParty"
+          - "SuspendMyParty"
+          - "GetPartyByID"
+          - "ActivatePartyByID"
+          - "SuspendPartyByID"
+
+          # Tokens
+          # We only allow payment resource creation with InvoiceAccessToken and CustomerAccessToken
+          # - "CreatePaymentResource"
+
+          # Payments
+          - "GetPayments"
+          - "CreatePayment"
+          - "GetPaymentByID"
+          - "CancelPayment"
+          - "CapturePayment"
+          - "GetChargebacks"
+          - "GetChargebackByID"
+          - "GetRefunds"
+          - "CreateRefund"
+          - "GetRefundByID"
+          - "GetPaymentByExternalID"
+          - "GetRefundByExternalID"
+
+          # Payouts
+          - "CreatePayout"
+          - "GetPayout"
+          - "GetPayoutTools"
+          - "GetPayoutToolsForParty"
+          - "GetPayoutToolByID"
+          - "GetPayoutToolByIDForParty"
+          - "GetScheduleByRef"
+
+          # Shops
+          - "GetShops"
+          - "GetShopsForParty"
+          - "GetShopByID"
+          - "GetShopByIDForParty"
+          - "ActivateShop"
+          - "ActivateShopForParty"
+          - "SuspendShop"
+          - "SuspendShopForParty"
+
+          # TradeBlocs
+          - "GetTradeBlocs"
+          - "GetTradeBlocByID"
+
+          # PaymentInstitutions
+          - "GetPaymentInstitutions"
+          - "GetPaymentInstitutionByRef"
+          - "GetPaymentInstitutionPaymentTerms"
+          - "GetPaymentInstitutionPayoutMethods"
+          - "GetPaymentInstitutionPayoutSchedules"
+
+          # Webhooks
+          - "CreateWebhook"
+          - "GetWebhooks"
+          - "GetWebhookByID"
+          - "DeleteWebhookByID"
+
+          # Geo
+          - "GetLocationsNames"
+
+          # Reports
+          - "CreateReport"
+          - "CreateReportForParty"
+          - "DownloadFile"
+          - "DownloadFileForParty"
+          - "GetReports"
+          - "GetReportsForParty"
+          - "GetReport"
+          - "GetReportForParty"
+
+  ApiKeyToken:
+    apis:
+      CommonAPI:
+        operations:
+          # Analytics
+          # Those methods are meant to be used by the private office web app
+          # and are only to be authorized with SessionTokens
+          # - "GetPaymentMethodStats"
+          # - "GetPaymentRateStats"
+          # - "GetPaymentGeoStats"
+          # - "GetPaymentRevenueStats"
+          # - "GetPaymentConversionStats"
+
+          #Search
+          - "SearchInvoices"
+          - "SearchPayments"
+          - "SearchRefunds"
+          - "SearchPayouts"
+
+          # Accounts
+          - "GetAccountByID"
+
+          # Categories
+          - "GetCategories"
+          - "GetCategoryByRef"
+
+          # Claims
+          - "CreateClaim"
+          - "GetClaims"
+          - "GetClaimByID"
+          - "RevokeClaimByID"
+
+          # Countries
+          - "GetCountries"
+          - "GetCountryByID"
+
+          # Customers
+          - "CreateCustomer"
+          - "GetCustomerById"
+          - "DeleteCustomer"
+          - "CreateCustomerAccessToken"
+          - "CreateBinding"
+          - "GetBindings"
+          - "GetBinding"
+          - "GetCustomerEvents"
+
+          # InvoiceTemplates
+          - "CreateInvoiceTemplate"
+          - "GetInvoiceTemplateByID"
+          - "UpdateInvoiceTemplate"
+          - "DeleteInvoiceTemplate"
+          - "CreateInvoiceWithTemplate"
+          - "GetInvoicePaymentMethodsByTemplateID"
+
+          # Invoices
+          - "GetInvoiceByExternalID"
+          - "CreateInvoice"
+          - "GetInvoiceByID"
+          - "CreateInvoiceAccessToken"
+          - "GetInvoiceEvents"
+          - "FulfillInvoice"
+          - "GetInvoicePaymentMethods"
+          - "RescindInvoice"
+
+          # Contracts
+          - "GetContracts"
+          - "GetContractsForParty"
+          - "GetContractByID"
+          - "GetContractByIDForParty"
+          - "GetContractAdjustments"
+          - "GetContractAdjustmentsForParty"
+          - "GetContractAdjustmentByID"
+          - "GetContractAdjustmentByIDForParty"
+
+          # Parties
+          - "GetMyParty"
+          - "GetPartyByID"
+          # We do not allow party/shop activations/suspensions with ApiKeyTokens
+          # - "ActivateMyParty"
+          # - "SuspendMyParty"
+          # - "ActivatePartyByID"
+          # - "SuspendPartyByID"
+
+          # Tokens
+          # We only allow payment resource creation with InvoiceAccessToken and CustomerAccessToken
+          # - "CreatePaymentResource"
+
+          # Payments
+          - "GetPayments"
+          - "CreatePayment"
+          - "GetPaymentByID"
+          - "CancelPayment"
+          - "CapturePayment"
+          - "GetChargebacks"
+          - "GetChargebackByID"
+          - "GetRefunds"
+          - "CreateRefund"
+          - "GetRefundByID"
+          - "GetPaymentByExternalID"
+          - "GetRefundByExternalID"
+
+          # Payouts
+          - "CreatePayout"
+          - "GetPayout"
+          - "GetPayoutTools"
+          - "GetPayoutToolsForParty"
+          - "GetPayoutToolByID"
+          - "GetPayoutToolByIDForParty"
+          - "GetScheduleByRef"
+
+          # Shops
+          - "GetShops"
+          - "GetShopsForParty"
+          - "GetShopByID"
+          - "GetShopByIDForParty"
+          # We do not allow party/shop activations/suspensions with ApiKeyTokens
+          # - "ActivateShop"
+          # - "ActivateShopForParty"
+          # - "SuspendShop"
+          # - "SuspendShopForParty"
+
+          # TradeBlocs
+          - "GetTradeBlocs"
+          - "GetTradeBlocByID"
+
+          # PaymentInstitutions
+          - "GetPaymentInstitutions"
+          - "GetPaymentInstitutionByRef"
+          - "GetPaymentInstitutionPaymentTerms"
+          - "GetPaymentInstitutionPayoutMethods"
+          - "GetPaymentInstitutionPayoutSchedules"
+
+          # Webhooks
+          - "CreateWebhook"
+          - "GetWebhooks"
+          - "GetWebhookByID"
+          - "DeleteWebhookByID"
+
+          # Geo
+          - "GetLocationsNames"
+
+          # Reports
+          - "CreateReport"
+          - "CreateReportForParty"
+          - "DownloadFile"
+          - "DownloadFileForParty"
+          - "GetReports"
+          - "GetReportsForParty"
+          - "GetReport"
+          - "GetReportForParty"
+
+  InvoiceAccessToken:
+    apis:
+      CommonAPI:
+        operations:
+        # Invoice
+          - "GetInvoiceByID"
+          - "GetInvoiceEvents"
+          - "GetInvoicePaymentMethods"
+          - "CreatePayment"
+          # NOTE
+          # Looks like some third-party integrations depend on `GetPayments`
+          # availability with invoice access tokens.
+          # Should we eventually allow this for specific parties only?
+          - "GetPayments"
+          - "GetPaymentByID"
+
+        # Tokenization
+          - "CreatePaymentResource"
+
+  CustomerAccessToken:
+    apis:
+      CommonAPI:
+        operations:
+        # Customer
+          - "GetCustomerById"
+          - "GetCustomerEvents"
+          - "CreateBinding"
+          - "GetBinding"
+
+        # Tokenization
+          - "CreatePaymentResource"
+
+  InvoiceTemplateAccessToken:
+    apis:
+      CommonAPI:
+        operations:
+        # Invoice Template
+          - "GetInvoiceTemplateByID"
+          - "CreateInvoiceWithTemplate"
+          - "GetInvoicePaymentMethodsByTemplateID"

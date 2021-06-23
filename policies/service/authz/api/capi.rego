@@ -5,6 +5,7 @@ import data.service.authz.api.capi.customer_access_token
 import data.service.authz.api.capi.invoice_template_access_token
 import data.service.authz.api.user
 import data.service.authz.access
+import data.service.authz.methods
 
 import input.capi.op
 import input.payment_processing
@@ -30,16 +31,14 @@ access_requirements := {
 # ```
 
 forbidden[why] {
-    input.auth.method == "SessionToken"
-    forbidden_session_token_operation
+    not allowed_operation_for_auth_method
     why := {
-        "code": "operation_not_allowed_for_session_token",
-        "description": "Operation not allowed for session token"
+        "code": "unknown_auth_method_forbids_operation",
+        "description": sprintf("Unknown auth method for this operation: %v", [input.auth.method])
     }
 }
 
 forbidden[why] {
-    input.auth.method == "SessionToken"
     access_violations[why]
 }
 
@@ -50,25 +49,40 @@ forbidden[why] {
 # ```
 
 allowed[why] {
+    allowed_operation_for_auth_method
+    auth_method_allowed[why]
+}
+
+##
+
+auth_method_allowed[why] {
     input.auth.method == "SessionToken"
     count(access_violations) == 0
     session_token_allowed[why]
 }
 
-allowed[why] {
+auth_method_allowed[why] {
+    input.auth.method == "ApiKeyToken"
+    count(access_violations) == 0
+    api_key_token_allowed[why]
+}
+
+auth_method_allowed[why] {
     input.auth.method == "InvoiceAccessToken"
     invoice_access_token.allowed[why]
 }
 
-allowed[why] {
+auth_method_allowed[why] {
     input.auth.method == "CustomerAccessToken"
     customer_access_token.allowed[why]
 }
 
-allowed[why] {
+auth_method_allowed[why] {
     input.auth.method == "InvoiceTemplateAccessToken"
     invoice_template_access_token.allowed[why]
 }
+
+##
 
 session_token_allowed[why] {
     operation_universal
@@ -93,6 +107,24 @@ session_token_allowed[why] {
     why := {
         "code": "org_role_allows_operation",
         "description": sprintf("User has role that permits this operation: %v", [role.id])
+    }
+}
+
+##
+
+api_key_token_allowed[why] {
+    operation_universal
+    why := {
+        "code": "operation_universal",
+        "description": "Operation is universally allowed"
+    }
+}
+
+api_key_token_allowed[why] {
+    access_status.in_scope
+    why := {
+        "code": "api_key_scope_matches",
+        "description": "Api key scope matches operation party"
     }
 }
 
@@ -193,11 +225,11 @@ entity_access_status["webhook"] = status {
     status := webhook_access_status(op.webhook.id)
 }
 
-party_access_status(id) = status {
-    user.is_owner(id)
+party_access_status(party_id) = status {
+    user.is_owner(party_id)
     status := {"owner": true}
 } else = status {
-    userorg := user.org_by_party(id)
+    userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
@@ -205,6 +237,11 @@ party_access_status(id) = status {
     }
     roles[_]
     status := {"roles": roles}
+} else = status {
+    not input.user
+    scope := input.auth.scope[_]
+    scope.party.id == party_id
+    status := {"in_scope": true}
 }
 
 shop_access_status(id, party_id) = status {
@@ -219,6 +256,11 @@ shop_access_status(id, party_id) = status {
     }
     roles[_]
     status := {"roles": roles}
+} else = status {
+    not input.user
+    scope := input.auth.scope[_]
+    scope.party.id == party_id
+    status := {"in_scope": true}
 }
 
 user_role_has_shop_access(shop_id, role) {
@@ -275,5 +317,7 @@ webhook_access_status(id) = status {
     status := party_access_status(webhook.party.id)
 }
 
-forbidden_session_token_operation
-    { op.id == "CreatePaymentResource" }
+allowed_operation_for_auth_method {
+    operations_available := methods.permissions[input.auth.method].apis[api_name].operations
+    operations_available[_] == op.id
+}

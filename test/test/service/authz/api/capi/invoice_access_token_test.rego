@@ -68,7 +68,7 @@ test_invoice_access_token_invalid_operation_1 {
         context.op_capi_create_refund,
         context.payproc_invoice
     ])
-    not result.forbidden
+    result.forbidden # Explicitly forbidden by auth method check
     not result.allowed
 }
 
@@ -79,7 +79,7 @@ test_invoice_access_token_invalid_operation_2 {
         context.invoice_access_token_valid,
         context.op_capi_create_invoice
     ])
-    not result.forbidden
+    result.forbidden # Explicitly forbidden by auth method check
     not result.allowed
 }
 

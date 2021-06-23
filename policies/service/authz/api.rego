@@ -12,6 +12,7 @@ import data.service.authz.whitelists
 import data.service.authz.roles
 import data.service.authz.org
 import data.service.authz.judgement
+import data.service.authz.methods
 
 assertions = a {
     a0 := {
@@ -36,6 +37,23 @@ forbidden[why] {
     why := {
         "code": "auth_required",
         "description": "Authorization is required"
+    }
+}
+
+forbidden[why] {
+    not known_auth_method
+    why := {
+        "code": "unknown_auth_method",
+        "description": "Authorization method is unknown"
+    }
+}
+
+forbidden[why] {
+    not tolerate_no_expiration
+    not input.auth.expiration
+    why := {
+        "code": "auth_no_token_expiration",
+        "description": "Tokens without expiration are not allowed"
     }
 }
 
@@ -104,6 +122,14 @@ forbidden[why] {
 forbidden[why] {
     input.claimmgmt
     claimmgmt.forbidden[why]
+}
+
+known_auth_method {
+    methods.methods[_] == input.auth.method
+}
+
+tolerate_no_expiration {
+    input.auth.method == "ApiKeyToken"
 }
 
 tolerate_expired_token {

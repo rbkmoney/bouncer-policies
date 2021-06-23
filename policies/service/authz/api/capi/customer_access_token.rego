@@ -19,7 +19,7 @@ allowed[why] {
 }
 
 allowed[why] {
-    is_customer_access_token_operation
+    op.id != "CreatePaymentResource"
     customer_matches_token_scope
     why := {
         "code": "customeraccess_token_allows_operation",
@@ -37,9 +37,3 @@ customer_matches_token_scope {
     scope.customer.id == op.customer.id
     scope.party.id == payment_processing.customer.party.id
 }
-
-is_customer_access_token_operation
-    { op.id == "GetCustomerById" }
-    { op.id == "CreateBinding" }
-    { op.id == "GetBinding" }
-    { op.id == "GetCustomerEvents" }

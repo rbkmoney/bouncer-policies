@@ -241,3 +241,89 @@ api:
         - "createOrg"
         - "joinOrg"
         - "listOrgMembership"
+  WalletAPI:
+    mandatory:
+      identity:
+        operations:
+          - 'CreateReport'
+          - 'CreateWebhook'
+          - 'CreateP2PTransferTemplate'
+          - 'CreateP2PTransfer'
+          - 'QuoteP2PTransfer'
+          - 'CreateWallet'
+          - 'CreateDestination'
+
+          - 'GetIdentity'
+          - 'ListIdentityChallenges'
+          - 'StartIdentityChallenge'
+          - 'GetIdentityChallenge'
+          - 'PollIdentityChallengeEvents'
+          - 'GetIdentityChallengeEvent'
+
+      wallet:
+        operations:
+          - 'CreateQuote'
+          - 'CreateWithdrawal'
+          - 'CreateW2WTransfer'
+          - 'GetWallet'
+          - 'GetWalletByExternalID'
+          - 'GetWalletAccount'
+          - 'IssueWalletGrant'
+
+      destination:
+        operations:
+          - 'CreateQuote'
+          - 'CreateWithdrawal'
+          - 'GetDestination'
+          - 'GetDestinationByExternalID'
+          - 'IssueDestinationGrant'
+
+      withdrawal:
+        operations:
+          - 'GetWithdrawal'
+          - 'GetWithdrawalByExternalID'
+          - 'PollWithdrawalEvents'
+          - 'GetWithdrawalEvents'
+
+      w2w_transfer:
+        operations:
+          - 'GetW2WTransfer'
+
+      webhook:
+        operations:
+          - 'GetWebhooks'
+          - 'GetWebhookByID'
+          - 'DeleteWebhookByID'
+
+      report:
+        operations:
+          - 'GetReport'
+          - 'GetReports'
+
+      file:
+        operations:
+          - "DownloadFile"
+
+      party:
+        operations:
+          - 'CreateIdentity'
+
+    universal:
+      operations:
+      - 'GetResidence'
+      - 'GetCurrency'
+
+      - 'ListProviders'
+      - 'GetProvider'
+      - 'ListProviderIdentityClasses'
+      - 'GetProviderIdentityClass'
+      - 'ListProviderIdentityLevels'
+      - 'GetProviderIdentityLevel'
+
+      - 'ListIdentities'
+      - 'ListWallets'
+      - 'ListDestinations'
+      - 'ListWithdrawals'
+      - 'ListDeposits'
+      - 'ListDepositReverts'
+      - 'ListDepositAdjustments'

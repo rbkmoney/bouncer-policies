@@ -234,3 +234,61 @@ roles:
           - "GetCurrentBalances"
           - "GetPaymentsSubErrorDistribution"
           - "GetCurrentBalancesGroupByShop"
+      WalletAPI:
+        operation:
+          - 'ListProviders'
+          - 'GetProvider'
+          - 'ListProviderIdentityClasses'
+          - 'GetProviderIdentityClass'
+          - 'ListProviderIdentityLevels'
+          - 'GetProviderIdentityLevel'
+
+          - 'ListIdentities'
+          - 'GetIdentity'
+          - 'CreateIdentity'
+          - 'ListIdentityChallenges'
+          - 'StartIdentityChallenge'
+          - 'GetIdentityChallenge'
+          - 'PollIdentityChallengeEvents'
+          - 'GetIdentityChallengeEvent'
+
+          - 'ListWallets'
+          - 'GetWallet'
+          - 'GetWalletByExternalID'
+          - 'CreateWallet'
+          - 'GetWalletAccount'
+          - 'IssueWalletGrant'
+
+          - 'ListDestinations'
+          - 'GetDestination'
+          - 'GetDestinationByExternalID'
+          - 'CreateDestination'
+          - 'IssueDestinationGrant'
+
+          - 'CreateQuote'
+          - 'CreateWithdrawal'
+          - 'GetWithdrawal'
+          - 'GetWithdrawalByExternalID'
+          - 'ListWithdrawals'
+          - 'PollWithdrawalEvents'
+          - 'GetWithdrawalEvents'
+
+          - 'ListDeposits'
+          - 'ListDepositReverts'
+          - 'ListDepositAdjustments'
+
+          - 'CreateW2WTransfer'
+          - 'GetW2WTransfer'
+
+          - 'CreateWebhook'
+          - 'GetWebhooks'
+          - 'GetWebhookByID'
+          - 'DeleteWebhookByID'
+
+          - 'CreateReport'
+          - 'GetReport'
+          - 'GetReports'
+          - 'DownloadFile'
+
+          - 'GetResidence'
+          - 'GetCurrency'

@@ -129,7 +129,11 @@ known_auth_method {
 }
 
 tolerate_no_expiration {
-    input.auth.method != "SessionToken"
+    input.auth.method == "ApiKeyToken"
+}
+tolerate_no_expiration {
+    # Some old invoice template tokens miss expiration?
+    input.auth.method == "InvoiceTemplateAccessToken"
 }
 
 tolerate_expired_token {

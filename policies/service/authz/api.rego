@@ -129,7 +129,7 @@ known_auth_method {
 }
 
 tolerate_no_expiration {
-    input.auth.method == "ApiKeyToken"
+    input.auth.method != "SessionToken"
 }
 
 tolerate_expired_token {

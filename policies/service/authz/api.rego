@@ -132,7 +132,7 @@ tolerate_no_expiration {
     input.auth.method == "ApiKeyToken"
 }
 tolerate_no_expiration {
-    # Some old invoice template tokens miss expiration?
+    # Invoice template access tokens currently have unlimited(undefined) expiration
     input.auth.method == "InvoiceTemplateAccessToken"
 }
 

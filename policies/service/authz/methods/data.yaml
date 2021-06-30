@@ -331,6 +331,10 @@ permissions:
           - "GetPayments"
           - "GetPaymentByID"
 
+          # Payments
+          - "CancelPayment"
+          - "CapturePayment"
+
         # Tokenization
           - "CreatePaymentResource"
 

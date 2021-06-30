@@ -12,9 +12,11 @@ api_name := "WalletAPI"
 access_matrix := access.api[api_name]
 
 access_mandatory := "mandatory"
+access_discretionary := "discretionary"
 
 access_requirements := {
-    access_mandatory
+    access_mandatory,
+    access_discretionary
 }
 
 # Set of assertions which tell why operation under the input context is forbidden.
@@ -24,10 +26,10 @@ access_requirements := {
 # ```
 
 forbidden[why] {
-    input.auth.method == "SessionToken"
+    input.auth.method != "SessionToken"
     why := {
-        "code": "operation_not_allowed_for_session_token",
-        "description": "Operation not allowed for session token"
+        "code": "unknown_auth_method_forbids_operation",
+        "description": sprintf("Unknown auth method for this operation: %v", [input.auth.method])
     }
 }
 
@@ -91,6 +93,7 @@ access_status = status {
     # Otherwise evaluation will end with a runtime error. Usually it would mean
     # that either incoming context or access matrix (access/data.yaml) is
     # malformed.
+    count(access_violations) == 0
     status := access_status_set[_]
 }
 
@@ -111,12 +114,11 @@ entity_access_requirement_status(name, req) = status {
     status := entity_access_status[name]
 } else = status {
     req == access_discretionary
-    not op_entity_specified[name]
+    not op[name]
     status := true
 } else = status {
     req == access_discretionary
-    entity_access_status[name]
-    status := true
+    status := entity_access_status[name]
 } else = status {
     violation := {
         "code": "missing_access",
@@ -128,15 +130,8 @@ entity_access_requirement_status(name, req) = status {
     status := {"violation": violation}
 }
 
-op_entity_specified[name] {
-    # NOTE
-    # Please take care to not misuse this when introducing something not exactly
-    # entity-like in the protocol.
-    op[name].id
-}
-
 format_entity_id(name) = s {
-    s := op[name].id
+    s := op[name]
 } else = s {
     s := "undefined"
 }
@@ -152,39 +147,32 @@ operation_universal {
 }
 
 entity_access_status["party"] = status {
-    status := party_access_status(op.party.id)
+    status := party_access_status(op.party)
 }
 entity_access_status["identity"] = status {
-    status := identity_access_status(op.identity.id)
+    status := identity_access_status(op.identity)
 }
 entity_access_status["wallet"] = status {
-    grant := try_get_wallet_grant()
-    wallet_entity := entity.try_find_by_id("Wallet", op.wallet.id, wallet)
-    status := wallet_grant_access_status(op.wallet.id, op.wallet_grant, wallet_entity.wallet.body)
-} else = status {
-    status := wallet_access_status(op.wallet.id)
+    status := wallet_access_status(op.wallet)
 }
 entity_access_status["destination"] = status {
-    grant := try_get_destination_grant()
-    destination_entity := entity.try_find_by_id("Destination", op.destination.id, wallet)
-    status := destination_grant_access_status(op.destination.id, op.destination_grant)
-} else = status {
-    status := destination_access_status(op.destination.id)
+    status := destination_access_status(op.destination)
 }
 entity_access_status["withdrawal"] = status {
-    status := withdrawal_access_status(op.withdrawal.id)
+    status := withdrawal_access_status(op.withdrawal)
 }
 entity_access_status["w2w_transfer"] = status {
-    status := w2w_transfer_access_status(op.w2w_transfer.id)
+    status := w2w_transfer_access_status(op.w2w_transfer)
 }
 entity_access_status["report"] = status {
-    status := report_access_status(op.report.id)
+    status := report_access_status(op.report)
 }
 entity_access_status["file"] = status {
-    status := file_access_status(op.file.id)
+    status := file_access_status(op.file)
 }
 entity_access_status["webhook"] = status {
-    status := webhook_access_status(op.webhook.id)
+    webhook := entity.try_find_by_id("WalletWebhook", op.webhook, wallet)
+    status := webhook_access_status(op.webhook)
 }
 
 party_access_status(id) = status {
@@ -203,8 +191,8 @@ party_access_status(id) = status {
 
 identity_access_status(id) = status {
     identity := entity.try_find_by_id("Identity", id, wallet)
-    party := identity.wallet.party
-    userorg := user.org_by_party(party)
+    party_id := identity.wallet.party
+    userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
@@ -228,13 +216,17 @@ wallet_grant_access_status(id, grant, body) = status {
     exp := time.parse_rfc3339_ns(grant.expires_on)
     now := time.parse_rfc3339_ns(input.env.now)
     now < exp
-    {"grant": true}
+    status := {"grant": true}
 }
 
 wallet_access_status(id) = status {
+    wallet_grants[_]
+    wallet_entity := entity.try_find_by_id("Wallet", op.wallet, wallet)
+    status := wallet_grant_access_status(op.wallet, op.wallet_grant, wallet_entity.wallet.body)
+} else = status {
     wallet_entity := entity.try_find_by_id("Wallet", id, wallet)
-    party := wallet_entity.wallet.party
-    userorg := user.org_by_party(party.id)
+    party_id := wallet_entity.wallet.party
+    userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
@@ -261,13 +253,17 @@ destination_grant_access_status(id, grant) = status {
     exp := time.parse_rfc3339_ns(grant.expires_on)
     now := time.parse_rfc3339_ns(input.env.now)
     now < exp
-    {"grant": true}
+    status := {"grant": true}
 }
 
 destination_access_status(id) = status {
+    destination_grants[_]
+    destination_entity := entity.try_find_by_id("Destination", op.destination, wallet)
+    status := destination_grant_access_status(op.destination, op.destination_grant)
+} else = status {
     destination := entity.try_find_by_id("Destination", id, wallet)
-    party := destination.wallet.party
-    userorg := user.org_by_party(party.id)
+    party_id := destination.wallet.party
+    userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
@@ -287,9 +283,9 @@ user_role_has_destination_access(_, role) {
 
 withdrawal_access_status(id) = status {
     withdrawal := entity.try_find_by_id("Withdrawal", id, wallet)
-    party := withdrawal.wallet.party
+    party_id := withdrawal.wallet.party
     wallet_id := withdrawal.wallet.wallet
-    userorg := user.org_by_party(party.id)
+    userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
@@ -301,9 +297,9 @@ withdrawal_access_status(id) = status {
 
 w2w_transfer_access_status(id) = status {
     w2w_transfer := entity.try_find_by_id("W2WTransfer", id, wallet)
-    party := w2w_transfer.wallet.party
+    party_id := w2w_transfer.wallet.party
     wallet_id := w2w_transfer.wallet.wallet
-    userorg := user.org_by_party(party.id)
+    userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
@@ -315,9 +311,9 @@ w2w_transfer_access_status(id) = status {
 
 report_access_status(id) = status {
     report := entity.try_find_by_id("WalletReport", id, wallet)
-    party := report.wallet.party
+    party_id := report.wallet.party
     identity_id := report.wallet.identity
-    userorg := user.org_by_party(party.id)
+    userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
@@ -328,16 +324,16 @@ report_access_status(id) = status {
 }
 
 file_access_status(id) = status {
-    # NOTE
-    # mb put this in universal?
-    status := {"owner": true}
+    report := entity.try_find_first("WalletReport", wallet)
+    report.wallet.report.files[_] == id
+    status := report_access_status(report.id)
 }
 
 webhook_access_status(id) = status {
     webhook := entity.try_find_by_id("WalletWebhook", id, wallet)
-    party := webhook.wallet.party
+    party_id := webhook.wallet.party
     identity_id := webhook.wallet.identity
-    userorg := user.org_by_party(party.id)
+    userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
@@ -347,12 +343,12 @@ webhook_access_status(id) = status {
     status := {"roles": roles}
 }
 
-try_get_wallet_grant() = grant {
+wallet_grants[grant] {
     grant := grants[_]
     grant.wallet
 }
 
-try_get_destination_grant() = grant {
+destination_grants[grant] {
     grant := grants[_]
     grant.destination
 }

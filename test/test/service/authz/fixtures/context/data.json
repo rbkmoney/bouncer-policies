@@ -426,6 +426,12 @@
         }
     },
 
+    "op_wapi_empty": {
+        "wapi": {
+            "op": {}
+        }
+    },
+
     "op_capi_get_customer_events": {
         "capi": {
             "op": {
@@ -1329,6 +1335,109 @@
         "requester": {
             "ip": "fd12:3456:789a:1::42"
         }
-    }
+    },
 
+    "wallet_pool_with_identity": {
+        "wallet": [
+            {
+                "id" : "IdentityId",
+                "type" : "Identity",
+                "wallet" : {
+                    "party" : "PARTY"
+                }
+            }
+        ]
+    },
+
+    "wallet_pool_with_wallet": {
+        "wallet": [
+            {
+                "id" : "WalletId",
+                "type" : "Wallet",
+                "wallet" : {
+                    "party" : "PARTY"
+                }
+            }
+        ]
+    },
+
+    "wallet_pool_with_destination": {
+        "wallet": [
+            {
+                "id" : "DestinationId",
+                "type" : "Destination",
+                "wallet" : {
+                    "party" : "PARTY"
+                }
+            }
+        ]
+    },
+
+    "wallet_pool_with_withdrawal": {
+        "wallet": [
+            {
+                "id" : "WithdrawalId",
+                "type" : "Withdrawal",
+                "wallet" : {
+                    "party" : "PARTY",
+                    "wallet" : "WalletId"
+                }
+            }
+        ]
+    },
+
+    "wallet_pool_with_w2w_transfer": {
+        "wallet": [
+            {
+                "id" : "W2WTransferId",
+                "type" : "W2WTransfer",
+                "wallet" : {
+                    "party" : "PARTY",
+                    "wallet" : "WalletId"
+                }
+            }
+        ]
+    },
+
+    "wallet_pool_with_webhook": {
+        "wallet": [
+            {
+                "id" : "WebhookId",
+                "type" : "WalletWebhook",
+                "wallet" : {
+                    "party" : "PARTY",
+                    "identity" : "IdentityId"
+                }
+            }
+        ]
+    },
+
+    "wallet_pool_with_report": {
+        "wallet": [
+            {
+                "id" : "ReportId",
+                "type" : "WalletReport",
+                "wallet" : {
+                    "party" : "PARTY",
+                    "identity" : "IdentityId",
+                    "report" : {
+                        "files" : ["FileId"]
+                    }
+                }
+            }
+        ]
+    },
+
+    "wallet_pool_with_file": {
+        "wallet": [
+            {
+                "id" : "FileId",
+                "type" : "WalletReportFile",
+                "wallet" : {
+                    "party" : "PARTY",
+                    "identity" : "IdentityId"
+                }
+            }
+        ]
+    }
 }

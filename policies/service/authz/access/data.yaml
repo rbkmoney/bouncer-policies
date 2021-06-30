@@ -244,7 +244,7 @@ api:
         - "createOrg"
         - "joinOrg"
         - "listOrgMembership"
-        
+
   ClaimManagement:
     mandatory:
       claim:
@@ -257,16 +257,13 @@ api:
       operations:
         - "getClaimByID"
         - "searchClaims"
-        
+
   WalletAPI:
     mandatory:
       identity:
         operations:
           - 'CreateReport'
           - 'CreateWebhook'
-          - 'CreateP2PTransferTemplate'
-          - 'CreateP2PTransfer'
-          - 'QuoteP2PTransfer'
           - 'CreateWallet'
           - 'CreateDestination'
 
@@ -276,6 +273,8 @@ api:
           - 'GetIdentityChallenge'
           - 'PollIdentityChallengeEvents'
           - 'GetIdentityChallengeEvent'
+          - 'GetWebhooks'
+          - 'GetReports'
 
       wallet:
         operations:
@@ -308,14 +307,12 @@ api:
 
       webhook:
         operations:
-          - 'GetWebhooks'
           - 'GetWebhookByID'
           - 'DeleteWebhookByID'
 
       report:
         operations:
           - 'GetReport'
-          - 'GetReports'
 
       file:
         operations:
@@ -324,6 +321,32 @@ api:
       party:
         operations:
           - 'CreateIdentity'
+          - 'ListIdentities'
+
+    discretionary:
+      identity:
+        operations:
+          - 'ListWallets'
+          - 'ListDestinations'
+          - 'ListWithdrawals'
+          - 'ListDeposits'
+          - 'ListDepositReverts'
+          - 'ListDepositAdjustments'
+
+      destination:
+        operations:
+          - 'ListWithdrawals'
+
+      wallet:
+        operations:
+          - 'ListWithdrawals'
+          - 'ListDeposits'
+          - 'ListDepositReverts'
+          - 'ListDepositAdjustments'
+
+      withdrawal:
+        operations:
+          - 'ListWithdrawals'
 
     universal:
       operations:
@@ -337,7 +360,6 @@ api:
       - 'ListProviderIdentityLevels'
       - 'GetProviderIdentityLevel'
 
-      - 'ListIdentities'
       - 'ListWallets'
       - 'ListDestinations'
       - 'ListWithdrawals'

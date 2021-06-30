@@ -76,6 +76,32 @@ test_list_deposit_adjustments_allowed {
     discretionary_op_with_common_cases("ListDepositAdjustments")
 }
 
+test_create_identity_with_invalid_auth_method_forbidden {
+    util.is_forbidden with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.user_owner,
+        context.api_key_token_valid,
+        context.op_wapi_empty
+    ]) with input.wapi.op as {
+        "id" : "CreateIdentity",
+        "party" : "PARTY"
+    }
+}
+
+test_create_identity_by_owner_allowed {
+    util.is_allowed with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.user_owner,
+        context.session_token_valid,
+        context.op_wapi_empty
+    ]) with input.wapi.op as {
+        "id" : "CreateIdentity",
+        "party" : "PARTY"
+    }
+}
+
 test_create_identity_allowed {
     util.is_allowed with input as wapi_public_operation_session_token_ctx with input.wapi.op as {
         "id" : "CreateIdentity",
@@ -347,4 +373,23 @@ test_download_file_allowed {
         context.wallet_pool_with_report.wallet,
         context.wallet_pool_with_file.wallet
     ])
+}
+
+test_create_w2w_transfer_with_wallet_grant_allowed {
+    util.is_allowed with input as wapi_public_operation_session_token_ctx
+        with input.wapi.op as {
+            "id" : "CreateW2WTransfer",
+            "wallet" : "WalletId"
+        }
+        with input.wapi.grants as context.wapi_wallet_grant.wapi.grants
+        with input.wallet as context.wallet_pool_with_another_wallet.wallet
+}
+
+test_get_destination_with_destination_grant_allowed {
+    util.is_allowed with input as wapi_public_operation_session_token_ctx
+        with input.wapi.op as {
+            "id" : "GetDestination",
+            "destination" : "DestinationId"
+        }
+        with input.wapi.grants as context.wapi_destination_grant.wapi.grants
 }

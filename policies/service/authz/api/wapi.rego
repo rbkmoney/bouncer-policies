@@ -202,10 +202,6 @@ identity_access_status(id) = status {
     status := {"roles": roles}
 }
 
-user_role_has_identity_access(identity_id, role) {
-    role.scope.identity
-    identity_id == role.scope.identity.id
-}
 user_role_has_identity_access(_, role) {
     user_role_has_party_access(role)
 }
@@ -220,9 +216,9 @@ wallet_grant_access_status(id, grant, body) = status {
 }
 
 wallet_access_status(id) = status {
-    wallet_grants[_]
-    wallet_entity := entity.try_find_by_id("Wallet", op.wallet, wallet)
-    status := wallet_grant_access_status(op.wallet, op.wallet_grant, wallet_entity.wallet.body)
+    grant := wallet_grants[_]
+    wallet_entity := entity.try_find_by_id("Wallet", id, wallet)
+    status := wallet_grant_access_status(id, grant, wallet_entity.wallet.body)
 } else = status {
     wallet_entity := entity.try_find_by_id("Wallet", id, wallet)
     party_id := wallet_entity.wallet.party
@@ -236,10 +232,6 @@ wallet_access_status(id) = status {
     status := {"roles": roles}
 }
 
-user_role_has_wallet_access(wallet_id, role) {
-    role.scope.wallet
-    wallet_id == role.scope.wallet.id
-}
 user_role_has_wallet_access(_, role) {
     user_role_has_party_access(role)
 }
@@ -257,9 +249,8 @@ destination_grant_access_status(id, grant) = status {
 }
 
 destination_access_status(id) = status {
-    destination_grants[_]
-    destination_entity := entity.try_find_by_id("Destination", op.destination, wallet)
-    status := destination_grant_access_status(op.destination, op.destination_grant)
+    grant := destination_grants[_]
+    status := destination_grant_access_status(id, grant)
 } else = status {
     destination := entity.try_find_by_id("Destination", id, wallet)
     party_id := destination.wallet.party
@@ -273,10 +264,6 @@ destination_access_status(id) = status {
     status := {"roles": roles}
 }
 
-user_role_has_destination_access(destination_id, role) {
-    role.scope.destination
-    destination_id == role.scope.destination.id
-}
 user_role_has_destination_access(_, role) {
     user_role_has_party_access(role)
 }

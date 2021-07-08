@@ -51,6 +51,10 @@ permissions:
           - "GetCountries"
           - "GetCountryByID"
 
+          # Trade blocs
+          - "GetTradeBlocs"
+          - "GetTradeBlocByID"
+
           # Customers
           - "CreateCustomer"
           - "GetCustomerById"
@@ -199,6 +203,10 @@ permissions:
           # Countries
           - "GetCountries"
           - "GetCountryByID"
+
+          # Trade blocs
+          - "GetTradeBlocs"
+          - "GetTradeBlocByID"
 
           # Customers
           - "CreateCustomer"

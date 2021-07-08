@@ -67,7 +67,7 @@ test_token_w_empty_id_blacklisted {
     result := api.assertions with input as util.deepmerge([
         context.env_default,
         context.requester_default,
-        context.session_token_empty_id,
+        context.session_token_id,
         context.op_capi_create_invoice
     ])
     result.forbidden[_].code == "auth_token_blacklisted"

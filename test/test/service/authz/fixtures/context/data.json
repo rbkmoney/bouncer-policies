@@ -695,11 +695,11 @@
         }
     },
 
-    "session_token_empty_id": {
+    "session_token_id": {
         "auth": {
             "method": "SessionToken",
             "expiration": "2021-01-01T00:00:00Z",
-            "token": {"id": ""}
+            "token": {"id": "d48e07ec-4899-4338-965b-98752397f2c4"}
         }
     },
 

@@ -6,4 +6,5 @@ description: >
   are we talking about. Though for the foreseeable future, we consider only
   JWTs where JWT's identifier is the value of the 'jti' claim.
 entries:
+  - ""
   - "d48e07ec-4899-4338-965b-98752397f2c4"

@@ -245,12 +245,6 @@ roles:
           - "GetCurrentBalancesGroupByShop"
       WalletAPI:
         operations:
-          - 'ListProviders'
-          - 'GetProvider'
-          - 'ListProviderIdentityClasses'
-          - 'GetProviderIdentityClass'
-          - 'ListProviderIdentityLevels'
-          - 'GetProviderIdentityLevel'
           - 'ListIdentities'
           - 'GetIdentity'
           - 'CreateIdentity'
@@ -290,5 +284,3 @@ roles:
           - 'GetReport'
           - 'GetReports'
           - 'DownloadFile'
-          - 'GetResidence'
-          - 'GetCurrency'

@@ -345,7 +345,10 @@ test_get_webhook_by_id_allowed {
         "id" : "GetWebhookByID",
         "webhook" : "WebhookId"
     }
-    with input.wallet as context.wallet_pool_with_webhook.wallet
+    with input.wallet as util.concat([
+        context.wallet_pool_with_identity.wallet,
+        context.wallet_pool_with_webhook.wallet
+    ])
 }
 
 test_delete_webhook_by_id_allowed {
@@ -353,7 +356,10 @@ test_delete_webhook_by_id_allowed {
         "id" : "DeleteWebhookByID",
         "webhook" : "WebhookId"
     }
-    with input.wallet as context.wallet_pool_with_webhook.wallet
+    with input.wallet as util.concat([
+        context.wallet_pool_with_identity.wallet,
+        context.wallet_pool_with_webhook.wallet
+    ])
 }
 
 test_get_report_allowed {
@@ -361,17 +367,9 @@ test_get_report_allowed {
         "id" : "GetReport",
         "report" : "ReportId"
     }
-    with input.wallet as context.wallet_pool_with_report.wallet
-}
-
-test_download_file_allowed {
-    util.is_allowed with input as wapi_public_operation_session_token_ctx with input.wapi.op as {
-        "id" : "DownloadFile",
-        "file" : "FileId"
-    }
     with input.wallet as util.concat([
-        context.wallet_pool_with_report.wallet,
-        context.wallet_pool_with_file.wallet
+        context.wallet_pool_with_identity.wallet,
+        context.wallet_pool_with_report.wallet
     ])
 }
 

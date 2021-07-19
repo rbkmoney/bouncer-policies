@@ -1342,9 +1342,7 @@
             {
                 "id" : "IdentityId",
                 "type" : "Identity",
-                "wallet" : {
-                    "party" : "PARTY"
-                }
+                "party" : "PARTY"
             }
         ]
     },
@@ -1354,9 +1352,7 @@
             {
                 "id" : "WalletId",
                 "type" : "Wallet",
-                "wallet" : {
-                    "party" : "PARTY"
-                }
+                "party" : "PARTY"
             }
         ]
     },
@@ -1366,9 +1362,7 @@
             {
                 "id" : "DestinationId",
                 "type" : "Destination",
-                "wallet" : {
-                    "party" : "PARTY"
-                }
+                "party" : "PARTY"
             }
         ]
     },
@@ -1378,8 +1372,8 @@
             {
                 "id" : "WithdrawalId",
                 "type" : "Withdrawal",
+                "party" : "PARTY",
                 "wallet" : {
-                    "party" : "PARTY",
                     "wallet" : "WalletId"
                 }
             }
@@ -1391,8 +1385,8 @@
             {
                 "id" : "W2WTransferId",
                 "type" : "W2WTransfer",
+                "party" : "PARTY",
                 "wallet" : {
-                    "party" : "PARTY",
                     "wallet" : "WalletId"
                 }
             }
@@ -1405,7 +1399,6 @@
                 "id" : "WebhookId",
                 "type" : "WalletWebhook",
                 "wallet" : {
-                    "party" : "PARTY",
                     "identity" : "IdentityId"
                 }
             }
@@ -1418,7 +1411,6 @@
                 "id" : "ReportId",
                 "type" : "WalletReport",
                 "wallet" : {
-                    "party" : "PARTY",
                     "identity" : "IdentityId",
                     "report" : {
                         "files" : ["FileId"]
@@ -1433,8 +1425,8 @@
             {
                 "id" : "FileId",
                 "type" : "WalletReportFile",
+                "party" : "PARTY",
                 "wallet" : {
-                    "party" : "PARTY",
                     "identity" : "IdentityId"
                 }
             }
@@ -1459,8 +1451,8 @@
             {
                 "id" : "WalletId",
                 "type" : "Wallet",
+                "party" : "PARTY2",
                 "wallet" : {
-                    "party" : "PARTY2",
                     "body" : {"amount": "123", "currency": "RUB"}
                 }
             }

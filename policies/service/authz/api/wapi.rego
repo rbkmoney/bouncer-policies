@@ -167,11 +167,7 @@ entity_access_status["w2w_transfer"] = status {
 entity_access_status["report"] = status {
     status := report_access_status(op.report)
 }
-entity_access_status["file"] = status {
-    status := file_access_status(op.file)
-}
 entity_access_status["webhook"] = status {
-    webhook := entity.try_find_by_id("WalletWebhook", op.webhook, wallet)
     status := webhook_access_status(op.webhook)
 }
 
@@ -190,144 +186,98 @@ party_access_status(id) = status {
 }
 
 identity_access_status(id) = status {
-    identity := entity.try_find_by_id("Identity", id, wallet)
-    party_id := identity.wallet.party
+    identities := entities["Identity"]
+    party_id := identities[id].party
     userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
-            user_role_has_identity_access(id, role)
+            user_role_has_party_access(role)
     }
     roles[_]
     status := {"roles": roles}
 }
 
-user_role_has_identity_access(_, role) {
-    user_role_has_party_access(role)
-}
-
-wallet_grant_access_status(id, grant, body) = status {
+wallet_access_status(id) = status {
+    wallet_entities := entities["Wallet"]
+    grant := wallet_grants[_]
     grant.wallet == id
-    grant.body == body
+    grant.body == wallet_entities[id].wallet.body
     exp := time.parse_rfc3339_ns(grant.expires_on)
     now := time.parse_rfc3339_ns(input.env.now)
     now < exp
     status := {"grant": true}
-}
-
-wallet_access_status(id) = status {
-    grant := wallet_grants[_]
-    wallet_entity := entity.try_find_by_id("Wallet", id, wallet)
-    status := wallet_grant_access_status(id, grant, wallet_entity.wallet.body)
 } else = status {
-    wallet_entity := entity.try_find_by_id("Wallet", id, wallet)
-    party_id := wallet_entity.wallet.party
+    wallet_entities := entities["Wallet"]
+    party_id := wallet_entities[id].party
     userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
-            user_role_has_wallet_access(id, role)
+            user_role_has_party_access(role)
     }
     roles[_]
     status := {"roles": roles}
-}
-
-user_role_has_wallet_access(_, role) {
-    user_role_has_party_access(role)
 }
 
 user_role_has_party_access(role) {
     not role.scope
 }
 
-destination_grant_access_status(id, grant) = status {
+destination_access_status(id) = status {
+    grant := destination_grants[_]
     grant.destination == id
     exp := time.parse_rfc3339_ns(grant.expires_on)
     now := time.parse_rfc3339_ns(input.env.now)
     now < exp
     status := {"grant": true}
-}
-
-destination_access_status(id) = status {
-    grant := destination_grants[_]
-    status := destination_grant_access_status(id, grant)
 } else = status {
-    destination := entity.try_find_by_id("Destination", id, wallet)
-    party_id := destination.wallet.party
+    destinations := entities["Destination"]
+    party_id := destinations[id].party
     userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
-            user_role_has_destination_access(id, role)
+            user_role_has_party_access(role)
     }
     roles[_]
     status := {"roles": roles}
 }
 
-user_role_has_destination_access(_, role) {
-    user_role_has_party_access(role)
-}
-
 withdrawal_access_status(id) = status {
-    withdrawal := entity.try_find_by_id("Withdrawal", id, wallet)
-    party_id := withdrawal.wallet.party
-    wallet_id := withdrawal.wallet.wallet
+    withdrawals := entities["Withdrawal"]
+    party_id := withdrawals[id].party
     userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
-            user_role_has_wallet_access(wallet_id, role)
+            user_role_has_party_access(role)
     }
     roles[_]
     status := {"roles": roles}
 }
 
 w2w_transfer_access_status(id) = status {
-    w2w_transfer := entity.try_find_by_id("W2WTransfer", id, wallet)
-    party_id := w2w_transfer.wallet.party
-    wallet_id := w2w_transfer.wallet.wallet
+    w2w_transfers := entities["W2WTransfer"]
+    party_id := w2w_transfers[id].party
     userorg := user.org_by_party(party_id)
     roles := {
         role |
             role := userorg.roles[_]
-            user_role_has_wallet_access(wallet_id, role)
+            user_role_has_party_access(role)
     }
     roles[_]
     status := {"roles": roles}
 }
 
 report_access_status(id) = status {
-    report := entity.try_find_by_id("WalletReport", id, wallet)
-    party_id := report.wallet.party
-    identity_id := report.wallet.identity
-    userorg := user.org_by_party(party_id)
-    roles := {
-        role |
-            role := userorg.roles[_]
-            user_role_has_identity_access(identity_id, role)
-    }
-    roles[_]
-    status := {"roles": roles}
-}
-
-file_access_status(id) = status {
-    report := entity.try_find_first("WalletReport", wallet)
-    report.wallet.report.files[_] == id
-    status := report_access_status(report.id)
+    reports := entities["WalletReport"]
+    status := identity_access_status(reports[id].wallet.identity)
 }
 
 webhook_access_status(id) = status {
-    webhook := entity.try_find_by_id("WalletWebhook", id, wallet)
-    party_id := webhook.wallet.party
-    identity_id := webhook.wallet.identity
-    userorg := user.org_by_party(party_id)
-    roles := {
-        role |
-            role := userorg.roles[_]
-            user_role_has_identity_access(identity_id, role)
-    }
-    roles[_]
-    status := {"roles": roles}
+    webhooks := entities["WalletWebhook"]
+    status := identity_access_status(webhooks[id].wallet.identity)
 }
 
 wallet_grants[grant] {
@@ -338,4 +288,13 @@ wallet_grants[grant] {
 destination_grants[grant] {
     grant := grants[_]
     grant.destination
+}
+
+entities[type] = out {
+    type := wallet[_].type
+    out := { id: entity |
+        entity := wallet[_]
+        id := entity.id
+        entity.type == type
+    }
 }

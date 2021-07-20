@@ -362,3 +362,4 @@ api:
       - 'ListDeposits'
       - 'ListDepositReverts'
       - 'ListDepositAdjustments'
+      - 'DownloadFile'

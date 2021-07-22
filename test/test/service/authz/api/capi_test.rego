@@ -143,6 +143,14 @@ test_capi_allowed_by_session_token_2 {
     count(result.allowed) == 1
 }
 
+test_get_countries_allowed_by_session_token {
+    util.is_allowed with input as capi_public_operation_session_token_ctx with input.capi.op as {"id" : "GetCountries"}
+}
+
+test_get_tradeblocs_allowed_by_session_token {
+    util.is_allowed with input as capi_public_operation_session_token_ctx with input.capi.op as {"id" : "GetTradeBlocs"}
+}
+
 test_capi_allowed_by_session_token_3 {
     result := api.assertions with input as capi_public_operation_session_token_ctx with input.capi.op as {"id" : "GetCategoryByRef"}
     not result.forbidden
@@ -492,6 +500,14 @@ test_capi_allowed_by_api_token_2 {
     result := api.assertions with input as capi_public_operation_api_token_ctx with input.capi.op as {"id" : "GetCategories"}
     not result.forbidden
     count(result.allowed) == 1
+}
+
+test_get_countries_allowed_by_api_token {
+    util.is_allowed with input as capi_public_operation_api_token_ctx with input.capi.op as {"id" : "GetCountries"}
+}
+
+test_get_tradeblocs_allowed_by_api_token {
+    util.is_allowed with input as capi_public_operation_api_token_ctx with input.capi.op as {"id" : "GetTradeBlocs"}
 }
 
 test_capi_allowed_by_api_token_3 {

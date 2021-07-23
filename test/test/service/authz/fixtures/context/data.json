@@ -185,6 +185,21 @@
         }
     },
 
+    "op_capi_create_payment_resource_2": {
+        "capi": {
+            "op": {
+                "id": "CreatePaymentResource",
+                "party": {"id": "ANOTHER_PARTY"}
+            }
+        }
+    },
+
+    "op_capi_tokens_replacement_ip": {
+        "tokens": {
+            "replacement_ip": "1.1.1.1"
+        }
+    },
+
     "op_capi_create_webhook": {
         "capi": {
             "op": {
@@ -829,6 +844,20 @@
                 {
                     "customer": { "id": "CUSTOMER" },
                     "party": { "id": "PARTY" }
+                }
+            ]
+        }
+    },
+
+    "customer_access_token_valid_2": {
+        "auth": {
+            "method": "CustomerAccessToken",
+            "expiration": "2021-01-01T00:00:00Z",
+            "token": { "id": "TÓKEN" },
+            "scope": [
+                {
+                    "customer": { "id": "CUSTOMER" },
+                    "party": { "id": "ANOTHER_PARTY"}
                 }
             ]
         }

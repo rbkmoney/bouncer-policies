@@ -3,6 +3,7 @@ package test.service.authz.api.capi
 import data.service.authz.api
 import data.test.service.authz.util
 import data.test.service.authz.fixtures.context
+import data.test.service.authz.fixtures.restrictions
 
 test_get_refunds_allowed {
     result := api.assertions with input as util.deepmerge([
@@ -540,4 +541,35 @@ test_capi_allowed_by_api_token_10 {
     result := api.assertions with input as capi_public_operation_api_token_ctx with input.capi.op as {"id" : "GetScheduleByRef"}
     not result.forbidden
     count(result.allowed) == 1
+}
+
+
+test_allowed_without_ip_replacement {
+  util.is_allowed with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.customer_access_token_valid,
+        context.op_capi_create_payment_resource
+    ])
+}
+
+test_allowed_ip_replacement {
+    util.is_allowed with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.op_capi_create_payment_resource,
+        context.customer_access_token_valid,
+        context.op_capi_tokens_replacement_ip
+    ])
+}
+
+test_restricted_ip_replacement {
+    rs := restrictions.op_capi_restrictions_ip_replacement_forbidden
+    util.is_restricted_with(rs) with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.op_capi_create_payment_resource_2,
+        context.customer_access_token_valid_2,
+        context.op_capi_tokens_replacement_ip
+    ])
 }

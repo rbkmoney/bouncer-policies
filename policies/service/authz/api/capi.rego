@@ -6,12 +6,14 @@ import data.service.authz.api.capi.invoice_template_access_token
 import data.service.authz.api.user
 import data.service.authz.access
 import data.service.authz.methods
+import data.service.authz.whitelists
 
 import input.capi.op
 import input.payment_processing
 import input.payouts
 import input.webhooks
 import input.reports
+import input.tokens
 
 api_name := "CommonAPI"
 access_matrix := access.api[api_name]
@@ -40,6 +42,18 @@ forbidden[why] {
 
 forbidden[why] {
     access_violations[why]
+}
+
+# Restrictions
+
+restrictions[restriction] {
+    trace(sprintf("Tokens: %v", [tokens]))
+    ip_replacement_forbidden
+    restriction := {
+        "capi": {
+            "ip_replacement_forbidden": true
+        }
+    }
 }
 
 # Set of assertions which tell why operation under the input context is allowed.
@@ -315,6 +329,11 @@ webhook_access_status(id) = status {
     webhook := webhooks.webhook
     webhook.id == id
     status := party_access_status(webhook.party.id)
+}
+
+ip_replacement_forbidden {
+    tokens.replacement_ip
+    op.party.id != whitelists.ip_replacement_party_ids.entries[_]
 }
 
 allowed_operation_for_auth_method {

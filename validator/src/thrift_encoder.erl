@@ -61,4 +61,6 @@ to_thrift_value(i32, V) ->
 to_thrift_value(i16, V) ->
     V;
 to_thrift_value(byte, V) ->
-    V.
+    V;
+to_thrift_value(bool, Bool) when is_boolean(Bool) ->
+    Bool.

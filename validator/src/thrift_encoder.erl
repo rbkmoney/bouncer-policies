@@ -6,8 +6,7 @@
 
 %%
 
--spec encode(format(), jsx:json_term(), validator:struct()) ->
-    {ok, _Content} | {error, _}.
+-spec encode(format(), jsx:json_term(), validator:struct()) -> {ok, _Content} | {error, _}.
 encode(thrift, Mapping, Struct) ->
     Codec = thrift_strict_binary_codec:new(),
     try to_thrift_value(Struct, Mapping) of
@@ -18,8 +17,9 @@ encode(thrift, Mapping, Struct) ->
                 {error, _} = Error ->
                     Error
             end
-    catch throw:{?MODULE, Reason} ->
-        {error, Reason}
+    catch
+        throw:{?MODULE, Reason} ->
+            {error, Reason}
     end.
 
 to_thrift_struct(StructDef, Map, Acc) ->

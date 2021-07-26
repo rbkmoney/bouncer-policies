@@ -47,7 +47,6 @@ forbidden[why] {
 # Restrictions
 
 restrictions[restriction] {
-    trace(sprintf("Tokens: %v", [tokens]))
     ip_replacement_forbidden
     restriction := {
         "capi": {

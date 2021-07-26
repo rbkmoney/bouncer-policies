@@ -211,7 +211,6 @@ restrictions[what] {
 restrictions[what] {
     input.capi
     rstns := capi.restrictions[_]
-    trace(sprintf("Restrictions: %v", [rstns]))
     what := {
         "type": "capi",
         "restrictions": rstns,

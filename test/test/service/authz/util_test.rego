@@ -1,5 +1,7 @@
 package test.service.authz.util
 
+import data.service.authz.util
+
 test_deepmerge_empty {
     deepmerge([]) == {}
 }
@@ -30,4 +32,16 @@ test_deepmerge_4 {
         {"a": 3, "c": {"sub": []}},
         {"b": 4, "c": {"mlem": "blep", "sub": null}}
     ]) == {"a": 3, "b": 4, "c": {"sub": null, "mlem": "blep"}}
+}
+
+test_member_of_true {
+    util.member_of(1, [1])
+}
+
+test_member_of_false {
+    false == util.member_of(1, [2])
+}
+
+test_member_of_empty_list {
+    false == util.member_of(1, [])
 }

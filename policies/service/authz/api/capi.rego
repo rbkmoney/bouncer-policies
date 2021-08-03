@@ -47,7 +47,8 @@ forbidden[why] {
 # Restrictions
 
 restrictions[restriction] {
-    ip_replacement_forbidden
+    tokens.replacement_ip
+    not ip_replacement_allowed
     restriction := {
         "capi": {
             "ip_replacement_forbidden": true
@@ -330,9 +331,8 @@ webhook_access_status(id) = status {
     status := party_access_status(webhook.party.id)
 }
 
-ip_replacement_forbidden {
-    tokens.replacement_ip
-    op.party.id != whitelists.ip_replacement_party_ids.entries[_]
+ip_replacement_allowed {
+    op.party.id = whitelists.ip_replacement_party_ids.entries[_]
 }
 
 allowed_operation_for_auth_method {

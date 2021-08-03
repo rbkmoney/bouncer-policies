@@ -579,6 +579,18 @@ test_allowed_ip_replacement {
     ])
 }
 
+test_restricted_ip_replacement_with_empty_dataset {
+    util.is_restricted_with(restrictions.op_capi_restrictions_ip_replacement_forbidden)
+      with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.op_capi_create_payment_resource_2,
+        context.customer_access_token_valid_2,
+        context.op_capi_tokens_replacement_ip
+      ])
+      with data.service.authz.whitelists.ip_replacement_party_ids.entries as []
+}
+
 test_restricted_ip_replacement {
     rs := restrictions.op_capi_restrictions_ip_replacement_forbidden
     util.is_restricted_with(rs) with input as util.deepmerge([

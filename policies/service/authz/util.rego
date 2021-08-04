@@ -7,5 +7,5 @@ member_of(element, list) = false {
 member_of(element, list) = result {
   some result
   count(list) > 0
-  result = list[_] == element
+  result := list[_] == element
 }

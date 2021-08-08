@@ -74,5 +74,5 @@ RUN_TEST_COVERAGE = $(DOCKER) run --rm $(TEST_VOLUMES) $(TEST_IMAGE) test --cove
 test_coverage: manifest
 	python3 test_coverage.py "$(RUN_TEST_COVERAGE)" $(TEST_COVERAGE_THRESHOLD)
 
-repl:
+repl: manifest
 	$(call which,docker) run --rm -it -v $$PWD:$$PWD --workdir $$PWD $(BASE_IMAGE_NAME):$(BASE_IMAGE_TAG) run --watch --bundle policies --bundle test

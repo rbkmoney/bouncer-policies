@@ -2,4 +2,4 @@ title: IP Replacement Lookup Whitelist
 description: >
     Parties (identified by ids) allowed to replace client IP with provided one
     Useful for parties that provide custom payment interface over our API
-entries: [ "PARTY" ]
+entries: [ "PARTY_ALLOWED_IP_REPLACEMENT" ]

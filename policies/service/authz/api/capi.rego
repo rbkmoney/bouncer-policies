@@ -13,7 +13,6 @@ import input.payment_processing
 import input.payouts
 import input.webhooks
 import input.reports
-import input.tokens
 
 api_name := "CommonAPI"
 access_matrix := access.api[api_name]
@@ -47,7 +46,7 @@ forbidden[why] {
 # Restrictions
 
 restrictions[restriction] {
-    tokens.replacement_ip
+    op.client_info.ip
     not ip_replacement_allowed
     restriction := {
         "capi": {

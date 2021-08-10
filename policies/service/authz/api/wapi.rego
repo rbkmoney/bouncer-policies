@@ -1,7 +1,6 @@
 package service.authz.api.wapi
 
 import data.service.authz.api.user
-import data.service.authz.api.entity
 import data.service.authz.access
 
 import input.wapi.op
@@ -186,38 +185,22 @@ party_access_status(id) = status {
 }
 
 identity_access_status(id) = status {
-    identities := entities["Identity"]
-    party_id := identities[id].party
-    userorg := user.org_by_party(party_id)
-    roles := {
-        role |
-            role := userorg.roles[_]
-            user_role_has_party_access(role)
-    }
-    roles[_]
-    status := {"roles": roles}
+    identity := entities["Identity"][id]
+    status := party_access_status(identity.party)
 }
 
 wallet_access_status(id) = status {
-    wallet_entities := entities["Wallet"]
+    wallet_entity := entities["Wallet"][id]
     grant := wallet_grants[_]
     grant.wallet == id
-    grant.body == wallet_entities[id].wallet.body
+    grant.body >= wallet_entity.wallet.body
     exp := time.parse_rfc3339_ns(grant.expires_on)
     now := time.parse_rfc3339_ns(input.env.now)
     now < exp
     status := {"grant": true}
 } else = status {
-    wallet_entities := entities["Wallet"]
-    party_id := wallet_entities[id].party
-    userorg := user.org_by_party(party_id)
-    roles := {
-        role |
-            role := userorg.roles[_]
-            user_role_has_party_access(role)
-    }
-    roles[_]
-    status := {"roles": roles}
+    wallet_entity := entities["Wallet"][id]
+    status := party_access_status(wallet_entity.party)
 }
 
 user_role_has_party_access(role) {
@@ -232,52 +215,29 @@ destination_access_status(id) = status {
     now < exp
     status := {"grant": true}
 } else = status {
-    destinations := entities["Destination"]
-    party_id := destinations[id].party
-    userorg := user.org_by_party(party_id)
-    roles := {
-        role |
-            role := userorg.roles[_]
-            user_role_has_party_access(role)
-    }
-    roles[_]
-    status := {"roles": roles}
+    destination := entities["Destination"][id]
+    status := party_access_status(destination.party)
 }
 
 withdrawal_access_status(id) = status {
-    withdrawals := entities["Withdrawal"]
-    party_id := withdrawals[id].party
-    userorg := user.org_by_party(party_id)
-    roles := {
-        role |
-            role := userorg.roles[_]
-            user_role_has_party_access(role)
-    }
-    roles[_]
-    status := {"roles": roles}
+    withdrawal := entities["Withdrawal"][id]
+    status := party_access_status(withdrawal.party)
 }
 
 w2w_transfer_access_status(id) = status {
-    w2w_transfers := entities["W2WTransfer"]
-    party_id := w2w_transfers[id].party
-    userorg := user.org_by_party(party_id)
-    roles := {
-        role |
-            role := userorg.roles[_]
-            user_role_has_party_access(role)
-    }
-    roles[_]
-    status := {"roles": roles}
+    transfer := entities["W2WTransfer"][id]
+    userorg := user.org_by_party(transfer.party)
+    status := party_access_status(transfer.party)
 }
 
 report_access_status(id) = status {
-    reports := entities["WalletReport"]
-    status := identity_access_status(reports[id].wallet.identity)
+    report := entities["WalletReport"][id]
+    status := identity_access_status(report.wallet.identity)
 }
 
 webhook_access_status(id) = status {
-    webhooks := entities["WalletWebhook"]
-    status := identity_access_status(webhooks[id].wallet.identity)
+    webhook := entities["WalletWebhook"][id]
+    status := identity_access_status(webhook.wallet.identity)
 }
 
 wallet_grants[grant] {

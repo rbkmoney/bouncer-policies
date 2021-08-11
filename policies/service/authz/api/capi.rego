@@ -1,8 +1,6 @@
 package service.authz.api.capi
 
-import data.service.authz.api.capi.invoice_access_token
-import data.service.authz.api.capi.customer_access_token
-import data.service.authz.api.capi.invoice_template_access_token
+import data.service.authz.api.capi
 import data.service.authz.api.user
 import data.service.authz.access
 import data.service.authz.methods
@@ -41,6 +39,11 @@ forbidden[why] {
 
 forbidden[why] {
     access_violations[why]
+}
+
+forbidden[why] {
+    input.payment_tool
+    capi.payment_tool.forbidden[why]
 }
 
 # Restrictions
@@ -82,17 +85,17 @@ auth_method_allowed[why] {
 
 auth_method_allowed[why] {
     input.auth.method == "InvoiceAccessToken"
-    invoice_access_token.allowed[why]
+    capi.invoice_access_token.allowed[why]
 }
 
 auth_method_allowed[why] {
     input.auth.method == "CustomerAccessToken"
-    customer_access_token.allowed[why]
+    capi.customer_access_token.allowed[why]
 }
 
 auth_method_allowed[why] {
     input.auth.method == "InvoiceTemplateAccessToken"
-    invoice_template_access_token.allowed[why]
+    capi.invoice_template_access_token.allowed[why]
 }
 
 ##

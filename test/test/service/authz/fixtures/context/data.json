@@ -552,6 +552,44 @@
         }
     },
 
+    "payment_tool_unlinked": {
+        "payment_tool": {
+            "expiration": "2021-01-01T00:00:00Z"
+        }
+     },
+
+    "payment_tool_expiration": {
+        "payment_tool": {
+            "expiration": "2020-01-01T00:00:00Z"
+        }
+     },
+
+    "payment_tool_shop": {
+        "payment_tool": {
+            "scope": {
+                "shop": { "id": "SHOP" },
+                "party": { "id": "PARTY" }
+            }
+        }
+     },
+
+    "payment_tool_shop2": {
+        "payment_tool": {
+            "scope": {
+                "shop": { "id": "SHOP2" },
+                "party": { "id": "PARTY" }
+            }
+        }
+     },
+
+    "payment_tool_invoice2": {
+        "payment_tool": {
+            "scope": {
+                "invoice": { "id": "INVOICE2" }
+            }
+        }
+     },
+
     "payproc_invoice": {
         "payment_processing": {
             "invoice": {
@@ -792,6 +830,7 @@
             "scope": [
                 {
                     "invoice": { "id": "INVOICE" },
+                    "shop": { "id": "SHOP" },
                     "party": { "id": "PARTY" }
                 }
             ]

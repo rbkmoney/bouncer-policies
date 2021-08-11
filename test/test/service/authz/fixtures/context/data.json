@@ -590,6 +590,14 @@
         }
      },
 
+    "payment_tool_customer2": {
+        "payment_tool": {
+            "scope": {
+                "customer": { "id": "CUSTOMER2" }
+            }
+        }
+     },
+
     "payproc_invoice": {
         "payment_processing": {
             "invoice": {

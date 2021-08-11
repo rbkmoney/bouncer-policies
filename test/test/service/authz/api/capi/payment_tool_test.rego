@@ -56,3 +56,15 @@ test_forbidden_payment_tool_invoice {
   ])
   result.forbidden[_].code == "payment_tool_forbidden"
 }
+
+test_forbidden_payment_tool_customer {
+    result := api.assertions with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.api_key_token_valid,
+        context.op_capi_create_binding,
+        context.payproc_customer,
+        context.payment_tool_customer2
+    ])
+    result.forbidden[_].code == "payment_tool_forbidden"
+}

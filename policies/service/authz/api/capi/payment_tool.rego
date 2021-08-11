@@ -16,44 +16,36 @@ forbidden[why] {
 
 forbidden[why] {
     op.id == "CreatePaymentResource"
-    payment_tool.scope.shop.id
-    not pass_shop_scope
+    payment_tool.scope[_]
+    not shop_matches_token_scope
     why := {
         "code": "payment_tool_forbidden",
-        "description": sprintf("Provider payment tool linked to shop: %s", [payment_tool.scope.shop.id])
+        "description": "Provider payment tool forbidden payment resource tokenization"
     }
 }
 
 forbidden[why] {
     op.id == "CreatePayment"
-    payment_tool.scope.invoice.id
-    not pass_invoice_operation
+    payment_tool.scope[_]
+    op.invoice.id != payment_tool.scope.invoice.id
     why := {
         "code": "payment_tool_forbidden",
-        "description": sprintf("Payment tool is linked to invoice: %s", [payment_tool.scope.invoice.id])
+        "description": "Payment resource forbidden this invoice"
     }
 }
 
 forbidden[why] {
     op.id == "CreateBinding"
-    payment_tool.scope.customer.id
-    not pass_customer_operation
+    payment_tool.scope[_]
+    op.customer.id != payment_tool.scope.customer.id
     why := {
         "code": "payment_tool_forbidden",
-        "description": sprintf("Payment tool is linked to customer: %s", [payment_tool.scope.customer.id])
+        "description": "Payment resource forbidden this customer"
     }
 }
 
-pass_shop_scope {
+shop_matches_token_scope {
     scope := input.auth.scope[_]
     scope.shop.id == payment_tool.scope.shop.id
     scope.party.id == payment_tool.scope.party.id
-}
-
-pass_invoice_operation {
-    op.invoice.id == payment_tool.scope.invoice.id
-}
-
-pass_customer_operation {
-    op.customer.id == payment_tool.scope.customer.id
 }

@@ -68,8 +68,8 @@ test: manifest
 		$(TEST_IMAGE) test $(TEST_BUNDLE_DIRS) \
 			--explain full \
 			--ignore input.json
-			
-test_%:
+
+run_%:
 	$(DOCKER) run --rm $(TEST_VOLUMES) \
 		$(TEST_IMAGE) test $(TEST_BUNDLE_DIRS) \
 			--explain full \

@@ -185,6 +185,25 @@
         }
     },
 
+    "op_capi_create_payment_resource_allow_ip": {
+        "capi": {
+            "op": {
+                "id": "CreatePaymentResource",
+                "party": {"id": "PARTY_ALLOWED_IP_REPLACEMENT"}
+            }
+        }
+    },
+
+    "op_capi_create_payment_resource_client_ip": {
+        "capi": {
+            "op": {
+                "client_info": {
+                    "ip": "1.1.1.1"
+                }
+            }
+        }
+    },
+
     "op_capi_create_webhook": {
         "capi": {
             "op": {
@@ -539,6 +558,52 @@
         }
     },
 
+    "payment_tool_unlinked": {
+        "payment_tool": {
+            "expiration": "2021-01-01T00:00:00Z"
+        }
+     },
+
+    "payment_tool_expiration": {
+        "payment_tool": {
+            "expiration": "2020-01-01T00:00:00Z"
+        }
+     },
+
+    "payment_tool_shop": {
+        "payment_tool": {
+            "scope": {
+                "shop": { "id": "SHOP" },
+                "party": { "id": "PARTY" }
+            }
+        }
+     },
+
+    "payment_tool_shop2": {
+        "payment_tool": {
+            "scope": {
+                "shop": { "id": "SHOP2" },
+                "party": { "id": "PARTY" }
+            }
+        }
+     },
+
+    "payment_tool_invoice2": {
+        "payment_tool": {
+            "scope": {
+                "invoice": { "id": "INVOICE2" }
+            }
+        }
+     },
+
+    "payment_tool_customer2": {
+        "payment_tool": {
+            "scope": {
+                "customer": { "id": "CUSTOMER2" }
+            }
+        }
+     },
+
     "payproc_invoice": {
         "payment_processing": {
             "invoice": {
@@ -779,6 +844,7 @@
             "scope": [
                 {
                     "invoice": { "id": "INVOICE" },
+                    "shop": { "id": "SHOP" },
                     "party": { "id": "PARTY" }
                 }
             ]
@@ -835,6 +901,20 @@
                 {
                     "customer": { "id": "CUSTOMER" },
                     "party": { "id": "PARTY" }
+                }
+            ]
+        }
+    },
+
+    "customer_access_token_valid_allow_ip": {
+        "auth": {
+            "method": "CustomerAccessToken",
+            "expiration": "2021-01-01T00:00:00Z",
+            "token": { "id": "TÓKEN" },
+            "scope": [
+                {
+                    "customer": { "id": "CUSTOMER" },
+                    "party": { "id": "PARTY_ALLOWED_IP_REPLACEMENT"}
                 }
             ]
         }

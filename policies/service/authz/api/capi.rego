@@ -1,11 +1,10 @@
 package service.authz.api.capi
 
-import data.service.authz.api.capi.invoice_access_token
-import data.service.authz.api.capi.customer_access_token
-import data.service.authz.api.capi.invoice_template_access_token
+import data.service.authz.api.capi
 import data.service.authz.api.user
 import data.service.authz.access
 import data.service.authz.methods
+import data.service.authz.whitelists
 
 import input.capi.op
 import input.payment_processing
@@ -42,6 +41,23 @@ forbidden[why] {
     access_violations[why]
 }
 
+forbidden[why] {
+    input.payment_tool
+    capi.payment_tool.forbidden[why]
+}
+
+# Restrictions
+
+restrictions[restriction] {
+    op.client_info.ip
+    not ip_replacement_allowed
+    restriction := {
+        "capi": {
+            "ip_replacement_forbidden": true
+        }
+    }
+}
+
 # Set of assertions which tell why operation under the input context is allowed.
 # Each element must be an object of the following form:
 # ```
@@ -69,17 +85,17 @@ auth_method_allowed[why] {
 
 auth_method_allowed[why] {
     input.auth.method == "InvoiceAccessToken"
-    invoice_access_token.allowed[why]
+    capi.invoice_access_token.allowed[why]
 }
 
 auth_method_allowed[why] {
     input.auth.method == "CustomerAccessToken"
-    customer_access_token.allowed[why]
+    capi.customer_access_token.allowed[why]
 }
 
 auth_method_allowed[why] {
     input.auth.method == "InvoiceTemplateAccessToken"
-    invoice_template_access_token.allowed[why]
+    capi.invoice_template_access_token.allowed[why]
 }
 
 ##
@@ -315,6 +331,10 @@ webhook_access_status(id) = status {
     webhook := webhooks.webhook
     webhook.id == id
     status := party_access_status(webhook.party.id)
+}
+
+ip_replacement_allowed {
+    whitelists.ip_replacement_party_ids.entries[_] == op.party.id
 }
 
 allowed_operation_for_auth_method {

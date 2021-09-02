@@ -30,7 +30,7 @@ $(SUBTARGETS): %/.git: %
 
 submodules: $(SUBTARGETS)
 
-.PHONY: manifest test
+.PHONY: manifest test repl
 
 VALIDATOR := $(CURDIR)/validator.escript
 INSTANCES := $(shell find test/test/service -type f -path '*/fixtures/*/*.json')
@@ -69,7 +69,19 @@ test: manifest
 			--explain full \
 			--ignore input.json
 
+run_%:
+	$(DOCKER) run --rm $(TEST_VOLUMES) \
+		$(TEST_IMAGE) test $(TEST_BUNDLE_DIRS) \
+			--explain full \
+			--ignore input.json \
+			-v \
+			--run $*
+
 RUN_TEST_COVERAGE = $(DOCKER) run --rm $(TEST_VOLUMES) $(TEST_IMAGE) test --coverage $(TEST_BUNDLE_DIRS)
 
 test_coverage: manifest
 	python3 test_coverage.py "$(RUN_TEST_COVERAGE)" $(TEST_COVERAGE_THRESHOLD)
+
+repl: manifest
+	$(DOCKER) run --rm -it -v $$PWD:$$PWD --workdir $$PWD $(TEST_IMAGE) run --watch --bundle policies --bundle test
+

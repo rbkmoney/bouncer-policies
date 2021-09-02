@@ -47,13 +47,14 @@ validate_json(Data) ->
             StructName = maps:get(type, Metadata, undefined),
             Struct = validate_struct(StructName),
             validate_instances(FilteredMapping, Struct)
-    catch error:badarg ->
-        abort(?INPUT_ERROR, "Input file contains invalid JSON")
+    catch
+        error:badarg ->
+            abort(?INPUT_ERROR, "Input file contains invalid JSON")
     end.
 
 validate_instances(Mapping, Struct) ->
     maps:fold(
-        fun (Name, Instance, Report = #{total := T, valid := V, errors := Es}) ->
+        fun(Name, Instance, Report = #{total := T, valid := V, errors := Es}) ->
             Report1 = Report#{total := T + 1},
             case thrift_encoder:encode(thrift, Instance, Struct) of
                 {ok, _Content} ->
@@ -99,9 +100,10 @@ abort(Code, Reason) ->
 
 -spec abort(integer(), string(), list()) -> no_return().
 abort(Code, Reason, Details) ->
-    Pre = case Code of
-        0 -> "[OK] ";
-        _ -> "[ERROR] "
-    end,
+    Pre =
+        case Code of
+            0 -> "[OK] ";
+            _ -> "[ERROR] "
+        end,
     io:format(standard_error, Pre ++ Reason ++ "~n", Details),
     erlang:halt(Code).

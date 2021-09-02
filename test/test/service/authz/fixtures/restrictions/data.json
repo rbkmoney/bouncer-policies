@@ -28,6 +28,12 @@
                 ]
             }
         }
+    },
+
+    "op_capi_restrictions_ip_replacement_forbidden": {
+        "capi": {
+            "ip_replacement_forbidden": true
+        }
     }
 
 }

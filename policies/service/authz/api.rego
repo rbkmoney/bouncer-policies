@@ -137,6 +137,10 @@ known_auth_method {
 tolerate_no_expiration {
     input.auth.method == "ApiKeyToken"
 }
+tolerate_no_expiration {
+    # Invoice template access tokens currently have unlimited(undefined) expiration
+    input.auth.method == "InvoiceTemplateAccessToken"
+}
 
 tolerate_expired_token {
     input.capi
@@ -217,5 +221,14 @@ restrictions[what] {
     what := {
         "type": "anapi",
         "restrictions": rstns
+    }
+}
+
+restrictions[what] {
+    input.capi
+    rstns := capi.restrictions[_]
+    what := {
+        "type": "capi",
+        "restrictions": rstns,
     }
 }

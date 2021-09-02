@@ -140,6 +140,13 @@ test_create_wallet_allowed {
     with input.wallet as context.wallet_pool_with_identity.wallet
 }
 
+test_create_wallet_forbidden_with_undefined_op_name {
+    util.is_forbidden with input as wapi_public_operation_session_token_ctx with input.wapi.op as {
+        "id" : "CreateWallet"
+    }
+    with input.wallet as []
+}
+
 test_create_destination_allowed {
     util.is_allowed with input as wapi_public_operation_session_token_ctx with input.wapi.op as {
         "id" : "CreateDestination",

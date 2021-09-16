@@ -43,36 +43,6 @@ test_token_blacklisted_local_ipv6 {
     result.forbidden[_].code == "ip_range_blacklisted"
 }
 
-test_session_token_missing_id_forbidden {
-    result := api.assertions with input as util.deepmerge([
-        context.env_default,
-        context.requester_default,
-        context.session_token_missing_id,
-        context.op_capi_create_invoice
-    ])
-    result.forbidden[_].code == "auth_token_missing_id"
-}
-
-test_api_token_missing_id_forbidden {
-    result := api.assertions with input as util.deepmerge([
-        context.env_default,
-        context.requester_default,
-        context.api_key_token_missing_id,
-        context.op_capi_create_invoice
-    ])
-    result.forbidden[_].code == "auth_token_missing_id"
-}
-
-test_token_w_empty_id_blacklisted {
-    result := api.assertions with input as util.deepmerge([
-        context.env_default,
-        context.requester_default,
-        context.session_token_empty_id,
-        context.op_capi_create_invoice
-    ])
-    result.forbidden[_].code == "auth_token_blacklisted"
-}
-
 test_session_token_no_expiration_forbidden {
     result := api.assertions with input as util.deepmerge([
         context.env_default,

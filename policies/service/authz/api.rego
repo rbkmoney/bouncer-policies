@@ -85,28 +85,6 @@ forbidden[why] {
 }
 
 forbidden[why] {
-    not tolerate_no_token_id
-    not input.auth.token.id
-    why := {
-        "code": "auth_token_missing_id",
-        "description": "Requester auth token is missing ID"
-    }
-}
-
-forbidden[why] {
-    token := input.auth.token
-    blacklist := blacklists.auth_token.entries
-    token.id == blacklist[_]
-    why := {
-        "code": "auth_token_blacklisted",
-        "description": sprintf(
-            "Requester auth token is blacklisted with id: %s",
-            [token.id]
-        )
-    }
-}
-
-forbidden[why] {
     input.anapi
     anapi.forbidden[why]
 }
@@ -144,18 +122,6 @@ tolerate_no_expiration {
     input.auth.method == "InvoiceTemplateAccessToken"
 }
 
-tolerate_no_token_id {
-    input.auth.method == "InvoiceTemplateAccessToken"
-}
-
-tolerate_no_token_id {
-    input.auth.method == "InvoiceAccessToken"
-}
-
-tolerate_no_token_id {
-    input.auth.method == "CustomerAccessToken"
-}
-
 tolerate_expired_token {
     input.capi
     input.auth.method == "SessionToken"
@@ -174,11 +140,6 @@ tolerate_expired_token {
 warnings[why] {
     not blacklists.source_ip_range.entries
     why := "Blacklist 'source_ip_range' is not defined, blacklisting by IP will NOT WORK."
-}
-
-warnings[why] {
-    not blacklists.auth_token.entries
-    why := "Blacklist 'auth_token' is not defined, blacklisting by specific JWTs will NOT WORK."
 }
 
 warnings[why] {

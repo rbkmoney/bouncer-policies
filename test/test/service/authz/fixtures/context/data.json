@@ -840,7 +840,6 @@
         "auth": {
             "method": "InvoiceAccessToken",
             "expiration": "2021-01-01T00:00:00Z",
-            "token": { "id": "TÓKEN" },
             "scope": [
                 {
                     "invoice": { "id": "INVOICE" },
@@ -855,7 +854,6 @@
         "auth": {
             "method": "InvoiceAccessToken",
             "expiration": "2021-01-01T00:00:00Z",
-            "token": { "id": "TÓKEN" },
             "scope": [
                 {
                     "invoice": { "id": "INVOICE" },
@@ -869,7 +867,6 @@
         "auth": {
             "method": "InvoiceAccessToken",
             "expiration": "2020-02-02T00:00:00Z",
-            "token": { "id": "TÓKEN" },
             "scope": [
                 {
                     "invoice": { "id": "INVOICE" }
@@ -882,7 +879,6 @@
         "auth": {
             "method": "InvoiceTemplateAccessToken",
             "expiration": "2021-01-01T00:00:00Z",
-            "token": { "id": "TÓKEN" },
             "scope": [
                 {
                     "invoice_template": { "id": "INVOICE_TEMPLATE" },
@@ -896,7 +892,6 @@
         "auth": {
             "method": "CustomerAccessToken",
             "expiration": "2021-01-01T00:00:00Z",
-            "token": { "id": "TÓKEN" },
             "scope": [
                 {
                     "customer": { "id": "CUSTOMER" },
@@ -910,7 +905,6 @@
         "auth": {
             "method": "CustomerAccessToken",
             "expiration": "2021-01-01T00:00:00Z",
-            "token": { "id": "TÓKEN" },
             "scope": [
                 {
                     "customer": { "id": "CUSTOMER" },

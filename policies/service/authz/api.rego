@@ -85,6 +85,7 @@ forbidden[why] {
 }
 
 forbidden[why] {
+    not tolerate_no_token_id
     not input.auth.token.id
     why := {
         "code": "auth_token_missing_id",
@@ -137,9 +138,22 @@ known_auth_method {
 tolerate_no_expiration {
     input.auth.method == "ApiKeyToken"
 }
+
 tolerate_no_expiration {
     # Invoice template access tokens currently have unlimited(undefined) expiration
     input.auth.method == "InvoiceTemplateAccessToken"
+}
+
+tolerate_no_token_id {
+    input.auth.method == "InvoiceTemplateAccessToken"
+}
+
+tolerate_no_token_id {
+    input.auth.method == "InvoiceAccessToken"
+}
+
+tolerate_no_token_id {
+    input.auth.method == "CustomerAccessToken"
 }
 
 tolerate_expired_token {

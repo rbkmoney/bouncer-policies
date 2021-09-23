@@ -2,6 +2,7 @@ package service.authz.api.wapi
 
 import data.service.authz.api.user
 import data.service.authz.access
+import data.service.authz.methods
 
 import input.wapi.op
 import input.wapi.grants
@@ -25,6 +26,14 @@ access_requirements := {
 # ```
 
 forbidden[why] {
+    not allowed_operation_for_auth_method
+    why := {
+        "code": "unknown_auth_method_forbids_operation",
+        "description": sprintf("Unknown auth method for this operation: %v", [input.auth.method])
+    }
+}
+
+forbidden[why] {
     input.auth.method != "SessionToken"
     why := {
         "code": "unknown_auth_method_forbids_operation",
@@ -44,9 +53,20 @@ forbidden[why] {
 # ```
 
 allowed[why] {
+    allowed_operation_for_auth_method
+    auth_method_allowed[why]
+}
+
+auth_method_allowed[why] {
     input.auth.method == "SessionToken"
     count(access_violations) == 0
     session_token_allowed[why]
+}
+
+auth_method_allowed[why] {
+    input.auth.method == "ApiKeyToken"
+    count(access_violations) == 0
+    api_key_token_allowed[why]
 }
 
 session_token_allowed[why] {
@@ -80,6 +100,24 @@ session_token_allowed[why] {
     why := {
         "code": "grant_allows_operation",
         "description": "User has grant that permits this operation"
+    }
+}
+
+##
+
+api_key_token_allowed[why] {
+    operation_universal
+    why := {
+        "code": "operation_universal",
+        "description": "Operation is universally allowed"
+    }
+}
+
+api_key_token_allowed[why] {
+    access_status.in_scope
+    why := {
+        "code": "api_key_scope_matches",
+        "description": "Api key scope matches operation party"
     }
 }
 
@@ -182,7 +220,13 @@ party_access_status(id) = status {
     }
     roles[_]
     status := {"roles": roles}
+} else = status {
+    not input.user
+    scope := input.auth.scope[_]
+    scope.party.id == id
+    status := {"in_scope": true}
 }
+
 
 identity_access_status(id) = status {
     identity := find_entity["Identity"][id]
@@ -257,4 +301,9 @@ find_entity[type] = out {
         id := entity.id
         entity.type == type
     }
+}
+
+allowed_operation_for_auth_method {
+    operations_available := methods.permissions[input.auth.method].apis[api_name].operations
+    operations_available[_] == op.id
 }

@@ -4,6 +4,27 @@ import data.service.authz.api
 import data.test.service.authz.util
 import data.test.service.authz.fixtures.context
 
+test_get_residence_apikey_allowed {
+    util.is_allowed with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.api_key_token_valid,
+        context.op_wapi_empty
+    ]) with input.wapi.op as {"id" : "GetResidence"}
+}
+
+test_create_identity_apikey_allowed {
+    util.is_allowed with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.api_key_token_valid,
+        context.op_wapi_empty
+    ]) with input.wapi.op as {
+        "id" : "CreateIdentity",
+        "party" : "PARTY"
+    }
+}
+
 wapi_public_operation_session_token_ctx = util.deepmerge([
     context.env_default,
     context.requester_default,

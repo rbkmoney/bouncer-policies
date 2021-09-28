@@ -25,14 +25,6 @@ access_requirements := {
 # {"code": "auth_expired", "description": "..."}
 # ```
 
-# forbidden[why] {
-#     not allowed_operation_for_auth_method
-#     why := {
-#         "code": "unknown_auth_method_forbids_operation",
-#         "description": sprintf("Unknown auth method for this operation: %v", [input.auth.method])
-#     }
-# }
-
 forbidden[why] {
     access_violations[why]
 }

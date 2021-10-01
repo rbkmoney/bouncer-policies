@@ -243,6 +243,8 @@ api:
           - "getOrgRole"
           - "cancelOrgMembership"
           - "inquireOrgMembership"
+          - "getContext"
+          - "switchContext"
     universal:
       operations:
         - "createOrg"

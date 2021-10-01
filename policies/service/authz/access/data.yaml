@@ -243,13 +243,13 @@ api:
           - "getOrgRole"
           - "cancelOrgMembership"
           - "inquireOrgMembership"
-          - "getContext"
           - "switchContext"
     universal:
       operations:
         - "createOrg"
         - "joinOrg"
         - "listOrgMembership"
+        - "getContext"
 
   ClaimManagement:
     mandatory:

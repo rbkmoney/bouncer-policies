@@ -192,6 +192,7 @@ api:
           - "SearchPayouts"
           - "SearchReports"
           - "SearchChargebacks"
+          - "SearchInvoiceTemplates"
           - "GetPaymentsToolDistribution"
           - "GetPaymentsAmount"
           - "GetAveragePayment"

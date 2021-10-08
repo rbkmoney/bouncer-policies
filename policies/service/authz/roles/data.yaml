@@ -37,6 +37,7 @@ roles:
           - "SearchInvoices"
           - "SearchPayments"
           - "SearchRefunds"
+          - "SearchInvoiceTemplates"
 
   Accountant:
     apis:
@@ -62,6 +63,7 @@ roles:
           - "SearchRefunds"
           - "SearchPayouts"
           - "SearchReports"
+          - "SearchInvoiceTemplates"
           - "GetReport"
           - "CreateReport"
           - "CancelReport"
@@ -96,6 +98,7 @@ roles:
           - "SearchPayments"
           - "SearchRefunds"
           - "SearchPayouts"
+          - "SearchInvoiceTemplates"
           - "GetPaymentsToolDistribution"
           - "GetPaymentsAmount"
           - "GetAveragePayment"
@@ -228,6 +231,7 @@ roles:
           - "SearchPayouts"
           - "SearchReports"
           - "SearchChargebacks"
+          - "SearchInvoiceTemplates"
           - "GetReport"
           - "CreateReport"
           - "CancelReport"

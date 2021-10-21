@@ -95,6 +95,7 @@ api:
           - "CreateBinding"
           - "GetBindings"
           - "GetBinding"
+          - "GetCustomerPaymentMethods"
 
       webhook:
         operations:

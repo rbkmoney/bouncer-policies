@@ -63,6 +63,18 @@ test_customer_access_token_allows_get_customer_events {
     count(result.allowed) == 1
 }
 
+test_customer_access_token_allows_get_customer_payment_methods {
+    result := api.assertions with input as util.deepmerge([
+        context.env_default,
+        context.requester_default,
+        context.customer_access_token_valid,
+        context.op_capi_get_customer_payment_methods,
+        context.payproc_customer
+    ])
+    not result.forbidden
+    count(result.allowed) == 1
+}
+
 test_customer_access_token_forbids_get_invoice {
     util.is_forbidden with input as util.deepmerge([
         context.env_default,

@@ -60,6 +60,7 @@ permissions:
           - "GetBindings"
           - "GetBinding"
           - "GetCustomerEvents"
+          - "GetCustomerPaymentMethods"
 
           # InvoiceTemplates
           - "CreateInvoiceTemplate"
@@ -258,6 +259,7 @@ permissions:
           - "GetBindings"
           - "GetBinding"
           - "GetCustomerEvents"
+          - "GetCustomerPaymentMethods"
 
           # InvoiceTemplates
           - "CreateInvoiceTemplate"
@@ -441,6 +443,7 @@ permissions:
           - "GetCustomerEvents"
           - "CreateBinding"
           - "GetBinding"
+          - "GetCustomerPaymentMethods"
 
         # Tokenization
           - "CreatePaymentResource"

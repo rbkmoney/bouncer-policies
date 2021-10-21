@@ -85,6 +85,7 @@ roles:
           - "GetPaymentByID"
           - "GetPayoutTools"
           - "CreatePayout"
+          - "GetCustomerPaymentMethods"
       OrgManagement:
         operations:
           - "getOrg"
@@ -140,6 +141,7 @@ roles:
           - "GetBindings"
           - "GetBinding"
           - "GetCustomerEvents"
+          - "GetCustomerPaymentMethods"
           - "CreateInvoiceTemplate"
           - "GetInvoiceTemplateByID"
           - "UpdateInvoiceTemplate"

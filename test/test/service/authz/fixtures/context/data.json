@@ -460,6 +460,15 @@
         }
     },
 
+    "op_capi_get_customer_payment_methods": {
+        "capi": {
+            "op": {
+                "id": "GetCustomerPaymentMethods",
+                "customer": { "id": "CUSTOMER" }
+            }
+        }
+    },
+
     "op_capi_rescind_invoice": {
         "capi": {
             "op": {

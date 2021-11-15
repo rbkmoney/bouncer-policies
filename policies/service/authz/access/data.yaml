@@ -205,6 +205,8 @@ api:
           - "GetCurrentBalances"
           - "GetPaymentsSubErrorDistribution"
           - "GetCurrentBalancesGroupByShop"
+          - "GetCreditingsAmount"
+          - "GetCurrentShopBalances"
 
     discretionary:
       shop:
